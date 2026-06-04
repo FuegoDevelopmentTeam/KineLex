@@ -323,6 +323,42 @@ Az automatizációt szigorú védőkorlátok (guardrails) szabályozzák. Az AI/
 2. **Kiejthetetlenség (Aesthetic / Pronounceability Alert):** Ha a kód hossza megnő, és a magánhangzó-mássalhangzó arány szerint a szó kimondhatatlanná válik az órán (pl. `lhx` $\rightarrow$ `lshldbx`), a rendszer megáll, és felajánlja a Dot Case szeparációra való visszalépést (`l.shld.b.x`).
 3. **Didaktikai Jelentőség-csökkenés:** Ha a változás miatt az alapeset (Default Representant) vizuálisan teljesen felismerhetetlenná válik a tanároknak a madártávlati nézetben.
 
+### F. Ontológiai Átrendezés és Szemantikai Elcsúszás (Ontological Reclassification & Semantic Drift)
+Gyakori módszertani hiba a tananyag-fejlesztés kezdetén, hogy egy kategóriát vagy fogalmat túl korán, nem elég absztrakt szinten nevezünk el. Használat közben kiderül, hogy a bevezetett fogalom valójában egy nagyobb, általánosabb igazság specifikus részhalmaza.
+
+#### 1. A "5s" (5 steps) ──> "5a" (5 accents) Példa
+- **A kezdeti koncepció (Beginner Level):** A zenei kérdésre (1-4. ütem) a táncos az alap 3 lépés helyett 5 lépést tesz. Elnevezzük **`5s`**-nek (5 steps), ami kisebb, sűrűbb lépéseket és gyorsabb érzetet ad.
+- **A mélyebb didaktikai igazság (Advanced Level):** Magasabb szinten a táncos takarékoskodik a súlyvonal-váltásokkal (flow optimalizáció). Nem tesz 5 teljes lépést, hanem 5 zenei történést / hangsúlyt táncol le (pl. testizoláció, vállpattintás, tap súlyáthelyezés nélkül).
+- **A szemantikai elcsúszás (Semantic Drift):** Kiderül, hogy az általános, felsőbb kategória a **`5a`** (5 accents - 5 hangsúly). Az **`5s`** (5 steps) valójában a **`5a`** egy specifikus, kezdő szintű megvalósulása (ahol minden hangsúlyhoz teljes lépés/súlyáthelyezés társul).
+- **A logikai reláció:** `5s` is-a `5a` (where `weight_transfer = true`).
+
+#### 2. Az Ontológiai Elcsúszás Kezelésének Folyamata (OntoShift Pipeline)
+Amikor egy korábbi bázisfogalomról kiderül, hogy az egy új, absztraktabb fogalom gyermeke (hyponymja), a rendszer az alábbiak szerint hajtja végre a struktúra átrendezését:
+
+1. **A Kapcsolat Átírása (Taxonomical Re-mapping):**
+   - Nem töröljük az `5s` kódot, mert az a kezdő órák videóiban és leírásaiban fizikailag pontos (ott tényleg léptek).
+   - Az adatbázisban az `5s` rekord `parent_term_id` mezőjét beállítjuk az újonnan létrehozott **`5a`** UUID-jára.
+   - Az `5s` tulajdonságaként rögzítjük a specifikus megszorítást: `{ weight_transfer: true }`.
+
+2. **AST-Alapú Szemantikai Fordítás (Semantic Expansion):**
+   - A parser felkészül arra, hogy a jövőben az `5s` kódot a háttérben **`5a.step`** formában is képes legyen értelmezni, biztosítva a szigorú logikai ekvivalenciát.
+
+3. **Irányított Curriculum Migráció (Guided Migration Toolkit):**
+   - A rendszer átvizsgálja az összes történelmi óravázlatot, ahol a régi `5s` szerepelt.
+   - Nem hajt végre vak szöveges cserét, hanem egy **HITL (Human-in-the-Loop) Refaktorizációs Panel** elé tárja a döntést a tanárnak:
+
+> 🔄 **Ontológiai Refaktorizációs Asszisztens:**
+>
+> *"Észleltük, hogy az **`5s`** (5 steps) fogalmat átminősítette az **`5a`** (5 accents) gyermekévé.*
+> *Az adatbázisban 42 történelmi óravázlat használja az `5s` kódot. Hogyan szeretné ezeket frissíteni?*
+>
+> 1. **Megtartás (Keep Specific):** *"Hagyja változatlanul `5s`-ként az érintett órákon, mert a didaktikai szint alapján (Salsa Cat 01) ott valóban fizikai lépéseket végeztek a tanulók."*
+> 2. **Általánosítás (Generalize to `5a`):** *"Cserélje le `5a`-ra az órákon, mert a kontextus alapján a zenei hangsúlyok elhelyezése volt a cél, és a lépés másodlagos."*
+> 3. **Dekonstruált Csere (Deconstruct to `5a.step`):** *"Cserélje le az explicit `5a.step` Dot Case formára a maximális elméleti precizitás érdekében."*
+>
+> *[Gomb: Végrehajtás kiválasztott órákon]*
+
+
 
 
 
