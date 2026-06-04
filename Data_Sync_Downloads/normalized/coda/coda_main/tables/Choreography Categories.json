@@ -1,0 +1,62 @@
+{
+  "coda_doc_id": "J4v88b4mmW",
+  "coda_table_id": "grid-Ll5IFcpU-n",
+  "coda_table_name": "Choreography Categories",
+  "row_count": 9,
+  "rows": [
+    {
+      "Choreography Category ID": "ChorCat10",
+      "Choreography Category": "⤳",
+      "Movement Type": "★",
+      "Choreography Category Name": "training flow"
+    },
+    {
+      "Choreography Category ID": "ChorCat08",
+      "Choreography Category": "Ⲋ",
+      "Movement Type": "★",
+      "Choreography Category Name": "leading-following (triggers)"
+    },
+    {
+      "Choreography Category ID": "ChorCat07",
+      "Choreography Category": "*✩",
+      "Movement Type": "★",
+      "Choreography Category Name": "couple choreo solo part"
+    },
+    {
+      "Choreography Category ID": "ChorCat06",
+      "Choreography Category": "✩",
+      "Movement Type": "★",
+      "Choreography Category Name": "couple choreo"
+    },
+    {
+      "Choreography Category ID": "ChorCat05",
+      "Choreography Category": "≈✩",
+      "Movement Type": "★",
+      "Choreography Category Name": "couple smooth choreo"
+    },
+    {
+      "Choreography Category ID": "ChorCat04",
+      "Choreography Category": "⁑",
+      "Movement Type": "★",
+      "Choreography Category Name": "couple shine"
+    },
+    {
+      "Choreography Category ID": "ChorCat01",
+      "Choreography Category": "*",
+      "Movement Type": "★",
+      "Choreography Category Name": "solo shine"
+    },
+    {
+      "Choreography Category ID": "ChorCat02",
+      "Choreography Category": "*♀",
+      "Movement Type": "★",
+      "Choreography Category Name": "solo shine female"
+    },
+    {
+      "Choreography Category ID": "ChorCat03",
+      "Choreography Category": "*♂",
+      "Movement Type": "★",
+      "Choreography Category Name": "solo shine male"
+    }
+  ]
+}

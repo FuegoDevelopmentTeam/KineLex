@@ -1,0 +1,33 @@
+{
+  "coda_doc_id": "J4v88b4mmW",
+  "coda_table_id": "grid-fa88nlk4TG",
+  "coda_table_name": "Difficulty of Movement",
+  "row_count": 5,
+  "rows": [
+    {
+      "Difficulty of Movement ID": "DoM01",
+      "Difficulty of Movement": "beg",
+      "Difficulty of Movement Description": "beginner"
+    },
+    {
+      "Difficulty of Movement ID": "DoM02",
+      "Difficulty of Movement": "intL",
+      "Difficulty of Movement Description": "intermediate light"
+    },
+    {
+      "Difficulty of Movement ID": "DoM03",
+      "Difficulty of Movement": "intH",
+      "Difficulty of Movement Description": "intermediate hard"
+    },
+    {
+      "Difficulty of Movement ID": "DoM04",
+      "Difficulty of Movement": "adv",
+      "Difficulty of Movement Description": "advanced"
+    },
+    {
+      "Difficulty of Movement ID": "DoM05",
+      "Difficulty of Movement": "spec",
+      "Difficulty of Movement Description": "special"
+    }
+  ]
+}

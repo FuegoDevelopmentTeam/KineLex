@@ -1,0 +1,77 @@
+{
+  "coda_doc_id": "J4v88b4mmW",
+  "coda_table_id": "grid-VDNT1GdYgD",
+  "coda_table_name": "Categories",
+  "row_count": 23,
+  "rows": [
+    {
+      "Category Name": "figure"
+    },
+    {
+      "Category Name": "dynamics"
+    },
+    {
+      "Category Name": "progress"
+    },
+    {
+      "Category Name": "didactic"
+    },
+    {
+      "Category Name": "quality"
+    },
+    {
+      "Category Name": "interaction (leading)"
+    },
+    {
+      "Category Name": "dance style"
+    },
+    {
+      "Category Name": "mood"
+    },
+    {
+      "Category Name": "rhythm"
+    },
+    {
+      "Category Name": "time"
+    },
+    {
+      "Category Name": "space"
+    },
+    {
+      "Category Name": "direction"
+    },
+    {
+      "Category Name": "geometric shape"
+    },
+    {
+      "Category Name": "solo"
+    },
+    {
+      "Category Name": "couple"
+    },
+    {
+      "Category Name": "anatomical movement"
+    },
+    {
+      "Category Name": "movement"
+    },
+    {
+      "Category Name": "position"
+    },
+    {
+      "Category Name": "relation"
+    },
+    {
+      "Category Name": "sequence"
+    },
+    {
+      "Category Name": "quantity"
+    },
+    {
+      "Category Name": "body (parts)"
+    },
+    {
+      "Category Name": "grammar"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "coda_doc_id": "J4v88b4mmW",
+  "coda_table_id": "grid-R-OgdHqyqx",
+  "coda_table_name": "Groups",
+  "row_count": 7,
+  "rows": [
+    {
+      "Day": "Szerda",
+      "Start": "1899-12-30T20:30:00.000+01:00",
+      "Duration": "60 mins",
+      "Dance": "bachata",
+      "Course Level": "haladó",
+      "Actual Name": "Haladó Bachata",
+      "Class in the day": 3,
+      "groupID": "Wed3",
+      "Group Name History": ""
+    },
+    {
+      "Day": "Csütörtök",
+      "Start": "1899-12-30T20:15:00.000+01:00",
+      "Duration": "60 mins",
+      "Dance": "salsa",
+      "Course Level": "közép hard",
+      "Actual Name": "Közép Hard Salsa",
+      "Class in the day": 3,
+      "groupID": "Thu3",
+      "Group Name History": ""
+    },
+    {
+      "Day": "Csütörtök",
+      "Start": "1899-12-30T19:00:00.000+01:00",
+      "Duration": "75 mins",
+      "Dance": "salsa",
+      "Course Level": "közép light",
+      "Actual Name": "Közép Light Salsa",
+      "Class in the day": 2,
+      "groupID": "Thu2",
+      "Group Name History": ""
+    },
+    {
+      "Day": "Csütörtök",
+      "Start": "1899-12-30T18:00:00.000+01:00",
+      "Duration": "60 mins",
+      "Dance": "salsa",
+      "Course Level": "kezdő",
+      "Actual Name": "Kezdő Salsa",
+      "Class in the day": 1,
+      "groupID": "Thu1",
+      "Group Name History": ""
+    },
+    {
+      "Day": "Kedd",
+      "Start": "1899-12-30T18:00:00.000+01:00",
+      "Duration": "90 mins",
+      "Dance": "jazz",
+      "Course Level": "all level",
+      "Actual Name": "Jazztánc & Flexibility",
+      "Class in the day": 1,
+      "groupID": "Tue1",
+      "Group Name History": ""
+    },
+    {
+      "Day": "Szerda",
+      "Start": "1899-12-30T18:00:00.000+01:00",
+      "Duration": "90 mins",
+      "Dance": "bachata",
+      "Course Level": "közép light",
+      "Actual Name": "Közép Light Bachata",
+      "Class in the day": 1,
+      "groupID": "Wed1",
+      "Group Name History": ""
+    },
+    {
+      "Day": "Szerda",
+      "Start": "1899-12-30T19:30:00.000+01:00",
+      "Duration": "60 mins",
+      "Dance": "bachata",
+      "Course Level": "közép hard",
+      "Actual Name": "Közép Hard Bachata",
+      "Class in the day": 2,
+      "groupID": "Wed2",
+      "Group Name History": ""
+    }
+  ]
+}

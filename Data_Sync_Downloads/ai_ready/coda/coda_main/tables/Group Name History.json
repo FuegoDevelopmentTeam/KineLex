@@ -1,0 +1,71 @@
+{
+  "coda_doc_id": "J4v88b4mmW",
+  "coda_table_id": "grid-ekK6h5Ilv2",
+  "coda_table_name": "Group Name History",
+  "row_count": 7,
+  "rows": [
+    {
+      "Start": "1899-12-30T18:00:00.000+01:00",
+      "Duration": "90 mins",
+      "Notes": "",
+      "Dance": "jazz",
+      "Course Level": "all level",
+      "Actual Name": "Jazz & Flexibility",
+      "Text": ""
+    },
+    {
+      "Start": "1899-12-30T18:00:00.000+01:00",
+      "Duration": "90 mins",
+      "Notes": "",
+      "Dance": "bachata",
+      "Course Level": "közép light",
+      "Actual Name": "Közép Light Bachata",
+      "Text": ""
+    },
+    {
+      "Start": "1899-12-30T19:30:00.000+01:00",
+      "Duration": "60 mins",
+      "Notes": "",
+      "Dance": "bachata",
+      "Course Level": "közép hard",
+      "Actual Name": "Közép Hard Bachata",
+      "Text": ""
+    },
+    {
+      "Start": "1899-12-30T18:00:00.000+01:00",
+      "Duration": "60 mins",
+      "Notes": "",
+      "Dance": "salsa",
+      "Course Level": "kezdő",
+      "Actual Name": "Kezdő Salsa",
+      "Text": ""
+    },
+    {
+      "Start": "1899-12-30T19:00:00.000+01:00",
+      "Duration": "75 mins",
+      "Notes": "",
+      "Dance": "salsa",
+      "Course Level": "közép light",
+      "Actual Name": "Közép Light Salsa",
+      "Text": ""
+    },
+    {
+      "Start": "1899-12-30T20:15:00.000+01:00",
+      "Duration": "60 mins",
+      "Notes": "",
+      "Dance": "salsa",
+      "Course Level": "közép hard",
+      "Actual Name": "Közép Hard Salsa",
+      "Text": ""
+    },
+    {
+      "Start": "",
+      "Duration": "60 mins",
+      "Notes": "",
+      "Dance": "",
+      "Course Level": "",
+      "Actual Name": "",
+      "Text": ""
+    }
+  ]
+}
