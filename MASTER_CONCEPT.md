@@ -358,6 +358,47 @@ Amikor egy korábbi bázisfogalomról kiderül, hogy az egy új, absztraktabb fo
 >
 > *[Gomb: Végrehajtás kiválasztott órákon]*
 
+---
+
+## 11. Szemantikai Ontológia, Didaktikai Approximáció és Fokozatos Pontosítás (Didactic Scaffolding & Epistemological Refinement)
+A tánctanítás hatékonysága megköveteli, hogy a kezdő tanulóknak ne a teljes fizikai valóságot (L0 szintű anatómia és kinetika) tanítsuk meg azonnal, hanem "didaktikai mankókat" (scaffolds) alkalmazzunk. Ezek a fogalmak kezdő szinten szándékosan pontatlanok, részlegesek és intuitívak, de később, a tanulás előrehaladtával pontosítani, szűkíteni és dekonstruálni kell őket.
+
+### A. Didaktikai Szintezés és Approximációs Életciklus (Refinement Pathway)
+Minden didaktikai fogalomhoz az adatbázisban hozzárendelünk egy **pontossági/didaktikai állapotot** (Epistemological State) és egy finomítási útvonalat (Refinement Pathway):
+
+```
+[Didaktikai Mankó / Kezdő Fogalom: "CBL"] (L3: Első intuitív benyomás)
+                       │
+                       ▼  (Középszint: Döntési pontok és pályasíkok tisztázása)
+[Kinetikai Pontosítás: "CBL.pathOpen & CBL.codDeact"] (L1: Viselkedési szabályok)
+                       │
+                       ▼  (Haladó szint: Teljes anatómiai és kinetikai dekonstrukció)
+[Atomi Fizikai Képlet: "CBL.Lhx.LLTO + swg.trans + reFace + bal.absorb"] (L0: Fizikai SoT)
+```
+
+1. **Epistemological States (Megértési Állapotok):**
+   - `scaffold` (didaktikai mankó, intuitív, de elméletileg pontatlan, pl. kezdő CBL).
+   - `precise` (kinetikailag pontosított, pl. középhaladó CBL).
+   - `deconstructed` (atomi elemeire bontott, fizikai valóság, pl. haladó CBL).
+
+2. **A "CBL" (Cross Body Lead) Didaktikai Evolúciója:**
+   - **Kezdő Szint (`scaffold`):** "Első alapeseti benyomás" $\rightarrow$ A férfi egy mozdulattal elvezeti a nőt, a nő pedig átmegy a túloldalra.
+   - **Haladó Szint (`deconstructed`):** A CBL valójában nem egyetlen figura, hanem egy zenei ütem (projektidő: 4 ütés) alatt lefutó **kinetikai döntéssorozat (kinematic chain)**:
+     - *Path opening:* A férfi kilép a bal oldali vonalról, szabaddá téve a Follower futási pályáját (`pathOpen`).
+     - *Active following:* A nő aktív vezetés nélkül, önmagából adódóan alaplépést táncol ezen a pályán.
+     - *COD Deactivation:* A nő elülső `cod` (change of direction) végpontján a férfi vezetéssel plusz gyorsítást/impulzust ad, hatástalanítva a nő természetes visszafordulási szándékát.
+     - *Transition:* A nő átsétál/átfut (`wlk`/`run`) a túloldalra.
+     - *Resynchronization & reFace:* A zenei ütem végén a nő reszinkronizálja magát és visszafordul a partnere felé (`reFace`).
+     - *Momentum Absorption:* A nő a testében felgyűlt kinetikus energiát kiegyensúlyozásokkal (`bal.absorb`) felemészti, beállva a következő alaplépés nyugalmi állapotába.
+
+### B. A "Fogalom Utó-Tisztázó" (Refinement Engine) működése
+A rendszer támogatja, hogy a tanár a diákok profilján vagy a tantervben fokozatosan "leleplezze" a fogalmak mögötti fizikai valóságot:
+1. **Diák Skill-Matrix Frissítés:** Amikor a diák kezdő szinten elsajátítja a CBL-t, a rendszer rögzíti az `L3: CBL [mastery_level = 2]` állapotot.
+2. **Szemantikai Feloldás (Unveiling):** Haladóbb kurzusokon a rendszer felajánlja a tanárnak, hogy bontsa fel a diák CBL tudását az atomi elemekre:
+   - *"A tanuló csoport elérte a Haladó szintet. Szeretné a 'CBL' didaktikai fogalmat feloldani a hozzá tartozó 'reFace', 'swg.trans' és 'bal.absorb' atomi készségekre a profiljukon?"*
+3. **Didaktikai Öröklődés:** Az adatbázisban a dekonstruált szilánkok tartalmazzák a szülő `scaffold` kapcsolatát, így a diák elméleti tudása mindig visszavezethető a legalapvetőbb mozdulatoktól a komplex kulturális figuranevekig.
+
+
 
 
 
