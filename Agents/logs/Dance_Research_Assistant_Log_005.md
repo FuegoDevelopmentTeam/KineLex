@@ -26,5 +26,9 @@ Kezdeti állapot: A MASTER_CONCEPT.md beolvasása és kibővítése a fogalom-ev
   3. A 2hx (kétkezes keresztfogás) jobb/bal felül dilemmája: Hogyan jelöljük pontosan és vizuálisan ütközésmentesen, ha a jobb vagy a bal kéz van felül? (`2hxl` / `2hxL` vs `2hxr` / `2hxR`).
   4. Alapértelmezéses eset rövidebb (hanyag) megfogalmazásának evolúciója: Hogyan kezeljük szoftveresen, ha egy kezdetben full specifikus kód (`rhxUpLaCar`) a gyakorlatban "alapesetté" válik, és a tanárok elkezdik a hanyagabb, rövidebb `rhxCar` formában írni?
 - **Tervezés és Megoldások:**
-  - **MASTER_CONCEPT Frissítés:** Bevezettük a **10. Fogalom-Evolúció: Kombinált- és Alapértelmezett Szavak** fejezetet, amely részletesen szabályozza a lexikalizációt, a 2hxR/2hxL szintaxist és a kontextus-érzékeny alapértelmezések (hanyag evolúció) működését.
-  - **Adatbázis & Parser Támogatás:** A `terms.is_default_representant` logikai mező segítségével a parser képes lesz a hanyag kódokat a háttérben automatikusan kiegészíteni a teljes specifikus jelentésre, így biztosítva a veszteségmentes adatfeldolgozást és a kényelmes tanári gépelést.
+  - **MASTER_CONCEPT Frissítés:** Bevezettük a **10. Fogalom-Evolúció: Kombinált- és Alapértelmezett Szavak** fejezetet, amely szabályozza a lexikalizációt, a 2hxR/2hxL szintaxist, a kontextus-érzékeny alapértelmezések működését, valamint a **D) Komponens-Öröklődés és Szemantikus Refaktorizációs Pipeline (Dependency DNA)** modellt.
+  - **Adatbázis & Parser Támogatás:** 
+    - A `terms.is_default_representant` logikai mező támogatja a hanyag kódok automatikus feloldását.
+    - A `term_components` tábla megőrzi a lexikalizált szavak (pl. `rhx`) kapcsolatát a szülő atomjaikkal (`r`, `h`, `x`) az UUID-alapú szemantikai függőségi gráfon keresztül.
+    - Ha egy alapelem módosul (pl. `h` -> `ha`), a refaktorizációs compiler végrehajtja az automatikus kód-újjágenerálást (`rhx` -> `rhax`) és az óravázlatok AST-alapú migrációját anélkül, hogy az adatintegritás sérülne.
+

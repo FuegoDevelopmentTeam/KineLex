@@ -235,5 +235,35 @@ A kutatás kezdetén a tanárok mindent a legmagasabb részletességgel (max det
    - Ha a tanár az óravázlatban a rövidebb `rhxCar` kódot használja, a parser a háttérben automatikusan feloldja azt a teljes `rhxUpLaCar` jelentésre, de a képernyőn meghagyja a tanár által preferált rövid, kényelmes formát.
    - Ha később egy új, alternatív caress jelenik meg (pl. `rhxLoLaCar` - lower caress), azt kötelezően ki kell írni, de a régi alapeset továbbra is megmaradhat a hanyag `rhxCar` alakban.
 
+### D. Komponens-Öröklődés és Szemantikus Refaktorizációs Pipeline (Dependency DNA & Refactoring)
+A legnagyobb kockázat a lexikalizált szavaknál (pl. `rhx`), hogy ha a háttérben megváltoztatunk egy alapelemet (pl. a `h` = hand helyett bevezetjük a `ha` kódot, hogy a `h` felszabaduljon a `hip` részére), a sima szöveges keresés és csere (`Search & Replace`) működésképtelen vagy veszélyes lesz, mert nem látja a kapcsolatot az `rhx` és a `h` között.
+
+Ennek feloldására egy szigorú **szemantikus függőségi gráfot** és egy **refaktorizációs fordítómotort (Compiler)** alkalmazunk:
+
+1. **A Szemantikai "DNA" (Összetételi Képlet) tárolása:**
+   Minden olyan kifejezés, amely más alapelemekből áll össze (legyen az CamelCase vagy már teljesen lexikalizált, egybeírt `rhx`), az adatbázisban **soha nem veszíti el a szülő-gyermek kapcsolatát**. 
+   A szótárban minden összetett kifejezés mögött kötelezően tároljuk annak **strukturális képletét (DNA Recipe)** egy relációs táblán keresztül (`term_components`):
+   ```
+   [Compound Term: rhx] (id: UUID_rhx)
+          │
+          ├───> [Index 1]: UUID_r (r = right)
+          ├───> [Index 2]: UUID_h (h = hand)
+          └───> [Index 3]: UUID_x (x = cross)
+   ```
+   Az `rhx` nem egy statikus karakterlánc, hanem a háttérben az **`r`**, **`h`** és **`x`** fizikai fogalmak UUID-fókusza.
+
+2. **Absztrakt Szintaxisfa (AST) Alapú Értelmezés:**
+   A leíró nyelven írt óravázlatokat a rendszer nem sima szövegként kezeli, hanem egy **AST Parser** segítségével lefordítja egy objektum-orientált fává, ahol minden egyes elem és karakter a mögöttes adatbázis-beli UUID-jára mutat.
+
+3. **Az Automatikus Refaktorizációs Pipeline (The Migrator):**
+   Amikor a fejlesztő vagy a tanár megváltoztat egy alapelemet (pl. `h` $\rightarrow$ `ha` szabály):
+   - **Step 1 (Impact Analysis):** A rendszer a `term_components` tábla segítségével azonnal kilistázza az összes érintett összetett és lexikalizált szót (pl. kimutatja, hogy a `h` módosítása érinti a `rhx`, `lhx`, `2hx` kifejezéseket).
+   - **Step 2 (Auto-Regeneration):** A refaktorizációs motor a képletek alapján automatikusan újragenerálja a lexikalizált szavak új karaktersorozatát: `r` + `ha` + `x` $\rightarrow$ **`rhax`**.
+   - **Step 3 (Semantic Migration):** A rendszer végigfut az összes adatbázis-rekordon (óravázlatok, videó-időbélyegek leírásai). Minden szöveget lefordít AST fává, elvégzi az UUID-alapú token-cseréket (pl. `rhx` helyett `rhax`), majd visszamenti a frissített szöveget.
+   - **Step 4 (Safety Validation):** A futtatás végén a linter ellenőrzi, hogy keletkezett-e új ütközés az új nevek miatt (pl. a generált `rhax` nem ütközik-e egy másik létező fogalommal).
+
+Ez a háttér-architektúra garantálja a **100%-os skálázhatóságot és biztonságot**: a nyelvtan és a kódok szabadon és hanyagul fejlődhetnek a felszínen, miközben a motor mélyén az adatintegritás és a visszakövethetőség matematikai precizitással megmarad.
+
+
 
 
