@@ -398,6 +398,34 @@ A rendszer támogatja, hogy a tanár a diákok profilján vagy a tantervben foko
    - *"A tanuló csoport elérte a Haladó szintet. Szeretné a 'CBL' didaktikai fogalmat feloldani a hozzá tartozó 'reFace', 'swg.trans' és 'bal.absorb' atomi készségekre a profiljukon?"*
 3. **Didaktikai Öröklődés:** Az adatbázisban a dekonstruált szilánkok tartalmazzák a szülő `scaffold` kapcsolatát, így a diák elméleti tudása mindig visszavezethető a legalapvetőbb mozdulatoktól a komplex kulturális figuranevekig.
 
+### C. Jelző-Transzponálás és Szemantikai Lehorgonyzás (Modifier Transposition & Semantic Anchoring)
+Különösen komplex didaktikai probléma, ha a tanár egy elméletileg még le nem bontott, pontatlan scaffold fogalmat (pl. `CBL`) ruház fel egyedi stílusbeli vagy fizikai jelzővel (pl. *"a férfi a zenei kérdésben [1-4 ütem] lépés helyett csak kicsúsztatja a szabad lábát"*).
+
+Hogy ez a jelző a későbbi pontosítás (dekonstrukció) után ne vesszen el, hanem automatikusan átkerüljön a pontosított fogalmi tér megfelelő helyére, a rendszer a **Szemantikai Lehorgonyzás (Semantic Anchoring)** technológiáját használja.
+
+#### 1. A Működés Alapelve (Metadata Intersection Matching)
+Minden összetett mozdulat-jelző (modifier) rendelkezik saját **szemantikai cél-metaadatokkal (Target DNA)**, amelyek leírják, hogy a mozdulat melyik dimenziót érinti:
+- **Szerep (Role):** Leader (férfi) / Follower (nő).
+- **Időzítés (Timing):** Beats 1-4 (zenei kérdés) / Beats 5-8 (zenei válasz).
+- **Testrész (Body Part):** Lower body (lábfej, súlypont) / Upper body (karok, kapcsolódás).
+
+Amikor a tanár a pontatlan `CBL` fogalomhoz hozzákapcsol egy ilyen stílus-jelzőt (pl. `flare` / `reachOut`), a háttérben futó **Refinement Engine**:
+1. Beolvassa a jelző metaadatait: `flare` $\rightarrow$ `{ role: 'Leader', timing: '1-4', body_part: 'lower_body' }`.
+2. Megvizsgálja a `CBL` dekonstruált kinetikai láncolatát (sub-components).
+3. Kiszámítja a jelző metaadatainak és a CBL alkatrészeinek **metszetét (Semantic Intersection)**.
+4. Megtalálja az egyetlen tökéletesen illeszkedő komponenst: **`CBL.pathOpen`** (amely szintén `{ role: 'Leader', timing: '1-4', body_part: 'lower_body' }` tulajdonságú).
+5. **Automatikusan lehorgonyozza (áttranszponálja)** a jelzőt a pontosított alkatrészre: `CBL.pathOpen[modified_by: flare]`.
+
+#### 2. Hogyan oldja fel ezt a UAA 2.0 Szótár-Asszisztens?
+Amikor a tanár beírja a felületre a hanyag/pontatlan megfogalmazást: *"cbl, de a férfi az 1-4-re kicsúsztatja a lábát"*:
+1. A rendszer felismeri a `CBL` szülőfogalmat és a megadott kinetikai változtatást.
+2. A fenti lehorgonyzási logika alapján azonosítja, hogy ez a `CBL.pathOpen` fázist érinti.
+3. Az **UAA 2.0 algoritmus** segítségével automatikusan felajánlja a legördülő menüben a két lehetséges szabványos és tömör elnevezést a general-specific skálán:
+   - **`maFlareCbl`** (Man's Flare Cross Body Lead): ha a mozdulat stílusjegyként a díszítésre (flare) fókuszál.
+   - **`maRchOutCbl`** (Man's Reach Out One Step Cross Body Lead): ha a mozdulat funkcionálisan a lépés messzire nyújtására (reach out) fókuszál.
+4. A tanár egyetlen kattintással jóváhagyja az elnevezést, és a rendszer a háttérben az új kifejezést **szülő-gyermek kapcsolatban** rögzíti a `CBL`-lel, megőrizve a pontos belső dekonstruált képletét is.
+
+
 
 
 
