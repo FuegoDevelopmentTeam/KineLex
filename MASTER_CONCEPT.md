@@ -256,13 +256,73 @@ Ennek feloldására egy szigorú **szemantikus függőségi gráfot** és egy **
    A leíró nyelven írt óravázlatokat a rendszer nem sima szövegként kezeli, hanem egy **AST Parser** segítségével lefordítja egy objektum-orientált fává, ahol minden egyes elem és karakter a mögöttes adatbázis-beli UUID-jára mutat.
 
 3. **Az Automatikus Refaktorizációs Pipeline (The Migrator):**
-   Amikor a fejlesztő vagy a tanár megváltoztat egy alapelemet (pl. `h` $\rightarrow$ `ha` szabály):
-   - **Step 1 (Impact Analysis):** A rendszer a `term_components` tábla segítségével azonnal kilistázza az összes érintett összetett és lexikalizált szót (pl. kimutatja, hogy a `h` módosítása érinti a `rhx`, `lhx`, `2hx` kifejezéseket).
-   - **Step 2 (Auto-Regeneration):** A refaktorizációs motor a képletek alapján automatikusan újragenerálja a lexikalizált szavak új karaktersorozatát: `r` + `ha` + `x` $\rightarrow$ **`rhax`**.
-   - **Step 3 (Semantic Migration):** A rendszer végigfut az összes adatbázis-rekordon (óravázlatok, videó-időbélyegek leírásai). Minden szöveget lefordít AST fává, elvégzi az UUID-alapú token-cseréket (pl. `rhx` helyett `rhax`), majd visszamenti a frissített szöveget.
-   - **Step 4 (Safety Validation):** A futtatás végén a linter ellenőrzi, hogy keletkezett-e új ütközés az új nevek miatt (pl. a generált `rhax` nem ütközik-e egy másik létező fogalommal).
+   259|   Amikor a fejlesztő vagy a tanár megváltoztat egy alapelemet (pl. `h` $\rightarrow$ `ha` szabály):
+   260|   - **Step 1 (Impact Analysis):** A rendszer a `term_components` tábla segítségével azonnal kilistázza az összes érintett összetett és lexikalizált szót (pl. kimutatja, hogy a `h` módosítása érinti a `rhx`, `lhx`, `2hx` kifejezéseket).
+   261|   - **Step 2 (Auto-Regeneration):** A refaktorizációs motor a képletek alapján automatikusan újragenerálja a lexikalizált szavak új karaktersorozatát: `r` + `ha` + `x` $\rightarrow$ **`rhax`**.
+   262|   - **Step 3 (Semantic Migration):** A rendszer végigfut az összes adatbázis-rekordon (óravázlatok, videó-időbélyegek leírásai). Minden szöveget lefordít AST fává, elvégzi az UUID-alapú token-cseréket (pl. `rhx` helyett `rhax`), majd visszamenti a frissített szöveget.
+   263|   - **Step 4 (Safety Validation):** A linter ellenőrzi az új nevek biztonságát (lásd 10. E. szabály-hierarchiát az ütközések és stílusváltások kezelésére).
 
 Ez a háttér-architektúra garantálja a **100%-os skálázhatóságot és biztonságot**: a nyelvtan és a kódok szabadon és hanyagul fejlődhetnek a felszínen, miközben a motor mélyén az adatintegritás és a visszakövethetőség matematikai precizitással megmarad.
+
+### E. Komponens-Módosulási Konfliktusok és Szabály-Hierarchia (Conflict Resolution & Rules Priority)
+Ha egy alapelem módosítása (pl. `h` $\rightarrow$ `ha`) megváltoztatja egy lexikalizált vagy összetett szó hosszát, ez közvetlenül ütközhet a tömörségi, helyesírási és szeparációs szabályokkal. Ennek feloldására egy szigorú, prioritás-alapú döntési hierarchiát és egy "Human-in-the-loop" (HITL) kapuőrzési folyamatot alkalmazunk.
+
+#### 1. Rendszerszintű Szabály-Hierarchia (Rules Priority)
+Amikor a refaktorizációs compiler újragenerál egy kódot, az alábbi prioritási sorrend szerint dönti el a végső helyesírási és összevonási állapotot (fentről lefelé haladva):
+
+| Prioritás | Szabály Neve | Leírás / Megkötés | Konfliktus Kezelés |
+| :---: | :--- | :--- | :--- |
+| **1.** | **Ütközésmentesség (No Collision)** | Az új kód semmilyen körülmények között nem ütközhet éles bázisszóval. | **Átléphetetlen korlát.** Ütközés esetén azonnali HITL leállítás történik. |
+| **2.** | **Szemantikai DNA konzisztencia** | A kódnak felépíthetőnek kell lennie a szülő UUID-k sorrendjéből. | Ha a képlet sérül, a kód érvénytelen. |
+| **3.** | **Vizuális Érthetőség (Lexical Integrity)** | A kód hosszától függően a compiler újraértékeli a szeparációt (pl. ha a `h` $\rightarrow$ `ha` miatt `rhx`-ből `rhax` lesz, ez még egybefüggően olvasható, de ha `lhdshldx` lenne belőle, az már olvashatatlan). | **Szeparációs Állapotgép (Transition):**<br>- Ha a kód $\le$ 4 karakter: csupa kisbetűs összeolvadás engedélyezett (pl. `rhax`).<br>- Ha a kód > 4 karakter: Kötelező visszalépés CamelCase-re (pl. `rHaX`) vagy Dot Case-re (pl. `r.ha.x`). |
+| **4.** | **Pronounceability (Kimondhatóság)** | A kódnak verbalizálhatónak kell lennie (ASS Level 2 elv alapján). | Ha nehezen kiejthető (pl. `rhtx`), a linter figyelmeztetést (Warning) küld a tanárnak jóváhagyásra. |
+| **5.** | **Minimális Hossz (ASS Max Compression)** | Törekedni kell a lehető legrövidebb reprezentációra. | Alárendelt az 1-4. pontoknak. |
+
+#### 2. Hogyan fut át a változtatás a rendszeren? (The Refactoring Flow)
+A megváltozott karakterhosszból adódó speciális helyesírási és összevonási állapotváltozásokat a compiler az alábbi folyamat szerint menedzseli:
+
+```
+[ Alapelem Módosítás: h ──> ha ]
+               │
+               ▼
+┌──────────────────────────────────────────────┐
+│  Módosult DNS Képletek Újragenerálása        │ 
+│  (r + ha + x ──> rhax)                       │
+└──────────────────────────────────────────────┘
+               │
+               ▼
+┌──────────────────────────────────────────────┐
+│  Szeparációs Állapotgép Értékelése           │
+│  - Karakterhossz vizsgálat                   │
+│  - Szükséges-e CamelCase / Dot Case vissza-   │
+│    lépés? (pl. rhax <= 4 char ──> OK)        │
+└──────────────────────────────────────────────┘
+               │
+               ▼
+┌──────────────────────────────────────────────┐
+│  Biztonsági Linter & Ütközésvizsgálat        │
+│  - Ütközik létező szóval?                    │
+│  - Kimondható a kód?                         │
+└──────────────────────────────────────────────┘
+       │                              │
+       │ (NINCS ütközés / OK)         │ (ÜTKÖZÉS vagy bizonytalanság)
+       ▼                              ▼
+┌──────────────────────────────┐ ┌──────────────────────────────────────────┐
+│  Automatizált Végrehajtás    │ │  Human-in-the-Loop (HITL) Gateway       │
+│  - Az összes óravázlat       │ │  - A compiler leáll.                     │
+│    AST-alapú átírása.        │ │  - Felületen mutatja a konfliktust:      │
+│  - Push a GitHubra.          │ │    "A h->ha miatt az rhx->rhax lett, de  │
+│  - 100% autonóm lefutás.     │ │     ez ütközik a 'rhax' standard szóval. │
+│                              │ │     Válasszon alternatívát!"             │
+└──────────────────────────────┘ └──────────────────────────────────────────┘
+```
+
+#### 3. Mikor KÖTELEZŐ a Human-in-the-Loop (HITL) beavatkozás?
+Az automatizációt szigorú védőkorlátok (guardrails) szabályozzák. Az AI/compiler nem dönthet önállóan az alábbi esetekben:
+1. **Név-ütközés (Name Collision):** Ha az újonnan generált hosszabb vagy rövidebb kód megegyezik egy már létező, más UUID-re mutató éles fogalommal (pl. ha az új `rhax` ütközne egy létező `rhax` nevű speciális forgással).
+2. **Kiejthetetlenség (Aesthetic / Pronounceability Alert):** Ha a kód hossza megnő, és a magánhangzó-mássalhangzó arány szerint a szó kimondhatatlanná válik az órán (pl. `lhx` $\rightarrow$ `lshldbx`), a rendszer megáll, és felajánlja a Dot Case szeparációra való visszalépést (`l.shld.b.x`).
+3. **Didaktikai Jelentőség-csökkenés:** Ha a változás miatt az alapeset (Default Representant) vizuálisan teljesen felismerhetetlenná válik a tanároknak a madártávlati nézetben.
+
 
 
 
