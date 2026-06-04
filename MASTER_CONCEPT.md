@@ -10,11 +10,12 @@ A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethet
 
 ## 2. Didaktikai Szintek (Abstraction Layers)
 A mozgásokat négy absztrakciós szinten modellezzük:
-1. **L0: Atomi / Geometriai és Anatómiai szint (Atoms & Primitives):** A test végpontjai (`occi`, `scr`), eltolások, irányok és kéz-koordináták (`6h`, `12h`).
-2. **L1: Core Lépések és Forgások (Core Patterns):** Alaplépések és bázis forgások (`CBL`, `LLT`, `MRT`, `Cami`, `Cuca`, `Tri`, `aida`).
+1. **L0: Atomi / Geometriai és Anatómiai szint (Atoms & Primitives):** A testrészek (`occi`, `scr`), tér felosztás, síkok, eltolások, súlypont haladás, lépések és típusai, irányok és kéz-koordináták (`6h`, `12h`).
+2. **L1: Alap Lépéssorozatok és Forgások (Solo Basic Step Patterns):** Alaplépések és forgások (`b`, `cng`, `baB`, `dblFrx`, `ai`,`cuca`,`tri`,`cami`) 
 3. **L1: Kinetikus Simított Átmenetek (Smooth Transients - SM00-SM21):** Test- és vállhullámok, fej- és csípőkörzések rögzített listája.
-4. **L3: Páros Szekvenciák és Figurák (Choreographies):** Időben láncolt, összetett minták és koreográfiai szálak (pl. `CBL.Lhx.LLTO`).
-
+4. **L2: Solo Sorok és Koreográfiák:** egyszemélyes mozdulatsorok.
+5. **L3: Páros Alapfigurák:** vezetés-követéses rendszerű egyszerű alapelemek (pl. `CblLhxLaLTo`, `CBL`, `LaLT`, `maRT`,)
+6. **L4: Páros Sorok és Koreográfiák (Choreographies):** Időben láncolt, összetett figurák és koreográfiák. 
 ---
 
 ## 3. Egységesített Rövidítési Algoritmus 2.0 (UAA 2.0)
@@ -46,7 +47,7 @@ Minden egyéb szót alapesetben a 3-betűs mássalhangzó-kiemeléssel (CPC-3) r
 ---
 
 ## 4. Hibrid CamelCase és Pont (Dot) Szeparációs Nyelvtan
-A kódok láncolatának minimalizálása érdekében egy **hibrid rendszert** alkalmazunk: ahol a CamelCase egyértelmű és kompakt, ott azt használjuk; ahol viszont kétértelműség vagy strukturális tagolás szükséges, ott kötelezően bevezetjük a pont (`.`) vagy egyéb karakterek használatát.
+A kódok láncolatának minimalizálása érdekében egy **hibrid rendszert** alkalmazunk: ahol a CamelCase egyértelmű és kompakt, ott azt használjuk; ahol viszont kétértelműség vagy strukturális tagolás szükséges, ott kötelezően bevezetjük a pont (`.`) vagy space (` `) karakterek használatát.
 
 ### A. Mikor használunk CamelCase-t? (Takarékos láncolás)
 A CamelCase-t használjuk a bázisszavak és standard jelzőik közvetlen összekapcsolására, amennyiben a szóhatár nagybetűvel egyértelműen elkülönül:
@@ -198,5 +199,41 @@ Ezt a rendszerszinten **`swg.trans`** (swing transition) metaadattal modellezzü
 1. Az aktuális alaplépés lengési állapotát (Current Swing Phase).
 2. A soron következő mozdulat elvárt induló lengési állapotát (Target Swing Phase).
 3. A kettő közötti kinetikus fázisillesztést (Phase Alignment / Transition Mode), biztosítva a folyamatos, zökkenőmentes és természetes mozgásáramlást (flow).
+
+---
+
+## 10. Fogalom-Evolúció: Kombinált- és Alapértelmezett Szavak (Concept Evolution & Defaults)
+A kutatási fázisban lévő leíró nyelv természetes tulajdonsága, hogy használat közben a fogalmak sűrűsödnek (tömörödnek), és bizonyos specifikus esetek alapértelmezetté (default) válnak. A rendszernek ezt a kognitív és nyelvészeti evolúciót szoftveresen is támogatnia kell.
+
+### A. Kombinált Fogalmak Alapelemivé Minősítése (Lexicalization of Compounds)
+Amikor több egykarakteres vagy kétkarakteres alapelemből (pl. `r` = right, `h` = hand, `x` = cross) gyakran ismétlődő kombinációt hozunk létre, a szigorú CamelCase szabályok szerinti írásmód (pl. `rHx`) nehezebbé teszi a gyors olvasást (madártávlat / high-level view).
+1. **A Lexikalizáció feltételei:** Egy összetett kód akkor minősíthető át CamelCase-mentes, tiszta kisbetűs önálló alapszóvá (pl. `rhx`), ha:
+   - A kifejezés a tananyagokban és óravázlatokban elér egy bizonyos használati gyakoriságot (Frequency Threshold, pl. legalább 15-ször előfordul).
+   - Az emberi kontroll (Human Control) jóváhagyja az átminősítést.
+2. **Az egykarakteres CamelCase szabály (Single-Character Edge Case):**
+   - Ha egy összetett szó egykarakteres alapelemekből áll, **NEM kötelező** minden egyes tagot nagybetűvel kezdeni.
+   - Elegendő csak a legfőbb strukturális határt nagybetűvel jelölni, vagy ha a szó már lexikalizálódott, teljesen kisbetűvel írni:
+     - *Példa:* `rhx` (Right Hand Cross) és `lhx` (Left Hand Cross) $\rightarrow$ teljesen kisbetűs, mert bevált, önálló atomi fogalmakká váltak.
+     - *Példa:* `2hx` (Two Hands Crossed) $\rightarrow$ teljesen kisbetűs, mert a szám (`2`) és a betűk határa nagybetű nélkül is egyértelmű.
+
+### B. A 2hx (Kétkezes Keresztfogás) Jobb/Bal Felül Dilemmája
+A kétkezes keresztfogásnak (`2hx`) didaktikailag két fajtája van attól függően, hogy melyik kéz helyezkedik el felül. Ennek pontos és ergonomikus jelölése:
+1. **2hxR (Right over Left):** Kétkezes keresztfogás, ahol a **jobb kéz van felül**.
+   - *Szintaxis:* **`2hxR`** (A nagy `R` jelzi a domináns, felül lévő kezet. Ergonomikus, mert a nagybetű azonnal felhívja magára a figyelmet a madártávlati olvasáskor).
+2. **2hxL (Left over Right):** Kétkezes keresztfogás, ahol a **bal kéz van felül**.
+   - *Szintaxis:* **`2hxL`** (A nagy `L` jelzi a felül lévő kezet).
+3. **Miért hibás a csupa kisbetűs forma (`2hxl` / `2hxr`)?**
+   - A kis `l` betű könnyen összetéveszthető az `1`-es számmal (pl. `2hx1`), ami ritmikai vagy darabszámbeli zavart okozhat a kódértelmezőben és az emberi szemnek is. A nagy `L` és `R` használata ezt a vizuális ütközést 100%-ban kiküszöböli.
+
+### C. Alapértelmezett Esetek Hanyag/Rövidített Evolúciója (Defaulting & Contextual Shorthands)
+A kutatás kezdetén a tanárok mindent a legmagasabb részletességgel (max detail zoom) írnak le. Később a leggyakoribb variációk "alapesetté" válnak, és a nyelvben ráragad a "sima" jelző, elhagyva a felesleges specifikációkat.
+1. **A Hanyag Evolúció (Shorthand Evolution) működése:**
+   - *Kezdeti fázis (Full Specification):* `rhxUpLaCar` (Right hand cross, upper lady's caress).
+   - *Evolúciós fázis (Shorthand):* Ha nincs más caress megadva, az `rhxCar` automatikusan a leggyakoribb `rhxUpLaCar`-t jelenti.
+2. **Szoftveres támogatás (Context-Aware Defaults):**
+   - A szótárban minden fogalomhoz hozzárendelhető egy **`is_default_representant`** (alapeset reprezentáns) logikai mező.
+   - Ha a tanár az óravázlatban a rövidebb `rhxCar` kódot használja, a parser a háttérben automatikusan feloldja azt a teljes `rhxUpLaCar` jelentésre, de a képernyőn meghagyja a tanár által preferált rövid, kényelmes formát.
+   - Ha később egy új, alternatív caress jelenik meg (pl. `rhxLoLaCar` - lower caress), azt kötelezően ki kell írni, de a régi alapeset továbbra is megmaradhat a hanyag `rhxCar` alakban.
+
 
 
