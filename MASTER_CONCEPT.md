@@ -814,6 +814,85 @@ A kiterjesztett valóság (Apple Vision Pro, Meta Quest) bevonása az otthoni ta
 A DANCE rendszer tudásbázisa idővel a világ legnagyobb, legpontosabb és legárnyaltabb táncleíró adatbázisává nőheti ki magát:
 *   A rendszer adatai és tudományos mélységű dekonstrukciói alapul szolgálhatnak egy nemzetközi standard felállításához, amely végre tudományos, rendszerszintű és egységes nyelvet biztosít a táncművészetnek, hasonlóan a zenében a kottához vagy a programozásban a programozási nyelvekhez.
 
+---
+
+## 16. MVP Megvalósítási Ütemterv (MVP Implementation Roadmap)
+A globális, jövőbe mutató ökoszisztéma eléréséhez egy szigorúan ütemezett, reális és azonnali gyakorlati értéket nyújtó **MVP (Minimum Viable Product)** fejlesztési tervet hajtunk végre. Az MVP fókuszában a **Smart Dictionary & Curriculum Editor** áll, amely integrálja az UAA 2.1-es leíró nyelvet, a Google Workspace nonprofit nonprofit infrastruktúráját, és lehetővé teszi a meglévő legacy `Abbreviations.json` human-controlled hibrid migrációját.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│ PHASES OF MVP DEVELOPMENT                                               │
+├─────────────────────────────────────────────────────────────────────────┤
+│ Phase 1: Infrastructure, GWS & Hybrid Schema Setup (Weeks 1-2)          │
+├─────────────────────────────────────────────────────────────────────────┤
+│ Phase 2: Hybrid Ingestion Pipeline & Smart Dictionary (Weeks 3-4)       │
+├─────────────────────────────────────────────────────────────────────────┤
+│ Phase 3: Interactive Curriculum Editor & Lesson Planning (Weeks 5-6)    │
+├─────────────────────────────────────────────────────────────────────────┤
+│ Phase 4: Basic Video Splicing & Time-stamping (Weeks 7-8)               │
+├─────────────────────────────────────────────────────────────────────────┤
+│ Phase 5: Feedback, Verification & Pilot Launch (Weeks 9-10)             │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### A. Részletes Fejlesztési Fázisok (Phased Breakdown)
+
+#### Phase 1: Infrastruktúra, GWS & Hibrid Adatbázis Séma (1-2. hét)
+*   **Cél:** A technológiai alapok és a biztonságos multi-tenant, Google-központú alapok lerakása.
+*   **Fejlesztési feladatok:**
+    1.  **GCP & Google Workspace Integráció:** Google Cloud Console projekt beállítása a Nonprofit Enterprise licenccel. Google OAuth 2.0 (SSO) integrálása Next.js-be (NextAuth.js segítségével).
+    2.  **Adatbázis Felállítása:** PostgreSQL (Supabase vagy GCP Cloud SQL) adatbázis sémájának lefejlesztése a master DDL szerint.
+    3.  **Multi-Tenancy:** RLS (Row Level Security) szabályok beállítása, hogy a különböző bérlő stúdiók (`tenants`) adatai és tanulói mátrixai egymástól tökéletesen elszeparáltak legyenek.
+    4.  **Google Drive API:** Google Drive integráció a videóforrások biztonságos, olcsó és zárt körű tárolásához.
+
+#### Phase 2: Hibrid Ingestion Pipeline & Okos Szótár (3-4. hét)
+*   **Cél:** A legacy `Abbreviations.json` (621 db elavult kód) okos, emberi jóváhagyással támogatott migrációja és az első funkcionális szótár modul.
+*   **Fejlesztési feladatok:**
+    1.  **Fuzzy Inbox importőr:** A 621 legacy rekord betöltése egy átmeneti `inbox_terms` táblába.
+    2.  **HITL Brainstorming & Curating Interface:** Egy adminisztrátori felület fejlesztése, ahol a tanár (Levi) sorban megnyitja a legacy kódokat, és az UAA 2.1 linter segítségével:
+        - Jóváhagyja az L1-L4 ASS kódokat (pl. `cbl`).
+        - Megadja a szülő-gyermek kapcsolatokat (Szemantikai DNA).
+        - Rögzíti a rokon- és ellentétes értelmű fogalmakat.
+        - Mentheti a hozzá tartozó képeket, didaktikai történeteket és hasonlatokat.
+    3.  **Linter Engine 1.0:** Egy alapvető AST-alapú parser kifejlesztése, amely valós időben jelzi a névütközéseket, a nem megengedett karaktereket és a kódolási szabálytalanságokat gépelés közben.
+
+#### Phase 3: Interaktív Tananyag Szerkesztő & Óratervező (5-6. hét)
+*   **Cél:** A tanterv és az órai összefoglalók interaktív, gépelés-könnyített írása.
+*   **Fejlesztési feladatok:**
+    1.  **Dot Case & CamelCase Editor:** Egy gazdag szövegszerkesztő (Rich Text Editor, pl. TipTap), amely automatikus kód-kiegészítéssel (Autofill/Autocomplete) támogatja a shift-mentes Dot Case írást. Gépelés közben a rendszer felajánlja a szótárban létező atomokat és combined szavakat.
+    2.  **Epistemological State Controller:** Didaktikai Mankók (Scaffolding) kezelése. A tanár beállíthatja egy-egy óra vázlatánál, hogy az adott fogalmat milyen megértési állapotban (`scaffold`, `precise`, `deconstructed`) adja át a csoportnak.
+    3.  **DDR (Dynamic Default Representant) feloldó:** A szerkesztőben a tanár írhat hanyagul (`rhxCar`), és a parser a háttérben automatikusan kitölti a teljes specifikus `rhxUpLaCar` jelentést.
+
+#### Phase 4: Alapszintű Videó-Szeletelés és Időbélyegzés (7-8. hét)
+*   **Cél:** Az oktatási videóarchívum összekötése az óravázlatokkal és kódokkal.
+*   **Fejlesztési feladatok:**
+    1.  **HTML5 Video Timeline Interface:** Egy egyedi videólejátszó, amelyen a tanár az órai videóösszefoglaló lejátszása közben gombnyomásra időbélyegzett szegmenseket hozhat létre (`video_segments`).
+    2.  **Fuzzy-to-Precise Pipeline:** Az új videók elemzésekor a tanár szabad szavas leírást írhat a kivágott részhez. Az AI (Gemini 2.5 Flash API) javaslatot tesz a szótár meglévő atomjai alapján a mozdulat kódjaira és az elnevezésre.
+    3.  **Deeplink Generator:** Ha a diák vagy a tanár rákattint egy óravázlat kódjára, a rendszer azonnal a videó megfelelő másodpercéhez ugrik és elindítja a lejátszást.
+
+#### Phase 5: Visszajelzés, Tesztelés & Pilot Launch (9-10. hét)
+*   **Cél:** A rendszer finomhangolása éles iskolai körülmények között és a pilot bevezetés.
+*   **Fejlesztési feladatok:**
+    1.  **Tanulói Skill Mátrix:** Egy egyszerű felület a diákok számára, ahol látják az órákon tanított kódokat, a hozzájuk tartozó videós deeplinkeket, didaktikai hasonlatokat, és nyomon követhetik a saját tudásszintjüket (mastery level).
+    2.  **Eredményesség-mérés (HITL feedback loops):** A tanárok visszajelzései alapján a linter és a szótár szabályainak finomhangolása.
+    3.  **Biztonsági Audit & Élesítés:** RLS szabályok és SSO tesztelése, majd az MVP elindítása 1-2 kiválasztott pilot csoportban.
+
+---
+
+### B. MVP Technológiai Stack Ajánlás (The Stack)
+| Layer | Választott Technológia | Indoklás |
+| :--- | :--- | :--- |
+| **Frontend** | **Next.js (React) + TailwindCSS + Shadcn/ui** | Maximális betöltési sebesség (SSR/ISR), modern dizájn, moduláris UI komponensek a szerkesztőhöz és a videólejátszóhoz. |
+| **Backend** | **Next.js Serverless API routes (Node.js)** | Gyors fejlesztés, közvetlen adatbázis és API kapcsolatok, zéró szerverüzemeltetési költség. |
+| **Adatbázis**| **PostgreSQL (Supabase vagy GCP Cloud SQL)** | Kiváló relációs képességek, JSONB támogatás az annotációkhoz és az AST-hez, beépített RLS (Row Level Security). |
+| **Infrastruktúra** | **Google Cloud Run (Serverless) + GCP Grants** | Skálázható, megbízható és teljesen ingyenes a nonprofit GCP támogatásnak köszönhetően. |
+| **Tárhely** | **Google Drive API + GCP Cloud Storage** | A videók olcsó, zárt és biztonságos tárolása közvetlenül az egyesület meglévő GWS-ében. |
+| **AI Motor** | **Gemini 2.5 Flash / Pro API (Google Cloud)** | Multimodális videóértelmezés, kiváló szöveges dekonstrukciós javaslatok alacsony költséggel és nagy sebességgel. |
+| **3D Rendering** | **Three.js / React Three Fiber (R3F)** | Böngészőben futó, hardveres gyorsítású, könnyű 3D humanoid avatár szimulátor. |
+
+---
+
+
 
 
 
