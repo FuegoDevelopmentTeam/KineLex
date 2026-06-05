@@ -425,6 +425,122 @@ Amikor a tanár beírja a felületre a hanyag/pontatlan megfogalmazást: *"cbl, 
    - **`maRchOutCbl`** (Man's Reach Out One Step Cross Body Lead): ha a mozdulat funkcionálisan a lépés messzire nyújtására (reach out) fókuszál.
 4. A tanár egyetlen kattintással jóváhagyja az elnevezést, és a rendszer a háttérben az új kifejezést **szülő-gyermek kapcsolatban** rögzíti a `CBL`-lel, megőrizve a pontos belső dekonstruált képletét is.
 
+### D. Rendhagyó Lexikális Idiómák (Irregular Idioms & Lexical Overrides)
+Minden természetes nyelv tartalmaz rendhagyó szerkezeteket és kivételeket. Ennek oka a nyelvhasználat ökonómiája (Zipf törvénye): a leggyakrabban használt kifejezések kiejtése és írása a történelem során rendkívül lerövidül és torzul a kényelem kedvéért.
+
+A DANCE leíró nyelvben is előfordulnak olyan **hagyatéki kódok**, amelyek nem követik az UAA 2.0 logikus levezetési szabályait, de a kényelem és a megszokás miatt megkerülhetetlenek:
+- *Példa:* face = **`fac`** (logikus rövidítés) és back = **`bck`** (logikus rövidítés, testrész).
+- *A rendhagyó kifejezés:* Az egymás mögött, azonos irányba néző táncosok pozíciója (a shadow pozíció általános formája) a **"face-to-back"**.
+  - A logikus kód a szabályok szerint: `fac2bck` lenne.
+  - A kényelmi, hagyatéki kód viszont: **`f2b`**.
+
+Hogy ezek a rendhagyó esetek ne "rúgják szét" a rendszerszintű konzisztenciát, a Dependency DNA-t és az automatizált refaktorizációs pipeline-t, az alábbi **Rendhagyó Idióma (Irregular Idiom)** protokollt vezetjük be:
+
+#### 1. A Rendhagyó Leképezés (Irregular Mapping)
+A szótárban az `f2b` kódot különleges, **`is_irregular = true`** jelzővel látjuk el. Ez a jelző azt jelenti, hogy a kód karaktersora manuális felülírás (override), és nem a standard UAA 2.0 generálja.
+
+Az adatbázisban a **Szemantikai DNA** (szülő-gyermek viszony) azonban **ugyanolyan szigorúan és hiánytalanul megmarad**, mint a szabályos szavaknál:
+```
+[Irregular Term: f2b] (id: UUID_f2b, is_irregular: true)
+       │
+       ├───> [Index 1]: UUID_face (face / fac)
+       ├───> [Index 2]: UUID_to (to / 2)
+       └───> [Index 3]: UUID_back (back / bck)
+```
+Az `f2b` a háttérben nem vak szöveg, hanem a `face` + `to` + `back` szemantikai atomok közvetlen, UUID-alapú láncolata.
+
+#### 2. Hogyan kezeli a rendhagyó szavakat a Refaktorizációs Pipeline?
+Amikor végrehajtunk egy rendszerszintű cserét az alapelemeken (pl. a `back` kódját `bck`-ról átírjuk `bka`-ra, hogy a `bck` felszabaduljon a `beckon` számára):
+1. **Biztonsági pajzs (Irregular Shield):** A refaktorizációs compiler észleli, hogy az `f2b` rekord `is_irregular = true` állapotú.
+2. **Karakter-megőrzés:** A rendszer **NEM** írja át automatikusan az `f2b` karaktersorát `f2bka` formára, mert tudja, hogy ez egy szándékos, kényelmi idióma.
+3. **Szemantikai Konzisztenccia:** Az óravázlatok AST fává alakításakor a háttérben az `f2b` továbbra is a megváltozott `back` (UUID_back, immár `bka`) atomra fog mutatni.
+4. **HITL Figyelmeztetés (Warning):** A migráció végén a linter csupán egy jelentést küld a tanárnak:
+   - *"A 'back' atom kódja megváltozott (`bck` ──> `bka`). Az 'f2b' rendhagyó idióma továbbra is a helyes atomra mutat a háttérben, de a felszíni karaktereit változatlanul hagytam a kényelem érdekében. Szeretné felülvizsgálni a helyesírást?"*
+
+---
+
+## 12. "Fuzzy-to-Precise" Videó Ingestion és Fokozatos Megismerési Pipeline (Incremental Concept Discovery Workflow)
+Amikor a tánctanár egy új videót elemez (pl. egy újonnan megjelent fesztivál összefoglalót vagy egy Instagram-kihívást), gyakran találkozik olyan **elsőre felfoghatatlan, komplex kinetikai elemekkel**, amelyeket az adott pillanatban képtelen a precíz L0/L1 fizikai szintaxissal leírni. 
+Ha ilyenkor rákényszerítenénk a precíz leírást, az megbénítaná a kutatói kreativitást (analysis paralysis).
+
+A rendszer ezt az **"Inkrementális Megismerési Pipeline" (Incremental Discovery Pipeline)** segítségével kezeli, amely lehetővé teszi a homályos (fuzzy) ötletek és videók gyors rögzítését, majd azok fokozatos, lépésről lépésre történő letisztázását.
+
+```
+┌────────────────────────────────────────────────────────┐
+│ 1. Akvizíció: Videó feltöltés + Időbélyegzés (01:12)   │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ 2. Sandbox Draft: Szabad szavas leírás / Voice Memo    │
+│    "furcsa csavaró lábcsúsztatás, mintha süllyedne"    │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ 3. Ideiglenes Címkézés (Didactic Scaffold):            │
+│    `tmp.backScrew` (Használható óravázlatban)          │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ 4. AI-Asszisztált Dekonstrukció (Gemini 2.5 Pose API) │
+│    "3. ütésre jobb sarok pivot + csípő-dőlés balra"    │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ 5. Hivatalos Integráció (Lexicalization & Lineage):    │
+│    `pvtScrew` / `sldScrew`                             │
+└────────────────────────────────────────────────────────┘
+```
+
+### A. A Workflow Lépései (Step-by-Step)
+
+#### 1. Videó Rögzítés és Időbélyegzés (Video Segmentation)
+*   **Felület:** A kutatószoftver beépített videólejátszójában a tanár elindítja a videót.
+*   **Akció:** Amikor meglátja az érdekes mozdulatot, egyetlen billentyűleütéssel (pl. `Space` vagy egy nagy piros "Core Mark" gombbal) kijelöli az időintervallumot (pl. `01:12.4` - `01:15.8`).
+*   **Rendszer-integráció:** A háttérben létrejön egy `video_segments` rekord, amely szorosan kapcsolódik a videóhoz, de még nincs hozzárendelve véglegesített fogalomhoz.
+
+#### 2. Sandbox Draft & Szabad Szavas Körülírás (The Fuzzy Inbox)
+*   **Akció:** A rendszer felugró ablakában a tanár nem kódol, hanem kiönti a gondolatait. Írhat szabad szöveggel, vagy rögzíthet egy gyors **Voice Memo-t** (hangjegyzetet), amit a rendszer automatikusan szöveggé alakít (Whisper / Google Cloud Speech-to-Text).
+*   *Példa leírás:* *"Olyan, mintha a férfi hátracsúsztatná a lábát egy csavaró mozdulattal, miközben süllyed a súlypontja, és közben a nő elhalad előtte. Olyan, mint egy csavar."*
+*   **Adatbázis-állapot:** Létrejön egy új fogalom rekord a `terms` táblában:
+    ```json
+    {
+      "id": "UUID_tmp_backScrew",
+      "primary_abbreviation": "tmp.backScrew",
+      "name_hu": "Hátsó csavaros csúsztatás (Ideiglenes)",
+      "epistemological_state": "fuzzy_draft",
+      "description_hu": "Olyan, mintha a férfi hátracsúsztatná a lábát egy csavaró mozdulattal, miközben süllyed a súlypontja...",
+      "type": "sandbox_draft"
+    }
+    ```
+
+#### 3. Ideiglenes Címkézés és Didaktikai Használat (The Scaffold Placeholder)
+*   **Akció:** Ahhoz, hogy az új ötletet azonnal lehessen használni az esti óravázlatban, a rendszer felajánl egy ideiglenes, jól megjegyezhető kódot (pl. `tmp.backScrew` vagy `ch.twistSlide`).
+*   **Óravázlat integráció:** A tanár beírja az esti óravázlatába: `CBL.pathOpen & tmp.backScrew`.
+*   A rendszer engedi ezt a leírást, nem dob linter hibát, mert a `tmp.backScrew` létezik a `terms` táblában mint `sandbox_draft`. A tanulók tudásmátrixában is megjelenik mint "megismert kihívás", de még nincs dekonstruálva.
+
+#### 4. AI-Asszisztált Dekonstrukciós Tükör (AI Pose Mirror)
+*   A Google Cloud Run háttérfolyamata kivágja az érintett 3.4 másodperces videószegmenst, és kulcsképkockákat (keyframes) generál.
+*   **Az AI Szerepe (Gemini 2.5 Pro Multimodal):** A tanár rákattint az **"Analyze with AI"** gombra. A Gemini megkapja a videószegmenst és a tanár szabad szavas megfogalmazását.
+*   Az AI nem helyettesíti a humán kontrollt, hanem **tükröt tart (Cognitive Mirror)**:
+    - *"Elemeztem a videót a megadott időbélyegnél. Azt látom, hogy a férfi a jobb lábán végez egy 180 fokos sarkon forgást (Pivot), miközben a bal lába nyújtva csúszik hátra (Slide) és a súlyvonala 15 cm-t süllyed. Ez megfelel a szabad szavas 'csavaró csúsztatás' leírásodnak."*
+    - *"Javasolt atomi összetevők a szótárból:* `pvt.R.180` (jobb láb pivot), `sld.L.back` (bal láb hátra csúsztatás), `lvl.down` (súlyvonal süllyesztés).*
+    - *Didaktikai hasonlat javaslat:* 'Csavarmenet' (Screw thread) - a láb úgy fúródik a földbe, mint egy csavar."*
+
+#### 5. Fokozatos Megemésztés, Kipróbálás és Hivatalos Integráció (HITL Formalization)
+*   **Humán-in-the-Loop jóváhagyás:** A tanár az esti órán leteszteli a mozdulatot. Tapasztalatokat gyűjt: *"A diákoknak valóban a 'csavarmenet' hasonlat segített megérteni a súlypontsüllyesztést."*
+*   A tanár visszatér a **Research Dashboard-ra**, és megnyitja a `tmp.backScrew` szócikket formalizálásra:
+    1.  **Státusz frissítése:** `fuzzy_draft` ──> `precise` vagy `deconstructed`.
+    2.  **Hivatalos kód generálása:** Az UAA 2.0 felajánlja a hivatalos elnevezést a general-specific skálán (pl. `pvtScrew` vagy `sldScrew`).
+    3.  **Szemantikai DNA rögzítése:** A `term_components` táblába bekerülnek a pontosított fizikai UUID-k (`pvt.R.180`, `sld.L.back`, `lvl.down`).
+    4.  **Didaktikai Metaadatok mentése:** Hozzáadódik a "Csavarmenet" story, a videós deeplink és a tanítási tapasztalat.
+    5.  **Automata Óravázlat Frissítés (Refactoring Pipeline):** A rendszer átvizsgálja az óravázlatokat, és a korábbi ideiglenes `tmp.backScrew` kódokat automatikusan frissíti a végleges `pvtScrew` kódra.
+
+
+
 
 
 
