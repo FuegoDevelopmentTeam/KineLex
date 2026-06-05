@@ -539,6 +539,79 @@ A rendszer ezt az **"Inkrementális Megismerési Pipeline" (Incremental Discover
     4.  **Didaktikai Metaadatok mentése:** Hozzáadódik a "Csavarmenet" story, a videós deeplink és a tanítási tapasztalat.
     5.  **Automata Óravázlat Frissítés (Refactoring Pipeline):** A rendszer átvizsgálja az óravázlatokat, és a korábbi ideiglenes `tmp.backScrew` kódokat automatikusan frissíti a végleges `pvtScrew` kódra.
 
+---
+
+## 13. Vizuális Annotáció és "Ideális Kinetika" Korrekciós Rendszer (Visual Annotation, Overlay Drawing & Kinematic Correction)
+A versenyzői szintű és a bonyolult solo videók elemzése során gyakran előfordul, hogy a táncos mozgása nem 100%-ig tiszta, vagy a kivitelezés nem éri el a kívánt elméleti ideált. Hogy a rendszer ne csak passzív leíró eszköz legyen, hanem aktív **fejlesztési, oktatási és visszajelzési (feedback) platform**, bevezetjük a **Vizuális Annotációs és Rétegzési Rendszert (Visual Overlay & Kinetic Markup Engine)**.
+
+Ez a modul lehetővé teszi, hogy a tanár közvetlenül a videó képkockáira rajzoljon (pályagörbéket, szövegeket, testrész-kapcsolatokat), vizuálisan ábrázolva a *"mi történik"* (actual) és a *"hogyan kellene történnie"* (ideal) közötti különbséget.
+
+```
+┌────────────────────────────────────────────────────────┐
+│  [Videó Lejátszó] (Next.js HTML5 Canvas Overlay)       │
+│                                                        │
+│   ( ◯ ) <-drawn: lvl.upCu (Ideális Súlypont Ív)        │
+│    /|\                                                 │
+│   / | \  <-drawn: Kinematic Pair Link (Ronde & Leg)    │
+│    / \                                                 │
+│   /   \  <-actual pose (MediaPipe / ViTPose Skeleton)  │
+└────────────────────────────────────────────────────────┘
+```
+
+### A. Technológiai és Adatarchitektúra (Annotation Data Model)
+A rajzolt elemek nem statikusan "ráégnek" a videó fájlra, hanem **dinamikus, időbélyegzett vektor-rétegekként (time-stamped vector layers)** kerülnek mentésre. Ez biztosítja, hogy a rajzok szerkeszthetők, kikapcsolhatók és a leíró nyelv kódjaival összekapcsolhatók legyenek.
+
+#### 1. Az Annotációs Adatbázis Séma (`video_annotations` & `annotation_shapes`)
+```sql
+CREATE TABLE video_annotations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    video_segment_id UUID REFERENCES video_segments(id) ON DELETE CASCADE,
+    created_by UUID REFERENCES users(id),
+    title VARCHAR(255), -- Pl. "Súlypont emelés javítás"
+    description TEXT,   -- "A ronde indításakor a medence essen be, hanem upCu ívet írjon le."
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE annotation_shapes (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    annotation_id UUID REFERENCES video_annotations(id) ON DELETE CASCADE,
+    frame_number INT,        -- Vagy pontos milliszekundum időbélyeg
+    shape_type VARCHAR(50),  -- 'line_trajectory', 'arrow', 'text_bubble', 'skeleton_link', 'angle_marker'
+    vector_data JSONB NOT NULL, -- Koordináták: { points: [{x: 120, y: 340}, ...], color: '#FF0000', stroke_width: 4 }
+    associated_term_id UUID REFERENCES terms(id) ON DELETE SET NULL -- Pl. UUID_lvl_upCu (lvl.upCu)
+);
+```
+
+### B. Didaktikai és Edzői Felhasználási Esetek (Core Use Cases)
+
+#### 1. Kinetikai Finomítás és Ötletelés (Biomechanical Enrichment)
+*   **Példa:** A tanár lát egy oldallépést a videón. Úgy érzi, a táncos túl laposan lép.
+*   **A szoftveres akció:** Kiválasztja a `Line/Curve Tool`-t, és berajzol egy felfelé ívelő parabolát (Upper Curve - `upCu`) a táncos medencéjének magasságában.
+*   **Szemantikai Csatolás:** A berajzolt ívhez hozzárendeli a `lvl.upCu` (súlyvonal felső ívű mozgása) és az `rcp.limb` (végtag-végtag közötti mozgáspár / kinetic pairing a ronde-dal) kódot a szótárból.
+*   **Az eredmény:** A szoftver nemcsak a rajzot tárolja, de a videószegmenshez most már hivatalosan kapcsolódik az **"így kellene kivitelezni"** elméleti modell kódja is.
+
+#### 2. Segédtanárok és Iskolák Betanítása (Choreography Mapping & Standardization)
+*   Ha a fő tanár (fejlesztő) készít egy rendkívül komplex, versenyzői szintű koreográfiát:
+    1.  A zenei ütemeket és a dekonstruált kódokat pontosan összehangolja a videó idősávjával.
+    2.  A videóra rárajzolja a kritikus erővonalakat, a feszítések irányait, és a karok ideális térbeli íveit.
+    3.  A segédtanárok a **"Standardized Teaching View"** segítségével pontosan látják, hogy mit és miért kell megkövetelni a diákoktól. Nincs többé *"ki hogyan emlékszik a mozdulatra"* bizonytalanság: a vizuális réteg és a kódos leírás együttesen adja ki az abszolút igazságot.
+
+#### 3. HITL Versenyzői Hibajavítás és Táv-Coaching (Asynchronous Feedback & Correction)
+*   **A munkafolyamat:**
+    1.  A versenyző feltölti az edzés-videóját a saját profiljáról a rendszerbe, és visszajelzést kér (pl. *"Kérem a bachata solo 2. részének javítását"*).
+    2.  A tanár megnyitja a videót a **Coaching Canvas** felületen.
+    3.  A tanár a videót kockáról kockára pörgetve (scrubbing) közvetlenül a képernyőre firkál:
+        *   Piros színnel berajzolja a versenyző rossz, beeső térdtengelyét.
+        *   Zöld nyíllal berajzolja a kívánt, kifelé mutató ideális térdirányt.
+        *   Ráilleszt egy szövegbuborékot a megfelelő zenei ütemre: *"Itt süllyessz és feszítsd a bokát!"*
+    4.  A rendszer elmenti a visszajelzést. A versenyző a saját felületén megnyitja a videót, és a lejátszás során az adott másodpercekben a képernyőn dinamikusan megjelennek a tanár színes "firkái" és javító kommentjei.
+
+#### 4. Pose-Estimation vs. Drawn Ideal (Automata Biomechanikai Kontraszt)
+*   A legmagasabb szintű technológiai integráció során a rendszer a MediaPipe vagy ViTPose segítségével **automatikusan kirajzolja a táncos csontvázát (actual pose skeleton)** kék színnel.
+*   A tanár zöld színnel berajzolja az **ideális csontvázat (ideal skeleton)** vagy a kívánt végpont-pályagörbéket.
+*   A rendszer kiszámítja a két görbe közötti eltérést (Delta), és számszerűsíthető biomechanikai visszajelzést ad: *"A ronde fázisban a bal lábnyújtás 12 fokkal elmarad az elméleti ideáltól, a medence süllyedése pedig 8 cm-rel mélyebb a kelleténél."*
+
+
 
 
 
