@@ -611,6 +611,141 @@ CREATE TABLE annotation_shapes (
 *   A tanár zöld színnel berajzolja az **ideális csontvázat (ideal skeleton)** vagy a kívánt végpont-pályagörbéket.
 *   A rendszer kiszámítja a két görbe közötti eltérést (Delta), és számszerűsíthető biomechanikai visszajelzést ad: *"A ronde fázisban a bal lábnyújtás 12 fokkal elmarad az elméleti ideáltól, a medence süllyedése pedig 8 cm-rel mélyebb a kelleténél."*
 
+---
+
+## 14. Kreatív Koreográfia-Tervező és 3D Show Készítő Rendszer (Creative Choreography Planner, Timeline Mashup & 3D Avatar Engine)
+Ez a modul a rendszer **koronája**. A megszerzett elméleti tudást (szótár, atomi kódok, dekonstruált szilánkok), a meglévő videóarchívumot és a vizuális annotációt egyetlen, **zene-központú kreatív alkotói munkaállomássá (Choreographer workstation)** gyúrja össze.
+
+A cél egy olyan digitális környezet, amely támogatja a koreográfus "álom-munkafolyamatát": az inspirációtól (zenevágás, szabad ötletelés, referenciák gyűjtése) a pontos zenei-kinetikai térképen át (timeline, zenei hangsúlyok, többtáncos formációk) a 3D-s szimulációig.
+
+```
+┌────────────────────────────────────────────────────────┐
+│ [AUDIO TIMELINE] BPM: 120 (Salsa on1)                   │
+│ Beat: [ 1 . 2 . 3 . 4 ] & [ 5 . 6 . 7 . 8 ]            │
+├────────────────────────────────────────────────────────┤
+│ [VIDEO TRACK]   [ Video_A.mp4 (01:12) ] -> [ Video_B ] │ (Referencia videók mashupja)
+├────────────────────────────────────────────────────────┤
+│ [NOTATION TRACK] `cbl.pathOpen`       -> `pvtScrew`    │ (Mozaikszavas kinetikai kódok)
+├────────────────────────────────────────────────────────┤
+│ [FORMATION GRID]  (A)  (B)  ───>  (A)──(B)  (Térform.) │ (2D/3D táncos pozíciók)
+└────────────────────────────────────────────────────────┘
+```
+
+### A. A Tervező Munkaállomás Adatmodellje (Choreography Data Model)
+A zenei idősávra fűzött események kezelésére egy rendkívül rugalmas, többrétegű és skálázható adatmodellt vezetünk be:
+
+```sql
+-- 1. A Koreográfia / Show Projekt
+CREATE TABLE choreography_projects (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID REFERENCES tenants(id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    theme TEXT,                     -- Téma / Karakterleírás / Dramaturgia
+    script_storyboard TEXT,         -- Forgatókönyv / Szöveges storyboard
+    audio_file_url TEXT,            -- Megvágott zenei sáv URL-je
+    bpm INT,                        -- Projekt alap BPM-je
+    competition_category VARCHAR(100), -- Versenykategória (Pl. "Salsa Solo Elite")
+    time_limit_seconds INT,         -- Kűridő limit másodpercben
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 2. A Projektben résztvevő táncosok/szerepek listája
+CREATE TABLE project_dancers (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    project_id UUID REFERENCES choreography_projects(id) ON DELETE CASCADE,
+    label VARCHAR(50) NOT NULL,    -- Pl. "Leader 1", "Follower 1", "Group_A_1"
+    assigned_user_id UUID REFERENCES users(id) ON DELETE SET NULL,
+    color_code VARCHAR(7)           -- Színkód a vizuális ábrázoláshoz (Pl. "#FF5733")
+);
+
+-- 3. Az Idővonal Csópontjai (Timeline Beats)
+CREATE TABLE timeline_nodes (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    project_id UUID REFERENCES choreography_projects(id) ON DELETE CASCADE,
+    measure_number INT NOT NULL,    -- Hányadik 8-as ütem (bar/measure)
+    beat_number INT NOT NULL,       -- Hányadik ütés (1-8 közötti érték)
+    sub_beat FLOAT DEFAULT 0.0,     -- Törtütések (Pl. 0.5 a "és" / "&" ütésekhez)
+    absolute_time_ms INT,          -- Abszolút időbélyeg a zenében (milliszekundumban)
+    musical_accent VARCHAR(100),    -- Zenei hangsúly / "Hit" leírása (Pl. "Trombita accent", "Dombó")
+    storyboard_note TEXT,           -- Forgatókönyvi / Drámai megjegyzés ezen az ütésen
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 4. Kinetikai és Vizuális Réteg (A táncosok egyéni mozdulatai az adott ütemen)
+CREATE TABLE timeline_dancer_actions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    timeline_node_id UUID REFERENCES timeline_nodes(id) ON DELETE CASCADE,
+    project_dancer_id UUID REFERENCES project_dancers(id) ON DELETE CASCADE,
+    term_id UUID REFERENCES terms(id) ON DELETE RESTRICT, -- A kódolt mozdulat (Pl. `pvtScrew`)
+    video_reference_segment_id UUID REFERENCES video_segments(id) ON DELETE SET NULL, -- A forrás-videó kivágott darabkája
+    custom_instruction TEXT,       -- Egyedi instrukció a táncosnak
+    PRIMARY KEY (timeline_node_id, project_dancer_id)
+);
+
+-- 5. Térformációs Réteg (A táncosok 2D koordinátái a színpadi téren az adott ütemen)
+CREATE TABLE choreography_formations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    timeline_node_id UUID REFERENCES timeline_nodes(id) ON DELETE CASCADE,
+    project_dancer_id UUID REFERENCES project_dancers(id) ON DELETE CASCADE,
+    position_x FLOAT NOT NULL,     -- Relatív X pozíció a színpadon (0.0 - 100.0)
+    position_y FLOAT NOT NULL,     -- Relatív Y pozíció a színpadon (0.0 - 100.0)
+    orientation_angle INT DEFAULT 0, -- Nézési irány fokban (0-360, ahol 0 a nézőtér)
+    PRIMARY KEY (timeline_node_id, project_dancer_id)
+);
+```
+
+---
+
+### B. A "Dream" Alkotói Munkafolyamat (Choreographer's Workflow)
+
+#### 1. Fázis: Zenei Projekt Alapítás és Keretek (Preparation)
+*   **Akció:** A koreográfus létrehozza a projektet (Pl. *"Salsa Duo Show 2026"*). Feltölti a megvágott hangsávot.
+*   **Szabály-ellenőrzés:** Megadja a versenykategóriát (Pl. *"Max 2 perc 15 mp"* és *"Megengedett stílusok: Salsa, Rumba, Afro"*). A rendszer a háttérben folyamatosan ellenőrzi a hosszt és a felhasznált kódok kategóriáit (UAA 2.0 szűrőkkel), és figyelmeztet, ha nem megengedett mozdulatot vagy túl hosszú zenét használunk.
+
+#### 2. Fázis: Videó Mashup és Idővonali Beillesztés (Visual Splicing)
+*   **Szeletelés (Slicing):** A rendszer automatikusan felosztja a hangsávot a BPM alapján 8-as ütemekre (measures) és ütésekre (beats). A tanár vizuálisan látja az ütemrácsot.
+*   **Mashup:** A tanár végigpörgeti a stúdió saját videótárát (vagy a "Fuzzy-to-Precise" pipeline-on át rögzített új referenciákat).
+*   **Drag & Drop:** A legszebb referenciákat egyszerűen **ráhúzza** az idővonal kiválasztott ütemeire (Pl. *"A 12. ütem 1-4. ütésére tegyük be a 'Viral Rumba Challenge' 01:14-es vállhullám szilánkját"*). A rendszer automatikusan rögzíti a `video_reference_segment_id`-t.
+
+#### 3. Fázis: Kinetikai és Forgatókönyv Térkép (Semantic Overlay)
+*   A koreográfus elhelyezi a "zenei csomópontokat" (Hits / Accents). Ráírja a hangsúlyok nevét (Pl. *"Trombita leütés"*, *"Harang ütés"*).
+*   A legfontosabb hangsúlyokra azonnal ráilleszti a legkifejezőbb kódolt mozdulatokat (Pl. `lvl.upCu` vagy `cod.rebd`).
+*   A köztes időszakokra vagy szabad szöveges jegyzetet ír, vagy rávonzza a standard átvezető alaplépéseket, fokozatosan feltöltve a teljes idősávot.
+
+#### 4. Fázis: Többtáncos Formációk Tervezése (Spatial Formations)
+*   A felületen megjelenik egy 2D-s rács (a színpad felülnézete).
+*   A koreográfus az idővonal egy adott ütemén (Pl. a 16. ütem 5. ütésén) az egérrel elhelyezi a táncosok ikonjait (Leader 1, Follower 1). Berajzolja az elmozdulásuk irányát és a nézési szögüket.
+*   A rendszer az ütemek lejátszása során **interpolálja a pozíciókat**, így a tanár folyamatos animációként látja, hogyan fognak a táncosok áthelyezkedni a színpadon.
+
+---
+
+### C. 3D Szimulációs és Avatár Motor (3D Avatar Simulation Engine)
+Ez a funkció teszi a rendszert valódi, jövőbe mutató **kutatóállomássá**. Az **AST (Abstract Syntax Tree) Parser** és a **Szemantikai DNA** lehetővé teszi, hogy a kódolt mozdulatokat ne csak szövegként értelmezzük, hanem vizuális mozgássá alakítsuk.
+
+```
+[Notation Code: lvl.upCu & pvtScrew] ──> [AST Parser] ──> [Kinematic bone rotation data] ──> [Three.js 3D Avatar Rendering]
+```
+
+#### 1. Hogyan fordítódik a kód 3D mozgássá? (Code-to-Motion compiler)
+1.  **Szemantikai DNA felbontása:** A rendszer beolvassa az idővonalra írt kódokat (Pl. `pvtScrew`). A `term_components` táblából lekéri az atomi L0-s fizikai összetevőket: `pvt.R.180` (jobb láb pivot) + `sld.L.back` (bal láb csúszás hátra) + `lvl.down` (súlypont süllyesztés).
+2.  **Anatómiai leképezés (Joint / Bone Mapping):** A rendszer minden atomi kódhoz hozzárendel egy parametrizált 3D csontváz-rotációs és elmozdulási mátrixot:
+    *   `lvl.down:15` $\rightarrow$ A csípőízület (root joint) Y-tengelyű elmozdulása lefelé: `-15cm`.
+    *   `pvt.R.180` $\rightarrow$ A jobb boka és talp ízület Y-tengelyű rotációja: `+180°`.
+    *   `sld.L.back` $\rightarrow$ A bal csípő- és térdízület nyújtása, a bal boka elmozdulása hátrafelé a padlósíkon (Z-tengely).
+3.  **Időbeli szinkronizáció (Time Warping):** A rendszer leolvassa a kód zenei ütemét (Pl. 1-4 ütés). A 3D-s animáció sebességét automatikusan a projekt BPM-jéhez igazítja, elosztva a rotációkat a megadott ütések időtartama alatt.
+
+#### 2. Vizuális 3D Megjelenítés (Three.js / WebGL Web-Viewer)
+*   A szoftver tartalmaz egy könnyű, böngészőben futó **3D WebGL szimulációs panelt**.
+*   A koreográfus a lejátszás gombra kattintva látja, ahogy a virtuális humanoid avatár(ok) elvégzik az idővonalra írt mozgássorozatot a megadott térformációknak megfelelően.
+*   **AI Mozgás-Generáció (AI Motion Synthesis):** Ha olyan összetett vagy ideiglenes kód szerepel (`sandbox_draft`), aminek nincs még precíz L0-s 3D-s leképezése, a háttérben futó **Motion Synthesis AI** (pl. egy finomhangolt Motion Diffusion Model) a szabad szavas leírás alapján legenerálja az avatár ideiglenes 3D mozgásfájlját (glTF/FBX formátumban), amit a tanár kézzel tovább finomíthat.
+
+#### 3. Miért forradalmi ez az oktatásban és a betanításban?
+*   **A "Koreográfia Digitális Ikerje" (Digital Twin):** A show teljes mértékben létezik a felhőben 3D szimulációként, kódolt szintaxisként és referencia-videókként.
+*   **Azonnali megértés:** Ha a segédtanár nem biztos egy mozdulatban, nemcsak a kódot és a videó-mashupot látja, hanem a 3D panelt elforgatva, tetszőleges kameraállásból, lassítva nézheti meg a virtuális avatár "ideális" kinetikai kivitelezését, ízületi szögeit és súlypont-ívelését.
+*   **Személyre szabott virtuális edzőtárs:** A versenyző otthon, a 3D-s avatárral együtt táncolva gyakorolhatja a show-t, akár VR-szemüvegen (WebXR) keresztül is, mintha az edzője folyamatosan mellette állna és mutatná az "ideális" mozgást.
+
+
 
 
 
