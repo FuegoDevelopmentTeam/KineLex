@@ -1,65 +1,167 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 2.1.0 (Hybrid Pronounceable System with ASS)
-Date: 2026-06-04
+Version: 2.6.0 (Super-Abbreviation Process & Aligned Categories & UI Font & Collision Resolution)
+Date: 2026-06-07
 
 ## 1. Rendszer-architektúra és Filozófia
 
-Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT).
-A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen Salsa, Bachata) leírására.
+### Vizuális és UI Követelmények (UI & Visual Guidelines)
+
+A rendszer minden felületén (frontend), ahol a formális nyelv kódjai és az acronymok megjelennek, **kötelező** olyan "Arial egyszerűségű", letisztult, de szigorúan "disambiguation-friendly" (nem redundáns) betűtípust használni (pl. egyértelmű monospace vagy modern sans-serif), ahol a kis "l" betű, a nagy "I" betű és az "1" szám vizuálisan élesen elkülönül egymástól (pl. ligatúrák és serif hiánya). Ennek célja a kódok olvasásakor fellépő vizuális ütközések teljes kiküszöbölése.
+
+Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen Salsa, Bachata) leírására és ezáltal oktatási rendszerbe foglalására.
+
+### A Rendszer Felhasználási Gradiense: Pedagógiai Pólus és Tudományos Kutatói Pólus (Capability & Commitment Gradient)
+
+A rendszer **nem egyetlen, homogén szoftver**, és nem is két, élesen szétválasztott külön termék, hanem egy **képesség- és vállalás-alapú gradiens** (Capability & Commitment Gradient) mentén szerveződik. A funkciókat **nem éles határvonal, hanem fokozatos átmenet** választja el aszerint, hogy a felhasználó milyen mélységig **képes** és **hajlandó** a fogalmak atomizálásával, dekonstrukciójával és tudományos pontosításával foglalkozni:
+
+- **Pedagógiai Pólus (Teaching Pole):** A "mezei" tánctanár napi munkáját szolgálja: óratervezés, csoport- és tanítványkövetés, tudásszint-térképezés, részvétel- és minőség-alapú haladásmérés. A tanár itt a fogalmakat **fekete dobozként** (scaffold / egyezményes figuranév szinten) használja, és **nem köteles atomizálni**. A teljes pedagógiai értéket úgy is megkapja, ha sosem lép a kutatói pólus felé.
+- **Tudományos Kutatói Pólus (Research Pole):** A kutatói funkciók (atomi dekonstrukció, ontológia-kezelés, kombinatorikus variációs motor, vizuális annotáció, 3D szimuláció, IP-jegyzék) a tudásbázis mélyítését és a leíró nyelv fejlesztését szolgálják. Ez **opcionális, többletvállalás**, amely a pedagógiai adatokra épül.
+
+A két pólus **ideális esetben összeér**: a pedagógiai követés adatai (mit, hányszor, milyen részletességgel tanítottak) táplálják a kutatást, a kutatás atomizált fogalmai pedig egyre finomabb pedagógiai követést és **absztraktabb, helyzetérzékenyebb, improvizatívabb tanulói tudást** tesznek lehetővé. A gradiens lényege, hogy minden tanár ott állhat meg, ahol a kompetenciája és a vállalása engedi — a rendszer minden szinten teljes értékű.
+
+Ennek a gradiensnek és a hozzá tartozó jogosultsági rétegeknek a részletes leírását lásd a **16. fejezetben**, a pedagógiai modult a **17. fejezetben**, a tudás természetének (koreográfia vs. improvizáció) kezelését a **18. fejezetben**, az atomizáció-vezérelt improvizációs absztrakciót pedig a **19. fejezetben**.
 
 ---
 
 ## 2. Didaktikai Szintek (Abstraction Layers)
 
-A mozgásokat négy absztrakciós szinten modellezzük:
+A mozgásokat és a tudásanyagot öt egymásra épülő, egyre komplexebb absztrakciós szinten modellezzük a fizikai alapoktól a színpadi koreográfiákig:
 
-1. **L0: Atomi / Geometriai és Anatómiai szint (Atoms & Primitives):** A testrészek (`occi`, `scr`), tér felosztás, síkok, eltolások, súlypont haladás, lépések és típusai, irányok és kéz-koordináták (`6h`, `12h`).
-2. **L1: Alap Lépéssorozatok és Forgások (Solo Basic Step Patterns):** Alaplépések és forgások (`b`, `cng`, `baB`, `dblFrx`, `ai`,`cuca`,`tri`,`cami`)
-3. **L1: Kinetikus Simított Átmenetek (Smooth Transients - SM00-SM21):** Test- és vállhullámok, fej- és csípőkörzések rögzített listája.
-4. **L2: Solo Sorok és Koreográfiák:** egyszemélyes mozdulatsorok.
-5. **L3: Páros Alapfigurák:** vezetés-követéses rendszerű egyszerű alapelemek (pl. `CblLhxLaLTo`, `CBL`, `LaLT`, `maRT`,)
-6. **L4: Páros Sorok és Koreográfiák (Choreographies):** Időben láncolt, összetett figurák és koreográfiák.
+**L0: Térbeli és Anatómiai Primitívek (Statika és Keretek)** Ez a legalapvetőbb szint, a "vászon", amelyen a tánc történik. Itt még nincs időbeli változás, csak állapotok és fizikai keretek.
+
+- **Tér és Síkok (Space and Planes):** Gravitáció, parkett sík, merőleges síkok (Sagittal Plane, Horizontal Plane, Lateral/Vertical Plane).
+- **Irányok és Orientáció (Directions and Orientation):** A test szemben iránya (Origo Direction), a tánctartás vonala (Dancing Position Line), a kommunikáció fő iránya (Communication Direction), valamint az abszolút és relatív térirányok (Forward, Backward, Diagonal, Side).
+- **Alátámasztás és Pozíció (Support and Stance):** Testsúly-megtartási pontok (több pontos, kétpontos/terpesz, egypontos, harmadik pont/kéztámasz) és testhelyzetek (állás, guggolás, ülés).
+- **Testrészek (Body Parts):** A mozgásra képes izolált egységek (fej, vállöv, gerinctengely, csípő, végtagok).
+
+**L1: Atomi Műveletek és Kinetika (Dinamika és Változás)** Ezen a szinten jelenik meg az idő (`from` $\rightarrow$ `to`), azaz az L0-s pozíciók megváltoztatása. Ide tartoznak a legkisebb, tovább már nem bontható mozdulatok.
+
+- **Szabadságfokok (Degrees of Freedom):** Az ízületek és testrészek rotációja (Turn, Tilt, Nod), eltolása (Shift) és ezek kombinációi (például fej/csípő nyolcasok, hullámok, csavarások/Twists).
+- **Végtag Műveletek (Limb Actions):** Súlytalan lábáthelyezések (Foot Transfers: on-floor slide/glide, off-floor tap/kick/rond), ugrások (Jumps) és terpeszváltások.
+- **Útvonal Stílusok (Path Styles / Via elements):** A térbeli elmozdulás mikéntje (egylendületű/Direct, tört, hurkos/Looped, firkálós/Scribble).
+- **Súlyvonal- és Lábkinetika (lépés):** Súlyvonal mozgatás (Center of Gravity Progression), súlyvonal irányváltás (Change of Direction).
+
+**L2: Ciklikus Műveletsorok és Szóló Alapok (Struktúra és Ritmus)** Az L1-es atomok zenei struktúrára (periódusokra) fűzött, felismerhető mintázatai. A zenei idő kitöltésének strukturált módjai.
+
+- **Zenei Ciklusok:** a zenei ütemezése és a táncot meghatározó "zenei kérdés" és "zenei válasz" részütemek ciklikussága. 
+- **Ciklikus Lépéssorok / Alaplépések (Cyclic Step Patterns / Basic Steps):** Vonalon elvégzett "rezgés" (lengés) természetű, önmagába ciklikusan visszatérő terpeszváltás-sorok (például túlgördülő/Over-rolling és irányváltó/Change of Direction fázisokból felépülő sorozat).
+- **Szóló Mintázatok (Solo Patterns):** Haladó (Walk) lépéssorozatok, alapvető szóló forgások és izolált lábmunka (Shines).
+- **Díszítések (Adornments):** Lépést helyettesítő műveletek (magasságváltás/Leveling, Tap, taps/Handclaps).
+
+**L3: Páros Alapfigurák (Interakció)** A tánc kiterjesztése a partnerek közötti fizikai és vizuális kommunikációra.
+
+- **Páros Ciklikusság Alapfeladatai:** a vezető és követő szerep alapszabályai (vezető általi a követő alaplépésének végpont átírása, követő oldali semleges és szembeforduló állapot rekonstruálása a periódusidő végéig).
+- **Alapvető Páros Építőelemek (Core Couple Elements):** Egyszerű, vezetés-követéses rendszerű alapelemek és helycserék (például Cross Body Lead, keresztvezetések, alap páros forgások és kifordulások/Turnouts).
+- **Vezetés és Követés Mechanikája (Lead and Follow Mechanics):** Erőhatások és holtjátékok, kerettartás, vizuális és fizikai kapcsolódási pontok és azok helyzete a vezetőhöz és követőhöz képest (tolt/húzott/tangenciális ív), prediktív (positive backlash) pattintások.
+
+**L4: Szekvenciák és Koreográfiák (Láncolás)**
+
+A legmagasabb absztrakciós szint, amely a korábbi elemek hosszabb, tudatos kompozíciója.
+
+- **Páros és Szóló Sorok (Sequences):** Több L2/L3-as elem összefűzött, de még improvizatív keretek között alkalmazható láncolata.
+- **Koreográfiák (Choreographies):** Időben kötött, specifikus zeneműre készített, rögzített összetett figurák és vizuális koncepciók (show elemek).
 
 ---
 
-## 3. Egységesített Rövidítési Algoritmus 2.0 (UAA 2.0)
+## 3. Egységesített Rövidítési Algoritmus 2.0 (UAA 2.0) és a Szuper Rövidítés Folyamata
 
-A kódok hosszúságának radikális csökkentése érdekében egy kiterjesztett 1-2 karakteres bázist és egy kiejtés-barát (pronounceable) tömörítési szabályt alkalmazunk.
+A leíró nyelv kódjainak tömörsége és írási sebessége érdekében a rendszer a **Szuper Rövidítés (Super-Abbreviation / SA)** folyamatát alkalmazza. Ahelyett, hogy a rövidítéseket statikusan és változtathatatlanul rögzítenénk ebben a koncepcióban, egy dinamikus, használat-alapú és verziózható szótárkezelő rendszert vezetünk be.
 
-### A. Kiterjesztett Determinánsok és Jelzők (1-2 Karakteres zárt készlet)
+### A. A "Szuper Rövidítés" Életciklusa és Folyamata (The Super-Abbreviation Lifecycle)
 
-Minden olyan fontos fogalom, amely gyakran szerepel jelzőként vagy összetett szavak tagjaként, fixen 1-2 karakteres rövidítést kap:
+A Szuper Rövidítés nem egy statikus táblázat, hanem egy háromfázisú, folyamatosan fejlődő és önjavító nyelvi életciklus:
 
+1. **Fázis: Az Induló "v1.0 Csomag" Bootstrappingje (Initial Package Bootstrapping):**
+   - A rendszer éles használatba vétele előtt a szoftver elemzi a meglévő tananyagot (syllabus) és óravázlat-mintákat.
+   - Az elemzés alapján a rendszer azonosítja a leggyakrabban és legfontosabbként előforduló bázisfogalmakat.
+   - A tudományos/kutatói pólus (T4) jóváhagyásával létrejön egy **zárt, induló "v1.0 csomag"**, amelyben ezek a kiemelt fogalmak szuper-rövid, fixen 1 vagy 2 karakteres egyedi kódokat kapnak.
+   - *Cél:* Garantálni, hogy a leggyakoribb szavak leírása minimális billentyűleütést igényeljen a kezdetektől fogva.
 
-| Kategória    | Fogalom (Eng)                                    | UAA 2.0 kód                                                                   | Legacy / Példa                                             | Jelentés                                                                          |
-| ------------ | ------------------------------------------------ | ----------------------------------------------------------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| **Szerepek** | Leader (Man) Follower (Lady)                     | `**M`** (vagy `ma`) `**F**` (vagy `la`)                                       | `maLt` `laLt`                                              | Vezető szerep (Man) Követő szerep (Lady)                                          |
-| **Irányok**  | Right Left Front Back Up Down Diagonal           | `**R`** `**L**` `**F**` `**B**` `**U**` `**D**` `**dg**`                      | `RT` `LT` `Fr` `Ba` `Up` `Dwn` `Diag`                      | Jobb Bal Elöl / Elülső Hátul / Hátulsó Fent / Felső Lent / Alsó Diagonál (45 fok) |
-| **Anatómia** | Arm Hand Leg Foot Shoulder Hip Knee Head Torso   | `**a`** `**h**` `**lg**` `**ft**` `**sh**` `**hp**` `**k**` `**hd**` `**to**` | `arm` `hand` `leg` `foot` `sh` `hip` `knee` `head` `torso` | Kar / Karív Kéz Láb / Lábszár Lábfej Vállöv Csípő Térd Fej Törzs                  |
-| **Jelzők**   | Elevated / Elevation Deep / Double Single Triple | `**el`** `**dp**` `**sgl**` `**trpl**`                                        | `elRT` / `elevated` `dpCbl` / `dbl` `sgl` `trpl`           | Emelt / Emelés (Váll/Kar) Mély / Dupla Egyszerű / Szóló Tripla                    |
-| **Ritmus**   | Basic 1st Half Basic 2nd Half                    | `**b1`** `**b2**`                                                             | `b1` `b2`                                                  | Alaplépés 1-4. üteme Alaplépés 5-8. üteme                                         |
+2. **Fázis: Használat-Alapú Statisztika és Dinamikus Monitorozás (Usage-Based Statistics):**
+   - Aktív használat közben (amikor a tanárok órákat terveznek, naplóznak, vagy fuzzy draftokat visznek fel) a rendszer a háttérben folyamatosan méri az egyes fogalmak használati gyakoriságát (Frequency Tracking) és az időközben bevezetett új fogalmakat.
+   - A rendszer figyeli, ha egy hosszú vagy dekonstruált kifejezést a tanárok rendkívül gyakran használnak, vagy ha egy korábban ritka fogalom hirtelen kulcsfontosságúvá válik.
 
+3. **Fázis: Új Szótárverziók Bevezetése és Automatikus Migráció (Dynamic Dictionary Versioning & Migration):**
+   - Ha a statisztikai adatok alapján egy új vagy meglévő fogalmat érdemes lenne felminősíteni a szuper-rövid (1-2 karakteres) szintre, vagy ha egy meglévő rövidítést az alacsony használat miatt érdemes visszafokozni, a rendszer **új szótárverzió bevezetését javasolja** a kutatói pólus (T4) részére.
+   - **Lektorálási és Validálási Folyamat (Review & Validation Gateway):** A kutatói felületen megjelenik a javaslat (pl. *"A 'cuddle' fogalom előfordulása meghaladta a küszöbértéket. Javasoljuk a 'cud' vagy 'cd' szuper-rövidítés bevezetését v1.1-ként"*). A kutató lektorálhatja, módosíthatja vagy elvetheti a javaslatot.
+   - **Visszamenőleges Frissítés (Retroactive Migration Pipeline):** Amikor a kutató jóváhagyja az új szótárverziót, az **automatikus refaktorizációs pipeline** (lásd 10.D fejezet) végigfut az összes történelmi óravázlaton, videó-időbélyegen és a diákok skill-mátrixán, és a háttérben az AST parser segítségével **visszamenőlegesen frissíti (updateli) a múltbeli kódolt leírásokat** az új rövidítésekre, garantálva a 100%-os adatintegritást és a történelmi konzisztenciát.
 
-### B. Standard Fogalmak: CPC-3 + Kimondhatósági Kivétel (Pronouncability Exception)
+---
 
-Minden egyéb szót alapesetben a 3-betűs mássalhangzó-kiemeléssel (CPC-3) rövidítünk, **DE** ha az így kapott kód nehezen kimondható vagy nem elég intuitív az összetett szavakban, akkor a **kimondhatóság és a hagyomány kedvéért prefix/fonetikus csonkolást** használunk:
+### B. Új Kategória-rendszer a Szuper Rövidítésekhez (Aligned Abstraction Categories)
 
-- `long` -> `**lon`** (Pronounceable - pl. `lon.a` = long arm, sokkal jobban kimondható és jobban hangzik, mint az `lng.a` / `lngA`)
-- `short` -> `**sho**` (Pronounceable - pl. `sho.a` = short arm, a nehezen kiejthető `shr` helyett)
-- `double` -> `**dbl**` (CPC-3 kivétel)
-- `triple` -> `**trpl**` (CPC-3 kivétel)
-- `caminando` -> `**cami**` (Megtartott hagyaték)
-- `cucaracha` -> `**cuca**` (Megtartott hagyaték)
-- `mambo` -> `**mambo**` (Rövid bázisszó, változatlan)
-- `conga` -> `**conga**` (Rövid bázisszó, változatlan)
-- `aida` -> `**aida**` (Rövid bázisszó, változatlan)
+A Szuper Rövidítések kategóriáit a **2. pont Didaktikai Szintjeivel (Abstraction Layers)** tökéletes harmóniában, az alábbi új struktúra szerint határozzuk meg. 
+
+*(Az alábbi táblázatokban szereplő kódok és rövidítések kizárólag feltételezett, nem előre eldöntött, illusztratív példák! Az éles kódokat az induló v1.0 csomag bootstrapping folyamata fogja meghatározni.)*
+
+#### C0: Atomi és Geometriai Alapok (Az L0 szint kiszolgálására)
+Az anatómiai pontok, alapvető térirányok és testhelyzetek kategóriája.
+
+| Al-kategória | Fogalom (Full Name) | Feltételezett Példa Kód | Példa Jelentése |
+| --- | --- | --- | --- |
+| **Anatómiai pontok** | Head, Torso, Arm, Hand, Leg, Foot, Shoulder, Hip, Knee | `hd`, `to`, `ar`, `ha`, `lg`, `ft`, `sh`, `hp`, `kn` | Fej, Törzs, Kar, Kéz, Láb, Lábfej, Vállöv, Csípő, Térd |
+| **Térbeli irányok** | Right, Left, Front, Back, Up, Down, Diagonal | `R`, `L`, `F`, `B`, `U`, `D`, `dg` | Jobb, Bal, Elöl, Hátul, Fent, Lent, Diagonál |
+| **Alátámasztás** | Stand, Squat, Sit, Kneel | `st`, `sq`, `si`, `kn` | Állás, Guggolás, Ülés, Térdelés |
+
+#### C1: Kinetikai és Dinamikai Műveletek (Az L1 szint kiszolgálására)
+A testrészek elmozdulásának, rotációjának és a végtagok mozgási útvonalainak kategóriája.
+
+| Al-kategória | Fogalom (Full Name) | Feltételezett Példa Kód | Példa Jelentése |
+| --- | --- | --- | --- |
+| **Szabadságfokok** | Shift, Rotate, Tilt, Nod, Twist | `shf`, `rot`, `tlt`, `nod`, `tws` | Eltolás, Forgatás, Döntés, Bólintás, Csavarás |
+| **Végtag műveletek** | Slide, Tap, Kick, Ronde, Wave, Circle | `sld`, `tp`, `kck`, `rnd`, `wav`, `cir` | Csúsztatás, Koppintás, Rúgás, Félkörív, Hullám, Körzés |
+| **Útvonal stílusok** | Direct, Looped, Scribble, Change of Direction | `dir`, `lop`, `scb`, `cod` | Egyenes, Hurkolt, Firkálós, Irányváltó |
+
+#### C2: Idő- és Ritmusstruktúra (Az L2 szint kiszolgálására)
+A zenei idő, ritmikai egységek és ciklikus fázisok leírásának kategóriája.
+
+| Al-kategória | Fogalom (Full Name) | Feltételezett Példa Kód | Példa Jelentése |
+| --- | --- | --- | --- |
+| **Zenei fázisok** | Basic 1st Half, Basic 2nd Half, Break | `b1`, `b2`, `brk` | Alaplépés 1-4. üteme, Alaplépés 5-8. üteme, Szünet |
+| **Időzítési markerek** | Beat 1, Beat 2, Beat 5, Hastening | `1:`, `2:`, `5:`, `&` | Első ütésre, Második ütésre, Ötödik ütésre, Siettetett ütem |
+
+#### C3: Interakciós és Kapcsolódási Jelzők (Az L3 szint kiszolgálására)
+A páros interakciók, szerepek, fogások és vezetés-követéses állapotváltozások kategóriája.
+
+| Al-kategória | Fogalom (Full Name) | Feltételezett Példa Kód | Példa Jelentése |
+| --- | --- | --- | --- |
+| **Szerepek** | Leader, Follower, Solo | `M` (vagy `ma`), `F` (vagy `la`), `S` | Vezető szerep, Követő szerep, Szóló szerep |
+| **Kapcsolódások** | Hand Crossed, Two Hands Crossed, Cuddle, Hold | `hx`, `2hx`, `cud`, `hld` | Keresztezett kéz, Kétkezes keresztfogás, Cuddle tartás, Fogás |
+| **Vezetés-követés** | Turnout, Turnback, Tension, Compression | `TO`, `TB`, `ten`, `cmp` | Kifordulás, Visszafordulás, Feszítés, Sűrítés |
+
+#### C4: Összetett Láncolási és Szerkezeti Operátorok (Az L4 szint kiszolgálására)
+A mozgássorok időbeli és térbeli összekapcsolásának kategóriája.
+
+| Al-kategória | Fogalom (Full Name) | Feltételezett Példa Kód | Példa Jelentése |
+| --- | --- | --- | --- |
+| **Időbeli láncolás** | Sequence (Egymás utániság) | `-` | Szekvenciális elválasztó |
+| **Egyidejűség** | Simultaneous (Egyidejű akciók) | `&` vagy `+` | Szimultán elválasztó |
+| **Szerep-szétválasztás**| Role Colon (Szerep-hozzárendelés) | `:` | Szerep-művelet elválasztó |
+
+---
+
+### C. Standard Fogalmak Rövidítési Elvei (UAA 2.0 Standard Rules)
+
+Minden olyan fogalomra, amely nem része a kiemelt szuper-rövid (C0-C4) zárt készletnek, az alábbi két standard rövidítési elv érvényes:
+
+1. **CPC-3 (Consonant Pattern Coding - 3 betűs):**
+   A szavakból kivonjuk a magánhangzókat, és az első három mássalhangzót tartjuk meg.
+   - *Feltételezett példa:* `glide` $\rightarrow$ `gld`, `mambo` $\rightarrow$ `mmb`.
+
+2. **Kimondhatósági Kivétel (Pronounceability Exception):**
+   Ha a CPC-3 kód nehezen kimondható vagy nem elég intuitív az összetett szavakban, a **kimondhatóság és a hagyomány kedvéért prefix/fonetikus csonkolást** használunk (szótag-alapú rövidítés).
+   - *Feltételezett példa:* `long` $\rightarrow$ `lon` (a nehezen kiejthető `lng` helyett), `short` $\rightarrow$ `sho` (a `shr` helyett), `caminando` $\rightarrow$ `cami`, `cucaracha` $\rightarrow$ `cuca`.
+
+A rendszer a Szuper Rövidítés 2. fázisában (használati statisztika) folyamatosan méri, hogy a standard CPC-3 vagy kimondhatósági kódok közül melyek érik el azt a használati gyakoriságot, ami indokolttá teszi a C0-C4 szuper-rövid kategóriákba való felminősítésüket.
 
 ---
 
 ## 4. Hibrid CamelCase és Pont (Dot) Szeparációs Nyelvtan
 
-A kódok láncolatának minimalizálása érdekében egy **hibrid rendszert** alkalmazunk: ahol a CamelCase egyértelmű és kompakt, ott azt használjuk; ahol viszont kétértelműség vagy strukturális tagolás szükséges, ott kötelezően bevezetjük a pont (`.`) vagy space ( ``) karakterek használatát.
+*(Megjegyzés: Az ebben a fejezetben és a dokumentum további részeiben szereplő kódok és rövidítések kizárólag feltételezett, nem előre eldöntött, illusztratív példák!)*
+
+A kódok láncolatának minimalizálása érdekében egy **hibrid rendszert** alkalmazunk: ahol a CamelCase egyértelmű és kompakt, ott azt használjuk; ahol viszont kétértelműség vagy strukturális tagolás szükséges, ott kötelezően bevezetjük a pont (`.`) vagy space (` `) karakterek használatát.
 
 ### A. Mikor használunk CamelCase-t? (Takarékos láncolás)
 
@@ -71,18 +173,17 @@ A CamelCase-t használjuk a bázisszavak és standard jelzőik közvetlen össze
 - `dblFrx` (Double Front Cross).
 - `rhx` / `lhx` (Right/Left Hand Crossed - a kis `x` jelzi a keresztezést).
 
-### B. Mikor kötelező a Pont (`.`) használata? (Ambivalencia-szűrés)
+### B. Mikor kötelező a Pont (`.`) használata? (Szülő-Gyermek Viszony és Specifikáció)
 
-A pont szeparátor használata kizárólag az alábbi esetekben kötelező:
+A pont szeparátor használata szigorúan **csak strukturális (objektum-tulajdonság, hierarchikus) tagolásra** használható, szavak lineáris elválasztására nem!
 
-1. **Egybetűs Core kódok összeolvadásának megakadályozására (Collision Prevention):**
-  - *Példa:* Amikor nem akarunk CamelCase-t használni, de meg kell előznünk a kétszavas ütközést (pl. `l` (left) + `a` (arm) egybeírva `la` lenne, ami ütközik a `la` = lady/follower bázisszóval. Ha nem akarunk CamelCase-t (pl. `lAr`), akkor kötelező a pont: `**l.a`**).
-2. **Hierarchikus és anatómiai névterek elhatárolására (Anatomical Namespaces):**
-  - *Példa:* A gerinc végpontjainak és eltolásainak leírásakor: `**occi.shift.lat`** (occiput lateral shift) vagy `**scr.circle.hor**` (sacrum horizontal circle). Ez azonnal tokenizálható és tisztán olvasható.
-3. **Állapotváltozások és Specifikációk (Properties & Types):**
-  - *Példa:* Forgások és kivezetéseik specifikálásakor: `**LLT.TO`** (Lady Left Turn with Turnout) vagy `**MRT.TB**` (Man Right Turn with Turnback).
-4. **Két azonos típusú CPC-3 kód közvetlen találkozásakor:**
-  - *Példa:* Ha két standard 3-betűs vagy kiejtés-barát kód áll egymás mellett, és egybeírásuk nehezen olvasható szótömböt alkotna: `**gld.sld`** (glide and slide).
+1. **Szülő-Gyermek Viszony (Parent-Child) / Hierarchikus és anatómiai névterek (Anatomical Namespaces):**
+  - *Szabály:* A pontot az objektumok egymásba ágyazottságának kifejezésére használjuk.
+  - *Példa:* A gerinc végpontjainak és eltolásainak leírásakor: `**occi.shift.lat`** (occiput lateral shift) vagy `**body.arm.left`**. Ez logikailag pontos és kódolható.
+2. **Állapotváltozások és Specifikációk (Properties & Types):**
+  - *Példa:* Forgások és kivezetéseik specifikálásakor (ahol a kivezetés a forgás egy altípusa/tulajdonsága): `**LLT.TO`** (Lady Left Turn with Turnout) vagy `**MRT.TB`** (Man Right Turn with Turnback).
+
+*(Fontos változás: A pontot TÖBBÉ NEM használjuk lineáris szóösszetételek vizuális elválasztására vagy rövidítési ütközések megelőzésére (pl. tilos az `l.a` a left arm-ra). Erre a CamelCase-en belüli Tömörítési Skála Elmozdulás (Compression Shift) szolgál, lásd a 6. fejezetet!)*
 
 ### C. Egyéb elválasztó operátorok
 
@@ -99,8 +200,8 @@ A 8-ütéses (8/4) ritmusú rendszerek zenei szintaktikáját szigorúan megőri
 - **Ritmikai képlet:** `**12 + 34 & 56 + 78`**
 - **Időzítési marker (`X:`):** A számérték és a kettőspont jelzi a konkrét zenei ütésre történő mozgásokat.
   - `**1:`** = Első ütésre történő mozgás (pl. `1:bwdCami` - lépés hátra az 1-re).
-  - `**5:**` = Ötödik ütésre történő mozgás.
-  - `**5&6:**` = Siettetett, sűrített ütemek (hastening).
+  - `**5:`** = Ötödik ütésre történő mozgás.
+  - `**5&6:`** = Siettetett, sűrített ütemek (hastening).
 
 ---
 
@@ -110,23 +211,27 @@ A pontok felesleges burjánzásának elkerülésére és a kódok hosszának min
 
 ### A. Minimalizált Tömörítési Szintek (Spectrum Layers):
 
-1. **Level 1 (Core - 1 karakter):** A leggyakoribb báziselem kód (pl. `left` -> `**l`**, `right` -> `**r**`, `arm` -> `**a**`).
+1. **Level 1 (Core - 1 karakter):** A leggyakoribb báziselem kód (pl. `left` -> `**l`**, `right` -> `**r`**, `arm` -> `**a**`).
 2. **Level 2 (Strictly Minimal 2-char - 2 karakter):** Kétkarakteres kiejtés-barát (syllable-based) vagy mássalhangzós kód. **Elsőbbséget élvez az L3/L4 előtt.**
   - *Példa:* `left` $\rightarrow$ Kétkarakteres opciók: `le` (vocalized) és `lf` (consonant). **A kiejthető `le` az abszolút győztes!**
   - *Példa:* `arm` $\rightarrow$ `**ar`**.
-3. **Level 3 (Standard / CPC-3 - 3 karakter):** CPC-3 alapú mássalhangzós kód vagy pronouncable szótag (pl. `left` -> `**lft`**, `glide` -> `**gld**`).
+3. **Level 3 (Standard / CPC-3 - 3 karakter):** CPC-3 alapú mássalhangzós kód vagy pronouncable szótag (pl. `left` -> `**lft`**, `glide` -> `**gld`**).
 4. **Level 4 (Full Word):** A fogalom teljes angol kiírása (pl. `left`, `arm`).
 
 ### B. Dinamikus Ütközésfeloldó Protokoll (Collision Resolution):
 
-Amikor összetett szavakat képzünk (pl. *Left Arm*), a szoftveres motor megpróbálja az L1 + L1 formát alkalmazni. Ha ütközést észlel egy bázisfogalommal, **fokozatosan, a minimális karakterhosszúság elvét szem előtt tartva** lépteti fel az egyik szót a 2-karakteres szintre (Level 2), megkeresve a legjobban kimondható opciót:
+Amikor összetett szavakat képzünk (pl. *Left Arm*), a szoftveres motor megpróbálja az L1 + L1 formát alkalmazni, szigorúan **CamelCase** formátumban maradva. Ha ütközést észlel egy bázisfogalommal, bekapcsol a **Tömörítési Skála Elmozdulás (Compression Shift Rule)**. A rendszer az alábbi elvek alapján dönti el, hogy melyik szót léptesse fel a 2-karakteres (Level 2) szintre:
+
+- **Domain-Specifikus Szó Prioritása (Domain-Specific Noun Priority):** A szigorú, univerzális minősítők (mint az `l` - left, `r` - right) a legstabilabb alapkövek. Ütközés esetén **először mindig a domain-specifikus főnevet (itt az "arm"-ot) léptetjük fel** az L2 szintre, és az univerzális minősítőt hagyjuk L1-en. Ez biztosítja a legnagyobb vizuális egyértelműséget.
 
 - **Kísérlet #1 (L1 + L1):** `l` + `a` $\rightarrow$ `**la`**
   - *Státusz:* **ÜTKÖZIK** a `la` (lady / follower) bázisszóval. -> **REJECTED**
-- **Kísérlet #2 (L2-Left + L1-Arm):** `left` L2 formája (`le`) + `arm` L1 formája (`a`) $\rightarrow$ `**leA*`*
-  - *Státusz:* **NINCS ÜTKÖZÉS!** Rendkívül tömör, mindössze 3 karakteres, kiválóan kimondható és egyértelmű kód. -> **ACCEPTED (WINNER)**
+- **Kísérlet #2 (L2-Modifier + L1-Noun):** `left` L2 formája (`le`) + `arm` L1 formája (`A`) $\rightarrow$ `**leA`**
+  - *Státusz:* Nincs ütközés, de a fókusz eltolódott a minősítőre, a főnév csak egy betű maradt, ami vizuálisan kevésbé felismerhető. -> **REJECTED (Szabály alapján elvetve)**
+- **Kísérlet #3 (L1-Modifier + L2-Noun):** `left` L1 formája (`l`) + `arm` L2 formája (`Ar`) $\rightarrow$ `**lAr`**
+  - *Státusz:* **NINCS ÜTKÖZÉS!** A `l` egyértelműen jelzi a bal oldalt, az `Ar` pedig kiválóan olvasható és kimondható. Vizuálisan jól tagolt. -> **ACCEPTED (WINNER)**
 
-Ez a megközelítés garantálja, hogy a kódok mérete mindig a lehető legkisebb maradjon, de 100%-ban ütközésmentes és jól verbalizálható formát öltsön.
+Ez a megközelítés garantálja, hogy a kódok mérete a lehető legkisebb maradjon, miközben 100%-ban ütközésmentes, vizuálisan egyértelmű (disambiguated) és jól verbalizálható marad.
 
 ---
 
@@ -225,7 +330,7 @@ Minden fogalomhoz (`terms`) és mozgássorhoz hozzárendelhető egy vagy több d
 ### B. Inga- és Lengőmozgások Dinamikája (Pendulum Swing Dynamics - `swg.dir`)
 
 A Salsa és Bachata alaplépései **inga- vagy lengőmozgások** (swinging/pendulum-type movements). Az inga egy adott zenei ütemre/lépésre vált irányt.
-A leíró nyelvben ezt a `**swg.dir`** (swinging direction) tulajdonsággal és a `**chg**` (change) időzítési markerrel fejezzük ki:
+A leíró nyelvben ezt a `**swg.dir`** (swinging direction) tulajdonsággal és a `**chg`** (change) időzítési markerrel fejezzük ki:
 
 1. **Salsa On1:** Az első lépésre/ütemre vált irányt az inga:
   - `**swg.dir.chg:1`** (Swing direction changes on beat 1).
@@ -237,7 +342,7 @@ A leíró nyelvben ezt a `**swg.dir`** (swinging direction) tulajdonsággal és 
 ### C. Dinamikus Lengés-Átmenetek (Swing Transitions - `swgDir2` / `swg.trans`)
 
 A felhasználó által felvetett `swgDir2` problémája arra az átmenetre utal, amikor az éppen táncolt alaplépés lengésiránya (és annak fázisa) átvált a következő lépés vagy figura lengésirányára.
-Ezt a rendszerszinten `**swg.trans**` (swing transition) metaadattal modellezzük, amely leírja:
+Ezt a rendszerszinten `**swg.trans`** (swing transition) metaadattal modellezzük, amely leírja:
 
 1. Az aktuális alaplépés lengési állapotát (Current Swing Phase).
 2. A soron következő mozdulat elvárt induló lengési állapotát (Target Swing Phase).
@@ -294,7 +399,7 @@ Ennek feloldására egy szigorú **szemantikus függőségi gráfot** és egy **
 1. **A Szemantikai "DNA" (Összetételi Képlet) tárolása:**
   Minden olyan kifejezés, amely más alapelemekből áll össze (legyen az CamelCase vagy már teljesen lexikalizált, egybeírt `rhx`), az adatbázisban **soha nem veszíti el a szülő-gyermek kapcsolatát**. 
    A szótárban minden összetett kifejezés mögött kötelezően tároljuk annak **strukturális képletét (DNA Recipe)** egy relációs táblán keresztül (`term_components`):
-   Az `rhx` nem egy statikus karakterlánc, hanem a háttérben az `**r`**, `**h**` és `**x**` fizikai fogalmak UUID-fókusza.
+   Az `rhx` nem egy statikus karakterlánc, hanem a háttérben az `**r`**, `**h`** és `**x**` fizikai fogalmak UUID-fókusza.
 2. **Absztrakt Szintaxisfa (AST) Alapú Értelmezés:**
   A leíró nyelven írt óravázlatokat a rendszer nem sima szövegként kezeli, hanem egy **AST Parser** segítségével lefordítja egy objektum-orientált fává, ahol minden egyes elem és karakter a mögöttes adatbázis-beli UUID-jára mutat.
 3. **Az Automatikus Refaktorizációs Pipeline (The Migrator):**
@@ -380,7 +485,7 @@ Gyakori módszertani hiba a tananyag-fejlesztés kezdetén, hogy egy kategóriá
 
 - **A kezdeti koncepció (Beginner Level):** A zenei kérdésre (1-4. ütem) a táncos az alap 3 lépés helyett 5 lépést tesz. Elnevezzük `**5s`**-nek (5 steps), ami kisebb, sűrűbb lépéseket és gyorsabb érzetet ad.
 - **A mélyebb didaktikai igazság (Advanced Level):** Magasabb szinten a táncos takarékoskodik a súlyvonal-váltásokkal (flow optimalizáció). Nem tesz 5 teljes lépést, hanem 5 zenei történést / hangsúlyt táncol le (pl. testizoláció, vállpattintás, tap súlyáthelyezés nélkül).
-- **A szemantikai elcsúszás (Semantic Drift):** Kiderül, hogy az általános, felsőbb kategória a `**5a`** (5 accents - 5 hangsúly). Az `**5s**` (5 steps) valójában a `**5a**` egy specifikus, kezdő szintű megvalósulása (ahol minden hangsúlyhoz teljes lépés/súlyáthelyezés társul).
+- **A szemantikai elcsúszás (Semantic Drift):** Kiderül, hogy az általános, felsőbb kategória a `**5a`** (5 accents - 5 hangsúly). Az `**5s`** (5 steps) valójában a `**5a`** egy specifikus, kezdő szintű megvalósulása (ahol minden hangsúlyhoz teljes lépés/súlyáthelyezés társul).
 - **A logikai reláció:** `5s` is-a `5a` (where `weight_transfer = true`).
 
 #### 2. Az Ontológiai Elcsúszás Kezelésének Folyamata (OntoShift Pipeline)
@@ -399,7 +504,7 @@ Amikor egy korábbi bázisfogalomról kiderül, hogy az egy új, absztraktabb fo
 
 > 🔄 **Ontológiai Refaktorizációs Asszisztens:**
 >
-> *"Észleltük, hogy az `**5s`** (5 steps) fogalmat átminősítette az `**5a**` (5 accents) gyermekévé.*
+> *"Észleltük, hogy az `**5s`** (5 steps) fogalmat átminősítette az `**5a`** (5 accents) gyermekévé.*
 > *Az adatbázisban 42 történelmi óravázlat használja az `5s` kódot. Hogyan szeretné ezeket frissíteni?*
 >
 > 1. **Megtartás (Keep Specific):** *"Hagyja változatlanul `5s`-ként az érintett órákon, mert a didaktikai szint alapján (Salsa Cat 01) ott valóban fizikai lépéseket végeztek a tanulók."*
@@ -481,7 +586,7 @@ Amikor a tanár beírja a felületre a hanyag/pontatlan megfogalmazást: *"cbl, 
 2. A fenti lehorgonyzási logika alapján azonosítja, hogy ez a `CBL.pathOpen` fázist érinti.
 3. Az **UAA 2.0 algoritmus** segítségével automatikusan felajánlja a legördülő menüben a két lehetséges szabványos és tömör elnevezést a general-specific skálán:
   - `**maFlareCbl`** (Man's Flare Cross Body Lead): ha a mozdulat stílusjegyként a díszítésre (flare) fókuszál.
-  - `**maRchOutCbl**` (Man's Reach Out One Step Cross Body Lead): ha a mozdulat funkcionálisan a lépés messzire nyújtására (reach out) fókuszál.
+  - `**maRchOutCbl`** (Man's Reach Out One Step Cross Body Lead): ha a mozdulat funkcionálisan a lépés messzire nyújtására (reach out) fókuszál.
 4. A tanár egyetlen kattintással jóváhagyja az elnevezést, és a rendszer a háttérben az új kifejezést **szülő-gyermek kapcsolatban** rögzíti a `CBL`-lel, megőrizve a pontos belső dekonstruált képletét is.
 
 ### D. Rendhagyó Lexikális Idiómák (Irregular Idioms & Lexical Overrides)
@@ -490,10 +595,10 @@ Minden természetes nyelv tartalmaz rendhagyó szerkezeteket és kivételeket. E
 
 A DANCE leíró nyelvben is előfordulnak olyan **hagyatéki kódok**, amelyek nem követik az UAA 2.0 logikus levezetési szabályait, de a kényelem és a megszokás miatt megkerülhetetlenek:
 
-- *Példa:* face = `**fac`** (logikus rövidítés) és back = `**bck**` (logikus rövidítés, testrész).
+- *Példa:* face = `**fac`** (logikus rövidítés) és back = `**bck`** (logikus rövidítés, testrész).
 - *A rendhagyó kifejezés:* Az egymás mögött, azonos irányba néző táncosok pozíciója (a shadow pozíció általános formája) a **"face-to-back"**.
   - A logikus kód a szabályok szerint: `fac2bck` lenne.
-  - A kényelmi, hagyatéki kód viszont: `**f2b*`*.
+  - A kényelmi, hagyatéki kód viszont: `**f2b`**.
 
 Hogy ezek a rendhagyó esetek ne "rúgják szét" a rendszerszintű konzisztenciát, a Dependency DNA-t és az automatizált refaktorizációs pipeline-t, az alábbi **Rendhagyó Idióma (Irregular Idiom)** protokollt vezetjük be:
 
@@ -525,91 +630,49 @@ Amikor végrehajtunk egy rendszerszintű cserét az alapelemeken (pl. a `back` k
 
 ---
 
-## 12. "Fuzzy-to-Precise" Videó Ingestion és Fokozatos Megismerési Pipeline (Incremental Concept Discovery Workflow)
+## 12. A "Fuzzy-to-Precise" Életút és a Dinamikus Névfeloldás (Fuzzy-to-Precise & Dynamic Resolution)
 
-Amikor a tánctanár egy új videót elemez (pl. egy újonnan megjelent fesztivál összefoglalót vagy egy Instagram-kihívást), gyakran találkozik olyan **elsőre felfoghatatlan, komplex kinetikai elemekkel**, amelyeket az adott pillanatban képtelen a precíz L0/L1 fizikai szintaxissal leírni. 
-Ha ilyenkor rákényszerítenénk a precíz leírást, az megbénítaná a kutatói kreativitást (analysis paralysis).
+A rendszer kialakításakor három párhuzamos célt valósítunk meg a tánctanárok napi munkafolyamatainak (workflow) támogatására, különösen az új mozdulatok rögzítése és a különböző iskolák eltérő terminológiájának kezelése terén:
 
-A rendszer ezt az **"Inkrementális Megismerési Pipeline" (Incremental Discovery Pipeline)** segítségével kezeli, amely lehetővé teszi a homályos (fuzzy) ötletek és videók gyors rögzítését, majd azok fokozatos, lépésről lépésre történő letisztázását.
+1. **Teljes megfogalmazási és pontatlansági szabadság** a tánctanároknak a jegyzeteléskor (hirtelen ötletek rögzítése).
+2. **Fokozatos, rendszer által támogatott tisztázás** és atomokra bontás (AI és UI asszisztencia az idő múlásával).
+3. **Dinamikus névváltozatok és hivatkozhatóság:** Az atomizált (és ezáltal a hétköznapokban túl bonyolulttá váló) objektumok tetszőleges részletességi szinten történő elnevezése és hivatkozása (a full-detailtől az egyezményes neveken át a teljesen egyedi, tanári azonosítókig).
 
-```
-┌────────────────────────────────────────────────────────┐
-│ 1. Akvizíció: Videó feltöltés + Időbélyegzés (01:12)   │
-└───────────────────────────┬────────────────────────────┘
-                            │
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│ 2. Sandbox Draft: Szabad szavas leírás / Voice Memo    │
-│    "furcsa csavaró lábcsúsztatás, mintha süllyedne"    │
-└───────────────────────────┬────────────────────────────┘
-                            │
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│ 3. Ideiglenes Címkézés (Didactic Scaffold):            │
-│    `tmp.backScrew` (Használható óravázlatban)          │
-└───────────────────────────┬────────────────────────────┘
-                            │
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│ 4. AI-Asszisztált Dekonstrukció (Gemini 2.5 Pose API) │
-│    "3. ütésre jobb sarok pivot + csípő-dőlés balra"    │
-└───────────────────────────┬────────────────────────────┘
-                            │
-                            ▼
-┌────────────────────────────────────────────────────────┐
-│ 5. Hivatalos Integráció (Lexicalization & Lineage):    │
-│    `pvtScrew` / `sldScrew`                             │
-└────────────────────────────────────────────────────────┘
-```
+### A. 1. Cél: Teljes Szabadság a Jegyzetelésben (The Fuzzy Inbox)
 
-### A. A Workflow Lépései (Step-by-Step)
+Amikor a tánctanárnak hirtelen eszébe jut egy ötlet, vagy lát egy videót, gyakran *"hirtelen leírja, de még azt sem tudja, hány ütemből áll"*. Ha a rendszer azonnal megkövetelné a precíz UAA 2.0 kódolást, az megbénítaná a kreativitást.
 
-#### 1. Videó Rögzítés és Időbélyegzés (Video Segmentation)
+- **A Szabad Szavas Objektum (Fuzzy Draft):** A tanár bármit beírhat (pl. *"furcsa csavaró lábcsúsztatás, mintha süllyedne"*), vagy rögzíthet egy hangjegyzetet, esetleg csak egy videó-időbélyeget.
+- **Rendszer-reakció:** A rendszer ezt nem dobja vissza hibaként. Létrehoz egy `fuzzy_draft` státuszú objektumot a szótárban, amely kap egy ideiglenes azonosítót (pl. `tmp.furcsaCsuszas`).
+- **Azonnali Használat:** A tanár ezt az ideiglenes azonosítót azonnal használhatja az esti óravázlatában (pl. `CBL & tmp.furcsaCsuszas`), anélkül, hogy a mögöttes fizika tisztázva lenne.
 
-- **Felület:** A kutatószoftver beépített videólejátszójában a tanár elindítja a videót.
-- **Akció:** Amikor meglátja az érdekes mozdulatot, egyetlen billentyűleütéssel (pl. `Space` vagy egy nagy piros "Core Mark" gombbal) kijelöli az időintervallumot (pl. `01:12.4` - `01:15.8`).
-- **Rendszer-integráció:** A háttérben létrejön egy `video_segments` rekord, amely szorosan kapcsolódik a videóhoz, de még nincs hozzárendelve véglegesített fogalomhoz.
+### B. 2. Cél: Fokozatos Tisztázás és Atomizáció (The Refinement Engine)
 
-#### 2. Sandbox Draft & Szabad Szavas Körülírás (The Fuzzy Inbox)
+Idővel a rendszer proaktívan segít a tanárnak a korábbi "homályos" objektumainak tisztázásában és atomokra bontásában.
 
-- **Akció:** A rendszer felugró ablakában a tanár nem kódol, hanem kiönti a gondolatait. Írhat szabad szöveggel, vagy rögzíthet egy gyors **Voice Memo-t** (hangjegyzetet), amit a rendszer automatikusan szöveggé alakít (Whisper / Google Cloud Speech-to-Text).
-- *Példa leírás:* *"Olyan, mintha a férfi hátracsúsztatná a lábát egy csavaró mozdulattal, miközben süllyed a súlypontja, és közben a nő elhalad előtte. Olyan, mint egy csavar."*
-- **Adatbázis-állapot:** Létrejön egy új fogalom rekord a `terms` táblában:
-  ```json
-  {
-    "id": "UUID_tmp_backScrew",
-    "primary_abbreviation": "tmp.backScrew",
-    "name_hu": "Hátsó csavaros csúsztatás (Ideiglenes)",
-    "epistemological_state": "fuzzy_draft",
-    "description_hu": "Olyan, mintha a férfi hátracsúsztatná a lábát egy csavaró mozdulattal, miközben süllyed a súlypontja...",
-    "type": "sandbox_draft"
-  }
-  ```
+- **AI-Asszisztált Dekonstrukciós Tükör:** Amikor a tanárnak van ideje (pl. a "Research Dashboard" felületen), a rendszer (Gemini 2.5 Pro Multimodal segítségével, ha van videó) kielemzi a szabad szavas leírást, és javaslatot tesz az atomi összetevőkre.
+  - *"A 'furcsa csavaró lábcsúsztatás' valószínűleg a következő atomokból áll: `pvt.R.180` + `sld.L.back` + `lvl.down`."*
+- **Szemantikai DNA Rögzítése:** A tanár jóváhagyja vagy módosítja a javaslatot. Ekkor a `fuzzy_draft` átalakul `deconstructed` (atomizált) állapottá. A rendszer a háttérben véglegesen rögzíti az objektum pontos fizikai képletét (Szemantikai DNA).
+- **Visszamenőleges Tudás-Szétosztás (Retroactive Skill Distribution):** A dekonstrukció pillanatában a rendszer **automatikusan jóváírja** az újonnan felfedezett atomi komponenseket minden olyan diák tudástérképén, aki a homályos szülő-fogalmat korábban tanulta — így a tudás nem ragad a "halott aliasban". A teljes pipeline-t lásd a **17.F fejezetben**.
 
-#### 3. Ideiglenes Címkézés és Didaktikai Használat (The Scaffold Placeholder)
+### C. 3. Cél: Dinamikus Névváltozatok és Részletességi Skála (Dynamic Aliasing & Resolution)
 
-- **Akció:** Ahhoz, hogy az új ötletet azonnal lehessen használni az esti óravázlatban, a rendszer felajánl egy ideiglenes, jól megjegyezhető kódot (pl. `tmp.backScrew` vagy `ch.twistSlide`).
-- **Óravázlat integráció:** A tanár beírja az esti óravázlatába: `CBL.pathOpen & tmp.backScrew`.
-- A rendszer engedi ezt a leírást, nem dob linter hibát, mert a `tmp.backScrew` létezik a `terms` táblában mint `sandbox_draft`. A tanulók tudásmátrixában is megjelenik mint "megismert kihívás", de még nincs dekonstruálva.
+Amikor egy mozdulatot atomokra bontunk, a fizikai képlete (pl. `pvt.R.180 + sld.L.back + lvl.down`) a mindennapi óravázlatokban olvashatatlanná és kezelhetetlenné válik. A többféle iskola ráadásul másképp nevezi ugyanazt a rokonértelmű kifejezést. 
+Ennek feloldására a rendszer egy **Dinamikus Névfeloldó (Dynamic Resolution)** réteget alkalmaz. 
 
-#### 4. AI-Asszisztált Dekonstrukciós Tükör (AI Pose Mirror)
+Ugyanaz a mögöttes Szemantikai DNA (UUID-láncolat) egyszerre **több hivatkozható névváltozattal (Alias)** rendelkezhet a részletességi skálán, és ezek mindegyike érvényes hivatkozás:
 
-- A Google Cloud Run háttérfolyamata kivágja az érintett 3.4 másodperces videószegmenst, és kulcsképkockákat (keyframes) generál.
-- **Az AI Szerepe (Gemini 2.5 Pro Multimodal):** A tanár rákattint az **"Analyze with AI"** gombra. A Gemini megkapja a videószegmenst és a tanár szabad szavas megfogalmazását.
-- Az AI nem helyettesíti a humán kontrollt, hanem **tükröt tart (Cognitive Mirror)**:
-  - *"Elemeztem a videót a megadott időbélyegnél. Azt látom, hogy a férfi a jobb lábán végez egy 180 fokos sarkon forgást (Pivot), miközben a bal lába nyújtva csúszik hátra (Slide) és a súlyvonala 15 cm-t süllyed. Ez megfelel a szabad szavas 'csavaró csúsztatás' leírásodnak."*
-  - *"Javasolt atomi összetevők a szótárból:* `pvt.R.180` (jobb láb pivot), `sld.L.back` (bal láb hátra csúsztatás), `lvl.down` (súlyvonal süllyesztés).*
-  - *Didaktikai hasonlat javaslat:* 'Csavarmenet' (Screw thread) - a láb úgy fúródik a földbe, mint egy csavar."*
+1. **Level 0 (Full-Detail / Atomi szint):** A nyers fizikai képlet (`pvt.R.180 + sld.L.back + lvl.down`). Ritkán írjuk le kézzel, de a gép ezen a szinten értelmez mindent.
+2. **Level 1 (Köztes Csoportfogalmak / Intermediate):** Részlegesen összevont kódok, amelyek még tartalmaznak atomi részleteket (pl. `pvtScrew + lvl.down`).
+3. **Level 2 (Egyezményes Figuranevek / Conventional):** A nemzetközi vagy iskolai standard rövidítés (pl. `sldScrew`).
+4. **Level 3 (Önkényes Tanári Név / Custom Alias):** A tanár saját, teljesen egyedi elnevezése (pl. `LevKedvencHelycseréi001` vagy `PetiFuraForgasa`).
 
-#### 5. Fokozatos Megemésztés, Kipróbálás és Hivatalos Integráció (HITL Formalization)
+**Hogyan kezeli ezt a rendszer technológiailag?**
 
-- **Humán-in-the-Loop jóváhagyás:** A tanár az esti órán leteszteli a mozdulatot. Tapasztalatokat gyűjt: *"A diákoknak valóban a 'csavarmenet' hasonlat segített megérteni a súlypontsüllyesztést."*
-- A tanár visszatér a **Research Dashboard-ra**, és megnyitja a `tmp.backScrew` szócikket formalizálásra:
-  1. **Státusz frissítése:** `fuzzy_draft` ──> `precise` vagy `deconstructed`.
-  2. **Hivatalos kód generálása:** Az UAA 2.0 felajánlja a hivatalos elnevezést a general-specific skálán (pl. `pvtScrew` vagy `sldScrew`).
-  3. **Szemantikai DNA rögzítése:** A `term_components` táblába bekerülnek a pontosított fizikai UUID-k (`pvt.R.180`, `sld.L.back`, `lvl.down`).
-  4. **Didaktikai Metaadatok mentése:** Hozzáadódik a "Csavarmenet" story, a videós deeplink és a tanítási tapasztalat.
-  5. **Automata Óravázlat Frissítés (Refactoring Pipeline):** A rendszer átvizsgálja az óravázlatokat, és a korábbi ideiglenes `tmp.backScrew` kódokat automatikusan frissíti a végleges `pvtScrew` kódra.
+- **Alias Rendszer:** Az adatbázisban a tanár bármilyen egyedi nevet (aliast) hozzárendelhet egy atomizált objektumhoz.
+- **Szabad Hivatkozhatóság:** A tanár az óravázlatba beírhatja, hogy `LevKedvencHelycseréi001`. A parser (AST) felismeri az aliast, és a háttérben azonnal feloldja a teljes atomi képletre. A tanárnak sosem kell a bonyolult kódot gépelnie.
+- **Nézet-Váltás (Detail Slider):** A UI felületen a tanár egy csúszkával állíthatja, hogy az óravázlatot milyen részletességgel akarja látni. Ugyanaz a sor megjelenhet úgy, mint `LevKedvencHelycseréi001`, de ha a csúszkát elhúzza "Atomi" irányba, a szöveg szétnyílik a `pvt.R.180 + sld.L.back + lvl.down` képletre, vagy bármilyen köztes állapotra.
+- **Iskolák Közötti Fordító (Rosetta Stone):** Mivel minden egyedi név (Alias) ugyanarra az atomi DNA-ra mutat, ha egy másik iskola tanára olvassa az óravázlatot, a rendszer automatikusan az ő iskolájában használt egyezményes névre (vagy az atomi képletre) tudja fordítani a `LevKedvencHelycseréi001` kifejezést. Ez tökéletesen megoldja a különböző iskolák eltérő terminológiájából fakadó káoszt.
 
 ---
 
@@ -919,6 +982,336 @@ A DANCE rendszer tudásbázisa idővel a világ legnagyobb, legpontosabb és leg
 - A rendszer adatai és tudományos mélységű dekonstrukciói alapul szolgálhatnak egy nemzetközi standard felállításához, amely végre tudományos, rendszerszintű és egységes nyelvet biztosít a táncművészetnek, hasonlóan a zenében a kottához vagy a programozásban a programozási nyelvekhez.
 
 ---
+
+## 16. Felhasználási Gradiens és Jogosultsági Rétegek (Capability Gradient & Permission Layers)
+
+A rendszer **nem egyetlen monolitikus szoftver**, és nem is két élesen szétvágott külön termék. A funkciókat egy **képesség- és vállalás-alapú gradiens** (Capability & Commitment Gradient) szervezi, amelynek két végpontja a **Pedagógiai Pólus** és a **Tudományos Kutatói Pólus**. A felhasználók nem "dobozokba" kerülnek, hanem egy folytonos skálán helyezkednek el aszerint, hogy mennyire mélyen kívánnak a fogalmak atomizálásával foglalkozni.
+
+### A. A Gradiens Vizualizációja
+
+```
+PEDAGÓGIAI PÓLUS  ◄─────────────────── GRADIENS ───────────────────►  KUTATÓI PÓLUS
+(fekete-doboz használat)                                          (atomi dekonstrukció)
+
+[Vendég] ─ [Tanuló] ─ [Segédtanár] ─ [Tánctanár] ─ [Fejlesztő Tanár] ─ [Kutató/Koreográfus]
+   │           │            │              │                │                    │
+ részvétel  saját       óravezetés,    óratervezés,     fogalmak          atomizáció,
+ naplózás   skill-      jelenlét-      tudástérkép,     tisztázása,       ontológia,
+            mátrix      rögzítés       csoportkövetés   fuzzy→precise     CVE, 3D, IP
+```
+
+- A skála **bal oldalán** a fogalmakat **fekete dobozként** (egyezményes figuranév / scaffold szinten) használják. Itt a teljes pedagógiai érték elérhető **anélkül**, hogy bárki egyetlen mozdulatot is atomizálna.
+- A skála **jobb oldalán** a felhasználó belép a tudományos rétegbe: dekonstruál, ontológiát rendez, kombinatorikus variációkat generál, 3D-ben szimulál.
+- A **fontos elv:** minden pozíció a skálán **önmagában teljes értékű**. A tanár ott állhat meg, ahol a kompetenciája és a vállalása engedi.
+
+### B. Jogosultsági Rétegek (Permission Tiers)
+
+A gradiens szoftveresen **kumulatív jogosultsági rétegekre** képződik le. Minden magasabb réteg tartalmazza az alatta lévők összes képességét.
+
+
+| Réteg  | Szerep                                                | Fő Képességek                                                                                                                                                       | Pólus-helyzet                       |
+| ------ | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| **T0** | **Vendég / Tanuló (Guest / Student)**                 | Saját jelenléti napló és skill-mátrix megtekintése; a tanult anyag (egyezményes nevek szintjén) visszanézése; videós önértékelés.                                   | Pedagógiai (passzív)                |
+| **T1** | **Segédtanár (Assistant)**                            | Jelenlét rögzítése; a fő tanár óratervének levezetése; a "Standardized Teaching View" használata; tanulói haladás bejelölése.                                       | Pedagógiai                          |
+| **T2** | **Tánctanár (Teacher)**                               | Óratervezés; tanfolyam- és csoportkezelés; tudásszint-térképezés; a Fuzzy Inbox használata (szabad jegyzetelés); egyezményes és önkényes (alias) nevek hivatkozása. | Pedagógiai (aktív, gradiens közepe) |
+| **T3** | **Fejlesztő Tanár (Developer-Teacher)**               | A saját fuzzy draftjainak atomizálása a Refinement Engine-nel; Semantic Anchoring; lokális szótárbővítés; Core Input dekonstrukció.                                 | Átmeneti zóna (pedagógia → kutatás) |
+| **T4** | **Kutató / Koreográfus (Researcher / Choreographer)** | Globális szótár- és ontológia-kezelés (OntoShift); Kombinatorikus Variációs Motor (CVE); 3D szimuláció; vizuális annotáció; IP-jegyzék; Git-for-Dance merge-jogok.  | Kutatói                             |
+
+
+### C. Adat-Áramlási Irány és a Pólusok Összeérése (The Convergence)
+
+A két pólust **nem fal választja el, hanem adatáramlás köti össze** — kétirányú, egymást tápláló ciklusban:
+
+1. **Lentről felfelé (Pedagógia → Kutatás):** A pedagógiai követés nyers adatai (mit, hányszor, milyen részletességgel tanítottak, hol akadtak el a csoportok) **táplálják a kutatást**. A gyakran ismételt fuzzy fogalmak az Induktív Fogalom-Felfedező motor (lásd 7.B) számára jelzik, hogy érdemes őket atomizálni és standardizálni.
+2. **Fentről lefelé (Kutatás → Pedagógia):** Az atomizált, tudományosan pontosított fogalmak **egyre finomabb pedagógiai követést** tesznek lehetővé (lásd 17. és 19. fejezet). Egy atomizált fogalom mentén a tanuló tudása nemcsak "tudja/nem tudja" bontásban, hanem atomi készség-szinten is térképezhető, és ez nyitja meg az utat az **absztraktabb, helyzetérzékenyebb, improvizatívabb tudás** felé.
+
+> **Tervezési alapelv:** A rendszer a háttérben mindig a kutatói pólus teljes mélységét tartja készenlétben (minden fogalom mögött ott a Szemantikai DNA potenciálja), de a felszínen csak annyit mutat, amennyit az adott réteg felhasználója kért. A pedagógus sosem botlik bele a tudományos komplexitásba, a kutató pedig sosem veszíti el a pedagógiai forrásadatokat.
+
+---
+
+## 17. Pedagógiai Modul: Óratervezés és Tudáskövetés (Pedagogy Module: Lesson Planning & Knowledge Tracking)
+
+Ez a fejezet a **Pedagógiai Pólus** (T1-T2) napi munkáját szolgáló modult írja le. A modul **nem igényel atomizációt**: a "mezei" tánctanár az egyezményes figuranevek és a saját aliasai szintjén tervez és követ. Mégis, a háttérben gyűjtött adatok pontossága fokozatosan nő, ahogy a fogalmak (opcionálisan) atomizálódnak.
+
+### A. A Tudásmérés Három Növekvő Bizonyossági Szintje (Three Confidence Tiers of Knowledge)
+
+A rendszer **fokozatos bizonyosság-elven** méri a tudást: az olcsón, automatikusan beszerezhető (de gyenge) jeltől halad a drága, de erős jel felé. A tanárnak nem kötelező a magasabb szintekre lépnie.
+
+
+| Szint  | Neve                                              | Adatforrás                                      | Erősség                | Jelentése                                                                                     |
+| ------ | ------------------------------------------------- | ----------------------------------------------- | ---------------------- | --------------------------------------------------------------------------------------------- |
+| **K1** | **Részvételi Bizonyíték (Exposure)**              | Beléptetőrendszer / jelenléti napló             | Gyenge (valószínűségi) | "A tanuló **jelen volt**, amikor ezt tanítottuk."                                             |
+| **K2** | **Begyakorlottsági Kvantum (Repetition Quantum)** | Óravezetési naplózás (mit hányszor ismételtünk) | Közepes                | "A tanuló **ismételten találkozott** az elemmel (1. letanítás, 2. ismétlés, 3. ismétlés...)." |
+| **K3** | **Minőségbiztosítás (Quality Assurance)**         | Tanári értékelés / videós ellenőrzés / szenzor  | Erős                   | "A tanuló **bizonyítottan, minőségi szinten tudja** az elemet."                               |
+
+
+### B. K1 — Részvétel-alapú Tudástérkép (Exposure-Based Mapping)
+
+A legolcsóbb és teljesen automatizálható jel. Az alapelv: **maga a részvétel ténye is tudást implikál.**
+
+- **A logikai lánc:** Ha a beléptetőrendszer rögzíti, hogy egy vendég részt vett az **X. tanfolyam Y. óráján**, ahol **Z1** volt a *tervezett* tananyag és **Z2** az, amit *sikerült is leadni*, akkor a tanuló "tudásszintje" az adott területen (pl. `salsa.on2`) a leadott `Z2` anyaggal **valószínűségileg gazdagodik**.
+- **Tervezett vs. Leadott (Planned vs. Delivered):** A rendszer szigorúan megkülönbözteti a tanár óratervét (`planned_curriculum`) attól, amit ténylegesen leadtak (`delivered_curriculum`). Az óra végén a tanár egyetlen mozdulattal jelzi, meddig jutott. Csak a `delivered` anyag számít exposure-jelnek.
+- **Valószínűségi súlyozás:** A K1 jel sosem jelent "biztos tudást". A skill-mátrixban `exposure_count` és `confidence: low` címkével jelenik meg (pl. *"3 órán találkozott a `CBL`-lel — valószínűleg ismeri a belépő szintjét"*).
+
+```sql
+CREATE TABLE attendance_records (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    student_id UUID REFERENCES users(id),
+    lesson_id UUID REFERENCES lessons(id),
+    checked_in_at TIMESTAMPTZ,           -- Beléptetőrendszer időbélyege
+    source VARCHAR(30) DEFAULT 'door'     -- 'door' | 'manual' | 'qr'
+);
+
+CREATE TABLE lessons (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    course_id UUID REFERENCES courses(id),
+    sequence_number INT,                  -- Hányadik óra a tanfolyamon (Y)
+    planned_curriculum JSONB,             -- Tervezett term_id-k (Z1)
+    delivered_curriculum JSONB,           -- Ténylegesen leadott term_id-k (Z2)
+    taught_at TIMESTAMPTZ
+);
+```
+
+### C. K2 — Begyakorlottsági Kvantum (Repetition Quantum & Teaching Detail)
+
+A tanítás közben a rendszer **kvantálja az egyes elemek (mozdulatfüzérek) előfordulásait és a tanítási részletességet.** Ez adja a K1-nél jóval pontosabb térképet.
+
+1. **Előfordulás-kvantálás (Occurrence Quantization):** Minden alkalommal, amikor egy elem megjelenik az órán, a rendszer növeli a tanuló adott elemhez tartozó számlálóját, és **megjelöli a tanítási epizód típusát**:
+  - `first_teaching` (első letanítás — lassú, részletes magyarázat),
+  - `repetition_2`, `repetition_3`, ... (ismétlések),
+  - `recall` (korábbi anyag felidézése),
+  - `application` (más kontextusban, kombinációban való alkalmazás).
+2. **Tanítási Részletesség (Teaching Detail / Zoom Level):** A rendszer rögzíti, hogy az elemet milyen mélységben tanították (pl. csak megmutatták / lebontották / technikailag finomították). Ez közvetlenül összekapcsolható a Részletességi Skálával (12.C) és a Megértési Állapotokkal (`scaffold` / `precise` / `deconstructed`).
+3. **Szerep-tudatosság (Role Awareness — KÖTELEZŐ):** Minden tanítási epizódot **kötelezően a táncos szerepéhez kötünk** (`Leader` / `Follower` / `Solo`). Ugyanazt a `CBL`-t a Leader és a Follower **gyökeresen máshogy** tanulja (a vezetés és a követés nem ugyanaz a készség, lásd 18.B.3). A Switch táncosok (akik mindkét szerepet tanulják) szerepenként külön sort kapnak — a kettő sosem mosható egybe.
+
+```sql
+CREATE TABLE teaching_events (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    lesson_id UUID REFERENCES lessons(id),
+    term_id UUID REFERENCES terms(id),
+    role VARCHAR(10) NOT NULL,            -- KÖTELEZŐ: 'Leader' | 'Follower' | 'Solo'
+    occurrence_type VARCHAR(20),          -- 'first_teaching' | 'repetition_2' | 'recall' | 'application'
+    teaching_detail VARCHAR(20),          -- 'shown' | 'broken_down' | 'refined'
+    musicality_context VARCHAR(50),       -- Melyik zenei frázishoz / hangsúlyhoz kötötték (lásd 19. fej.)
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+### D. K3 — Minőségbiztosítási Réteg (Quality Assurance Overlay)
+
+A skill-mátrix legerősebb jele. Itt a tanár (T2) vagy szenzor (T4) **megerősíti**, hogy a részvétel és az ismétlések tényleg tudássá értek.
+
+- **Tanári megerősítés:** A tanár a tanuló profilján egy elemet `mastery_level`-re emel (pl. `2` = stabil végrehajtás, `3` = improvizatívan alkalmazza). Ez felülírja a valószínűségi K1/K2 becslést.
+- **Bizonyíték-alapú megerősítés:** Videós önértékelés, vizuális annotáció (13. fej.) vagy haptikus szenzor (15.A.4) adatai automatikusan emelhetik a `mastery_level`-t.
+
+### E. A Skill-Mátrix Egyesített Adatmodellje (Unified Skill Matrix)
+
+A három szint egyetlen, összevont nézetben jelenik meg a tanuló profilján. Minden bejegyzés **megőrzi a forrását és a bizonyosságát**, így a tanár átláthatja, mi puszta részvétel és mi bizonyított tudás.
+
+A skill-mátrix kulcsa **összetett**: a tudást nem csak elemenként (`term_id`), hanem **szerepenként (`role`) is külön tartjuk nyilván**. Így a térkép pontosan kifejezi, hogy *"a diák a `CBL`-t Followerként K3 szinten tudja, de Leaderként még csak K1 szinten expozálódott neki"*. A Switch táncos ugyanahhoz az elemhez két külön sort kap.
+
+```sql
+CREATE TABLE student_skill_matrix (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    student_id UUID REFERENCES users(id),
+    term_id UUID REFERENCES terms(id),
+    role VARCHAR(10) NOT NULL,             -- KÖTELEZŐ: 'Leader' | 'Follower' | 'Solo'
+    exposure_count INT DEFAULT 0,          -- K1: hány leadott órán fordult elő
+    repetition_count INT DEFAULT 0,        -- K2: hány ismétlési kvantum
+    deepest_teaching_detail VARCHAR(20),   -- K2: legmélyebb tanítási részletesség
+    mastery_level INT DEFAULT 0,           -- K3: 0=nincs, 1=ismeri, 2=stabil, 3=improvizatív
+    confidence VARCHAR(10),                -- 'low' (K1) | 'medium' (K2) | 'high' (K3)
+    acquired_via VARCHAR(20) DEFAULT 'direct', -- 'direct' (közvetlen tanulás) | 'retroactive' (visszamenőleges jóváírás, lásd 17.F)
+    source_term_id UUID REFERENCES terms(id), -- Ha 'retroactive': melyik dekonstruált szülő-fogalomból származik
+    last_seen_at TIMESTAMPTZ,
+    UNIQUE (student_id, term_id, role)
+);
+```
+
+> **A pedagógiai modul ígérete:** A "mezei" tánctanár pusztán azzal, hogy ebben a rendszerben tervezi és vezeti az óráit (jelenlét + leadott anyag jelölése), **automatikusan, mellékhatásként megkapja** a csoportjai és tanítványai részvétel-alapú tudástérképét. Ha többet vállal (ismétlés-kvantálás, minőségi megerősítés), a térkép arányosan pontosabb lesz — de a belépő szintű érték már nulla extra adminisztrációval is működik.
+
+### F. Visszamenőleges Tudás-Szétosztás (Retroactive Skill Distribution)
+
+A pedagógiai modul (17.) és a Fuzzy-to-Precise életút (12.) találkozásánál kritikus láncszem rejlik. A 12. fejezet megengedi, hogy a tanár **homályos (`fuzzy_draft`) fogalmakat** hozzon létre (pl. `tmp.PetiFuraForgasa`), a 17. fejezet pedig rögzíti, hogy a diákok ezt megtanulták (K1/K2). De **mi történik, ha a tanár 3 hónappal később a Refinement Engine-nel atomizálja** ezt az elemet (`pvt.R` + `sld.L`)?
+
+- **A probléma (a régi "halott alias"):** Naiv esetben a diák profilján egy értelmét vesztett `tmp.PetiFuraForgasa` alias maradna, és a rendszer **nem tudná**, hogy a diák valójában már gyakorolta a pivotot és a csúszást is. A tudás "csapdába esne" a homályos szülő-fogalomban.
+- **A megoldás — Retroactive Skill Distribution:** Amikor egy tanár (T3+) dekonstruál egy fuzzy fogalmat, a rendszer a háttérben **automatikusan szétosztja az újonnan felfedezett atomi komponenseket** minden olyan diák `student_skill_matrix` táblájába, aki a szülő-fogalmat korábban tanulta.
+
+**A folyamat (Distribution Pipeline):**
+
+```
+[T3 tanár: tmp.PetiFuraForgasa  ──Refinement Engine──►  pvt.R + sld.L]
+                       │
+                       ▼  (Trigger: epistemological_state -> 'deconstructed')
+┌──────────────────────────────────────────────────────────────────┐
+│ 1. Érintett diákok lekérése:                                       │
+│    SELECT * FROM student_skill_matrix WHERE term_id = UUID_tmp...  │
+├──────────────────────────────────────────────────────────────────┤
+│ 2. Minden érintett (student, role) párra: a szülő K1/K2 jelét      │
+│    örökítsd az új atomokra (pvt.R, sld.L), azonos role-lal.        │
+│    acquired_via = 'retroactive', source_term_id = UUID_tmp...      │
+├──────────────────────────────────────────────────────────────────┤
+│ 3. A régi tmp.* sor megmarad (lineage), de a profilon az atomok    │
+│    is megjelennek a háttérben jóváírt tudásként.                   │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+1. **Bizonyosság-örökítés (Confidence Inheritance):** A visszamenőleg jóváírt atomi készség **sosem kaphat magasabb bizonyossági szintet, mint a forrás**. Ha a diák a `tmp.PetiFuraForgasa`-t csak K1 (exposure) szinten ismerte, az `pvt.R` és `sld.L` is csak K1-et örököl — soha nem K3-at. A `mastery_level` (K3) megerősítés mindig **közvetlen, friss bizonyítékot** igényel, sosem öröklődik visszamenőleg.
+2. **Szerep-megőrzés (Role Preservation):** A szétosztás **szerep-érzékeny**: ha a diák a fogalmat Followerként tanulta, az atomokat is Followerként írjuk jóvá (lásd 17.C role oszlop).
+3. **Visszakövethetőség (Lineage):** A jóváírt sorok `acquired_via = 'retroactive'` és `source_term_id` mezővel jelölik, honnan származnak. Így a tanár átláthatja, mi közvetlen tanulás és mi visszamenőleges levezetés, és egy esetleges téves dekonstrukció visszavonható (a retroaktív sorok törölhetők a forrás alapján).
+4. **Idempotencia:** Ha a diák az atomot időközben közvetlenül is megtanulta (`direct`, magasabb bizonyossággal), a retroaktív jóváírás **nem rontja le** azt — a rendszer a kettő közül a magasabb bizonyosságot tartja meg.
+
+> **Összekapcsolás a 19. fejezettel:** A Retroactive Skill Distribution adja az atomizáció-vezérelt absztrakció (19.A) mérhető alapját: amint egy homályos fogalom atomizálódik, a diákok tudása is azonnal, visszamenőleg atomi szintűvé válik — feltárva, hogy egy-egy atomot (pl. a pivotot) több korábbi fogalomból is ismernek, ami megnyitja az átvihető, kombinálható, improvizatív tudás útját.
+
+---
+
+## 18. A Tudás Természete: Koreográfia kontra Improvizáció (The Nature of Knowledge: Choreography vs. Improvisation)
+
+A tudásmérés (17. fejezet) legnagyobb kihívása, hogy a **"tud egy mozdulatsort" megfogalmazás önmagában megtévesztő**. Két, gyökeresen eltérő tudásfajta létezik, amelyeket a rendszernek külön kell kezelnie.
+
+### A. A Shakespeare-szonett Probléma (The Memorized-Block Problem)
+
+Egy komplex mozdulatsort meg lehet tanulni **zárt koreográfiaként** — ahogy egy angolul nem beszélő ember is bemagolhat egy Shakespeare-szonettet. Az ilyen tudás:
+
+- **nem variálható szabadon:** a tanuló legfeljebb a blokkok sorrendjét cserélgeti, de az elemeket nem tudja önállóan kontextusba helyezni;
+- **nem improvizatív:** kiszakítva a betanult láncból az egyes elemek "nem élnek";
+- **kontextusvak:** nem reagál a partnerre, a térre vagy a zenei pillanatra.
+
+Ezzel szemben az **improvizatív (generatív) tudás** olyan, mint egy nyelv valódi beszélése: a tanuló az elemeket szabad mondatokká fűzi, a pillanathoz igazítva.
+
+> **Rendszerszintű következmény:** Ugyanaz a `term_id` szerepelhet a skill-mátrixban "betanult blokk része" és "szabadon alkalmazható atom" minőségben is. A rendszer ezt a `knowledge_modality` mezővel különbözteti meg, mert a kettő pedagógiailag **nem ekvivalens**.
+
+```sql
+ALTER TABLE student_skill_matrix
+  ADD COLUMN knowledge_modality VARCHAR(20) DEFAULT 'memorized_block';
+  -- 'memorized_block'  : zárt koreográfiaként tudja (Shakespeare-szonett)
+  -- 'block_reorder'    : blokk-sorrendet cserélget
+  -- 'free_application' : elemként, szabadon kombinálja (generatív)
+  -- 'improvisational'  : kontextusra (zene/partner) reagálva alkalmazza
+```
+
+### B. A Négy Social Dance Kompetenciatengely (The Four Social-Dance Axes)
+
+A social táncban (Salsa, Bachata) az érték **nem a betanult lánc**, hanem négy, egymástól független kompetenciatengely együttese. A rendszer ezt a négy dimenziót **külön-külön is méri** a skill-mátrixban:
+
+1. **Elemkiválasztás — "Mit táncoljak?" (Element Selection):** A tanuló a pillanatban a legjobb elemet választja ki a repertoárjából.
+2. **Időmenedzsment / Mondatalkotás (Time Management & Musicality):** A tanult mozdulatok **rá-morfolása a zenére** — a mozdulat zenei frázishoz, hangsúlyhoz illesztése (lásd részletesen a 19. fejezetet).
+3. **Kommunikáció (Communication / Lead & Follow):** Párban a tökéletes vezetés vagy követés — a mozdulat partnerrel való valós idejű egyeztetése.
+4. **Stílusválasztékosság (Style & Expression):** Díszítés, személyiség, gag-ek, a hangulat fokozása.
+
+A kompetenciatengelyeket is **szerepenként** mérjük (`role`): a kommunikáció tengelye különösen szerep-függő (vezetni és követni külön készség), de a Switch táncosnál az elemkiválasztás és a stílus is eltérhet a két szerepben.
+
+```sql
+CREATE TABLE student_competency_axes (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    student_id UUID REFERENCES users(id),
+    dance_domain VARCHAR(30),              -- pl. 'salsa.on2', 'bachata'
+    role VARCHAR(10) NOT NULL,             -- KÖTELEZŐ: 'Leader' | 'Follower' | 'Solo'
+    element_selection INT DEFAULT 0,       -- "mit táncoljak"
+    musicality INT DEFAULT 0,              -- időmenedzsment / mondatalkotás
+    communication INT DEFAULT 0,           -- vezetés / követés
+    style_expression INT DEFAULT 0,        -- díszítés / személyiség
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE (student_id, dance_domain, role)
+);
+```
+
+### C. Az Előadóművészeti (Performance) Tengely
+
+Az előadóművészeti / versenytáncban a koreográfus a fenti négy kontextustengelyt (elemkiválasztás–időmenedzsment–kommunikáció–stílus) **előre megoldja és rögzíti**. Ez **nem hátrány, hanem fókuszáló döntés**: pont ezért a táncos a felszabaduló kapacitását a **mély technikai, dinamikai és esztétikai kihívásokra** fordíthatja:
+
+- maximális mozgásminőség (precíz ízületi szögek, súlypont-ívek, lásd 13. fej.),
+- dinamika és energiamenedzsment,
+- kiemelt esztétika és előadói jelenlét.
+
+A rendszer ezt a tengelyt a **vizuális annotációs (13.)** és **3D korrekciós (15.A.4)** modulokkal támogatja, ahol a "Drawn Ideal vs. Actual Pose" kontraszt számszerűsíthető technikai visszajelzést ad.
+
+### D. A Két Terület Összeérése — Az Ideális Táncos Profilja (The Convergence Target)
+
+A pedagógiai pólus végső, **rendszerszinten a háttérben megcélzott** célja, hogy a két terület összeérjen. Az ideális táncos egyetlen mozdulatfolyamban egyesíti mind a hat dimenziót:
+
+```
+                   ┌─────────────────────────────────────────────┐
+                   │           AZ IDEÁLIS TÁNCOS (Vízió)          │
+                   └─────────────────────────────────────────────┘
+  SOCIAL tengelyek (improvizáció)        │   PERFORMANCE tengelyek (mélység)
+  ─────────────────────────────         │   ─────────────────────────────
+  • azonnali elemkiválasztás (mit)       │   • maximális technikai komplexitás
+  • zenére morfolás (mikor/hogyan)       │   • nagy dinamika
+  • tökéletes vezetés/követés (kivel)     │   • kiemelt esztétika
+  • stílus, díszítés, gag (hogyan érzem)  │   • előadói jelenlét
+                   └──────────────► VILÁGBAJNOK SZINT ◄──────────┘
+            (maximális komplexitás könnyedén, nagy dinamikával és esztétikával)
+```
+
+> **A "tiszteletben tartott határ" elve:** A rendszer **nem kényszerít** senkit a teljes konvergenciára. Egy hobbi social táncosnak a négy social tengely fejlesztése a cél; egy versenyzőnek a performance mélység. De a **háttérarchitektúra mindkét utat egyszerre méri és támogatja**, így ha egy tanuló (és tanára) elindul a teljesség felé, a rendszer végig vele tart — anélkül, hogy bárkire ráerőltetné a másik világ elvárásait.
+
+---
+
+## 19. Atomizáció-Vezérelt Improvizációs Absztrakció (Atomization-Driven Improvisational Abstraction)
+
+Ez a fejezet köti össze a leíró nyelv atomizációs képességét (12. fej.) a tudás minőségi természetével (18. fej.). **Központi tézis:** ahogy a tanár megfogalmazása egyre atomizáltabbá válik, **a tanulók tudásszintje is egyre atomizáltabban válik megfogalmazhatóvá** — és pont ez nyitja meg az utat, hogy a tudásuk a betanult blokkból (Shakespeare-szonett) **absztraktabb, környezetre alkalmazkodó, improvizatív tudássá** alakuljon.
+
+### A. A Megfogalmazás és a Tudás Atomizációjának Párhuzama (Parallel Atomization)
+
+```
+A TANÁR MEGFOGALMAZÁSA                       A TANULÓ TUDÁSÁNAK LEÍRÁSA
+─────────────────────────                    ──────────────────────────
+fuzzy_draft  ("furcsa csúsztatás")     ──►   "találkozott egy homályos elemmel" (K1)
+egyezményes  ("sldScrew")              ──►   "tudja az sldScrew figurát"          (K2)
+atomizált    ("pvt.R + sld.L + lvl")   ──►   "tudja a pivotot, a csúszást ÉS a    (K3, atomi)
+                                              súlypontsüllyesztést — külön-külön is"
+```
+
+A párhuzam pedagógiai haszna: amíg egy fogalom csak egyezményes névként létezik, a tanuló tudása is csak "tudja/nem tudja" bontásban mérhető. Amint a fogalom **atomizálódik**, a tanuló tudása is **atomi készségekre bomlik** — és kiderül, hogy pl. a pivotot már három másik figurából is ismeri. Ez teszi a tudást **átvihetővé (transferable)** és kombinálhatóvá.
+
+### B. A Didaktikai Absztrakció-Vezérlő Motor (Abstraction Pacing Engine)
+
+A rendszer aktívan **segíti a tanárt** abban, hogy a betanult blokkot generatív tudássá oldja fel. A motor a 17.C ismétlés-kvantumokra épül, és **az ismétlésszám függvényében javasol absztrakciós lépéseket**:
+
+1. **1-2. ismétlés (Stabilizáció):** A motor **nem avatkozik be**. A cél az elem változatlan formájú berögzítése (motoros memória). A `knowledge_modality` itt még `memorized_block`.
+2. **Szétbontás és Összekeverés (Decompose & Remix):** A 2. változatlan ismétlés *után* a rendszer felajánlja, hogy a tanár **bontsa szét** az elemet, és **keverje össze a régi, korábban tanult elemekkel**. (Pl.: *"A csoport kétszer stabilan letáncolta a `sldScrew`-t. Javaslom, kösd most a már ismert `CBL`-hez és `rsp`-hez, hogy a tanulók a blokkból kiemelve, szabad átmenetként is gyakorolják."*) → `knowledge_modality` célállapot: `free_application`.
+3. **Variáció-Összehasonlítás (Side-by-Side Variations):** A motor felajánlja **ugyanazon elem különféle variációinak egymás mellé tételét**, hogy a tanuló a különbségek tudatosításával ne egy merev formát, hanem egy **variációs teret** tanuljon meg (pl. `sldScrew` vs. `pvtScrew` vs. `flareScrew` közvetlen összehasonlítása).
+
+```sql
+CREATE TABLE abstraction_suggestions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    group_id UUID REFERENCES groups(id),
+    term_id UUID REFERENCES terms(id),
+    trigger_repetition_count INT,          -- Hányadik ismétlés váltotta ki
+    suggestion_type VARCHAR(30),           -- 'decompose_remix' | 'side_by_side' | 'musicality_deviation'
+    suggested_partners JSONB,              -- Mely régi elemekkel keverjük / hasonlítsuk
+    status VARCHAR(20) DEFAULT 'offered',  -- 'offered' | 'accepted' | 'dismissed'
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+### C. A Musicality mint Absztrakciós Dimenzió (Musicality as an Abstraction Axis)
+
+A musicality (időmenedzsment, 18.B.2) ugyanúgy az atomizáció-vezérelt absztrakció dimenziója: a **"tipikusan előre sejthető" zenei frázisok** (pl. egy 8-as vége, egy break, egy trombita-hangsúly) **idejéhez kreatív mozdulat-eltéréseket rendel**.
+
+- **Sejthető frázis → kreatív deviáció:** A rendszer ismeri a zenei struktúra előre jelezhető pontjait (a ritmikai szintaxisból, 5. fej.). Ezekhez **deviációs ajánlásokat** kapcsol: ahelyett, hogy a tanuló a frázis végén is a "default" alaplépést táncolná, a motor felkínál egy kontextushoz illő díszítést, hangsúlyt vagy irányváltást.
+- **Kapcsolat a Kombinatorikus Variációs Motorral (7.C):** A CVE által generált variációk itt **zenei lehorgonyzást** kapnak — nem önmagukban, hanem egy konkrét, sejthető zenei pillanathoz rendelve válnak gyakorolható improvizációs feladattá.
+- **Mérés:** Az így gyakorolt deviációk a `teaching_events.musicality_context` mezőn keresztül naplózódnak, és a `student_competency_axes.musicality` tengelyt emelik.
+
+### D. Az Absztrakciós Életút a Skill-Mátrixban (The Abstraction Lifecycle)
+
+A három modalitás-lépcső (18.A) így kapcsolódik össze egyetlen, mérhető fejlődési ívvé, amelyet a tanár az Abstraction Pacing Engine ajánlásaival vezérel:
+
+```
+[memorized_block] ──(2 stabil ismétlés)──► [block_reorder]
+        │                                          │
+        │                              (decompose & remix régi elemekkel)
+        │                                          ▼
+        └──────────────────────────────► [free_application]
+                                                   │
+                                  (side-by-side variációk + musicality deviáció)
+                                                   ▼
+                                          [improvisational]
+                              (kontextusra — zene + partner — reagáló, generatív tudás)
+```
+
+> **A rendszer csendes nagy célja:** Minden egyes atomizációs lépés (akár a tanár fogalmainak tisztázása, akár a tanuló tudásának finomítása) egy aprócska lépés afelé, hogy a tanuló a betanult szonettből **valódi nyelvi beszélővé** váljon: aki a zenét hallva azonnal kiválasztja a megfelelő elemet, ráalakítja a zeneiségre, kommunikál a partnerével, és stílussal fűszerezi — azaz a 18.D ideális táncosává. A rendszer ezt **a háttérben, a határokat tiszteletben tartva, de következetesen célozza meg.**
 
 ---
 
