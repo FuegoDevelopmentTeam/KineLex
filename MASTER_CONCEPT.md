@@ -1,6 +1,6 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 2.7.0 (Frequency vs Atomicity Priority)
+Version: 2.8.0 (Timeline Model & Diff-Based Formulation)
 Date: 2026-06-07
 
 ## 1. Rendszer-architektúra és Filozófia
@@ -193,15 +193,30 @@ A pont szeparátor használata szigorúan **csak strukturális (objektum-tulajdo
 
 ---
 
-## 5. Ritmikai Szintaktika (Megtartandó Hagyaték)
+## 5. Ritmikai Szintaktika és Idővonal (Megtartandó Hagyaték & Hibrid Modell)
 
-A 8-ütéses (8/4) ritmusú rendszerek zenei szintaktikáját szigorúan megőrizzük:
+A 8-ütéses (8/4) ritmusú rendszerek zenei szintaktikáját szigorúan megőrizzük, de az egydimenziós (lineáris) szöveg és a többdimenziós (párhuzamos) tánc közötti feszültség feloldására egy **Hibrid Idővonal-Modellt** alkalmazunk.
 
+*(Megjegyzés: A Span és Track operátorok jelenleg kidolgozás/megvitatás alatt állnak, a végleges szintaktika változhat!)*
+
+### A. Pontszerű Zenei Markerek (Hit)
 - **Ritmikai képlet:** `**12 + 34 & 56 + 78`**
 - **Időzítési marker (`X:`):** A számérték és a kettőspont jelzi a konkrét zenei ütésre történő mozgásokat.
   - `**1:`** = Első ütésre történő mozgás (pl. `1:bwdCami` - lépés hátra az 1-re).
   - `**5:`** = Ötödik ütésre történő mozgás.
   - `**5&6:`** = Siettetett, sűrített ütemek (hastening).
+
+### B. Időtartam Operátor (Span) - Egyszerű párhuzamosság (TERVEZET)
+Amikor egy mozdulat (pl. egy karmozdulat) átível több lépésen, a kötőjel (`-`) használható az időtartam kifejezésére, amelyet a `+` vagy `&` kapcsol a lépésekhez.
+- *Példa:* `1-4:upCu & 1:l 2:r 3:l` (Az 1-4. ütés alatt folyamatos upper curve, miközben 1, 2, 3-ra lépünk).
+
+### C. Relatív Horgonyzás (Structural Anchoring) - Pedagógiai szint
+Nem kötelező számokat használni. A kitartott mozdulat ráköthető egy ismert zenei/lépés blokkra, mint tulajdonság.
+- *Példa:* `b1(upCu)` vagy `upCu.b1` -> "Csináld a Basic első felét, és közben csinálj egy upCu-t."
+
+### D. Sáv-alapú Bontás (Track/Voice Separation) - Kutatói szint (TERVEZET)
+Komplex izolációknál (ahol a testrészek független ritmikát táncolnak) a kódot névterekre (sávokra) bontjuk, amit a UI egy kottaszerű Timeline nézetben vizualizál:
+- *Szöveges kód:* `Legs[1:l 2:r 3:l] & Arms[1-4:upCu]`
 
 ---
 
@@ -267,7 +282,22 @@ Ha a tanárok sok különböző, részletes és szerteágazó variációt viszne
 
 ### C. Kombinatórikus Kísérleti Motor (Combinatorial Variation Engine - CVE)
 
-A kutatás-fejlesztés felgyorsítására a rendszer tartalmaz een logikai generátort, amely az alábbi dimenziók mentén állít elő új, még nem létező variációkat (kísérleti feladatokat):
+### D. Diff-alapú Megfogalmazás (Diff-Based Formulation) - Helyettesítés
+
+A rendszer támogatja a már létező, komplex fogalmakból kiinduló **eltérések (diff)** megfogalmazását. Ez lehetővé teszi, hogy a tanár egy hosszú, jól ismert szekvenciát használjon alapként, és csak azt az egy elemet definiálja, amelyben az ő variációja eltér a sztenderdtől.
+
+Ezzel a módszerrel az új variáció közvetlen **szülő-gyermek (parent-child)** kapcsolatba kerül az eredeti figurával a rendszerben.
+
+*Szintaktikai Javaslat (Csere operátor):* `AlapFogalom[eredeti_komponens -> új_komponens]`
+
+1. **Példa (Salsa On1 Basic Step módosítása):**
+   - Alapfogalom: `salsaOn1Basic` (amely magában foglalja a "collector" karmozdulatot a zenei kérdés alatt).
+   - Új variáció: A "collector" kar helyett "colCod" (collector change of direction).
+   - Diff kód: `**salsaOn1Basic[collector -> colCod]**` (vagy rövidítve: `b1[col -> colCod]`).
+
+2. **Értelmezés:** A compiler ezt úgy olvassa, hogy "Vedd a `salsaOn1Basic` teljes fájlfáját, keresd meg benne a `collector` komponenst, és cseréld le a `colCod` komponensre". Ez minimalizálja a gépelést és azonnal érthető, miközben strukturális pontosságot ad.
+
+A kutatás-fejlesztés felgyorsítására a rendszer tartalmaz egy logikai generátort, amely az alábbi dimenziók mentén állít elő új, még nem létező variációkat (kísérleti feladatokat):
 
 - **Variációs Dimenziók:**
   1. *Kapcsolódás (Hold):* `2h`, `1h`, `rhx`, `lhx`, `noHand`
