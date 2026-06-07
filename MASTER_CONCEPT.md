@@ -1,6 +1,6 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 2.8.0 (Timeline Model & Diff-Based Formulation)
+Version: 2.9.0 (L1 Kinetika pontosítása & Vektor Operátorok bevezetése)
 Date: 2026-06-07
 
 ## 1. Rendszer-architektúra és Filozófia
@@ -9,13 +9,13 @@ Date: 2026-06-07
 
 A rendszer minden felületén (frontend), ahol a formális nyelv kódjai és az acronymok megjelennek, **kötelező** olyan "Arial egyszerűségű", letisztult, de szigorúan "disambiguation-friendly" (nem redundáns) betűtípust használni (pl. egyértelmű monospace vagy modern sans-serif), ahol a kis "l" betű, a nagy "I" betű és az "1" szám vizuálisan élesen elkülönül egymástól (pl. ligatúrák és serif hiánya). Ennek célja a kódok olvasásakor fellépő vizuális ütközések teljes kiküszöbölése.
 
-Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen Salsa, Bachata) leírására és ezáltal oktatási rendszerbe foglalására.
+Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen salsa, mambo vagy "on2" salsa, bachata, chachacha) leírására és ezáltal oktatási rendszerbe foglalására.
 
 ### A Rendszer Felhasználási Gradiense: Pedagógiai Pólus és Tudományos Kutatói Pólus (Capability & Commitment Gradient)
 
 A rendszer **nem egyetlen, homogén szoftver**, és nem is két, élesen szétválasztott külön termék, hanem egy **képesség- és vállalás-alapú gradiens** (Capability & Commitment Gradient) mentén szerveződik. A funkciókat **nem éles határvonal, hanem fokozatos átmenet** választja el aszerint, hogy a felhasználó milyen mélységig **képes** és **hajlandó** a fogalmak atomizálásával, dekonstrukciójával és tudományos pontosításával foglalkozni:
 
-- **Pedagógiai Pólus (Teaching Pole):** A "mezei" tánctanár napi munkáját szolgálja: óratervezés, csoport- és tanítványkövetés, tudásszint-térképezés, részvétel- és minőség-alapú haladásmérés. A tanár itt a fogalmakat **fekete dobozként** (scaffold / egyezményes figuranév szinten) használja, és **nem köteles atomizálni**. A teljes pedagógiai értéket úgy is megkapja, ha sosem lép a kutatói pólus felé.
+- **Pedagógiai Pólus (Teaching Pole):** A "mezei" tánctanár napi munkáját szolgálja: óratervezés, csoport- és tanítványkövetés, tudásszint-térképezés, részvétel- és tanítási mélység-alapú haladásmérés. A tanár itt a fogalmakat **fekete dobozként** (scaffold / egyezményes figuranév / saját, kitalált figuranév szinten) használja, és **nem köteles atomizálni**. A teljes pedagógiai értéket úgy is megkapja, ha sosem lép a kutatói pólus felé.
 - **Tudományos Kutatói Pólus (Research Pole):** A kutatói funkciók (atomi dekonstrukció, ontológia-kezelés, kombinatorikus variációs motor, vizuális annotáció, 3D szimuláció, IP-jegyzék) a tudásbázis mélyítését és a leíró nyelv fejlesztését szolgálják. Ez **opcionális, többletvállalás**, amely a pedagógiai adatokra épül.
 
 A két pólus **ideális esetben összeér**: a pedagógiai követés adatai (mit, hányszor, milyen részletességgel tanítottak) táplálják a kutatást, a kutatás atomizált fogalmai pedig egyre finomabb pedagógiai követést és **absztraktabb, helyzetérzékenyebb, improvizatívabb tanulói tudást** tesznek lehetővé. A gradiens lényege, hogy minden tanár ott állhat meg, ahol a kompetenciája és a vállalása engedi — a rendszer minden szinten teljes értékű.
@@ -30,17 +30,19 @@ A mozgásokat és a tudásanyagot öt egymásra épülő, egyre komplexebb abszt
 
 **L0: Térbeli és Anatómiai Primitívek (Statika és Keretek)** Ez a legalapvetőbb szint, a "vászon", amelyen a tánc történik. Itt még nincs időbeli változás, csak állapotok és fizikai keretek.
 
-- **Tér és Síkok (Space and Planes):** Gravitáció, parkett sík, merőleges síkok (Sagittal Plane, Horizontal Plane, Lateral/Vertical Plane).
-- **Irányok és Orientáció (Directions and Orientation):** A test szemben iránya (Origo Direction), a tánctartás vonala (Dancing Position Line), a kommunikáció fő iránya (Communication Direction), valamint az abszolút és relatív térirányok (Forward, Backward, Diagonal, Side).
-- **Alátámasztás és Pozíció (Support and Stance):** Testsúly-megtartási pontok (több pontos, kétpontos/terpesz, egypontos, harmadik pont/kéztámasz) és testhelyzetek (állás, guggolás, ülés).
+- **Tér és Síkok (Space and Planes):** Gravitáció, parkett sík, merőleges síkok (sagittal plane, horizontal plane, lateral plane).
+- **Irányok és Orientáció (Directions and Orientation):** A test szemben iránya (origo direction), a tánctartás vonala és nyitottsága (dancing position line and opening), a kommunikáció fő iránya (communication direction), valamint az abszolút és relatív térirányok (forward, backward, diagonal, side).
+- **Alátámasztás és Pozíció (Support and Stance):** Testsúly-megtartási pontok (több pontos / harmadik pont pl. kéztámasz,  kétpontos terpesz, egypontos) és testhelyzetek (állás, guggolás, ülés, fekvés).
 - **Testrészek (Body Parts):** A mozgásra képes izolált egységek (fej, vállöv, gerinctengely, csípő, végtagok).
+- **Testkontúrok (Body Lines):** a testhelyzetek burkoló görbéi és a képzetes testrészek (pl. oldalvonal, laterál-mediális vonal) vonalai.
 
-**L1: Atomi Műveletek és Kinetika (Dinamika és Változás)** Ezen a szinten jelenik meg az idő (`from` $\rightarrow$ `to`), azaz az L0-s pozíciók megváltoztatása. Ide tartoznak a legkisebb, tovább már nem bontható mozdulatok.
+**L1: Atomi Műveletek és Kinetika (Dinamika és Változás)** Ezen a szinten jelenik meg az idő (`>` mint `from -> to` és `<` mint origin operátorokkal), azaz az L0-s pozíciók megváltoztatása. Ide tartoznak a legkisebb, tovább már nem bontható mozdulatok.
 
-- **Szabadságfokok (Degrees of Freedom):** Az ízületek és testrészek rotációja (Turn, Tilt, Nod), eltolása (Shift) és ezek kombinációi (például fej/csípő nyolcasok, hullámok, csavarások/Twists).
-- **Végtag Műveletek (Limb Actions):** Súlytalan lábáthelyezések (Foot Transfers: on-floor slide/glide, off-floor tap/kick/rond), ugrások (Jumps) és terpeszváltások.
+- **Elemi Testmozdulatok és Szabadságfokok (Elemental Body Actions & Degrees of Freedom):** Az ízületek és testrészek rotációja (rotation, tilt, nod), eltolása (shift) és ezek kombinációi (például head / hip 8 / C rolls, waves, twists). Ide tartoznak az olyan alapvető kinetikus akciók, mint a homorítás, domborítás, nyújtás, hajlítás, csavarás, csapás, hajítás, bump.
+- **Kiegyenlítő Mozdulatpárok (Compensatory / Counter-Balancing Gestures):** A csípő, a törzs és a végtagok olyan összehangolt mozdulatpárjai, amelyek a test alsó vagy felső központjában "kiegyensúlyozott csendet" (referenciapont-stabilitást) hoznak létre. Például a csípő teljes kitolása egy lábon állásig, miközben a másik kar oldalsó megnyújtása komplementer egyensúlyt ad, megőrizve a fej mozdulatlanságát. (Ide tartozik az azonos oldali lábkör/rond és a komplementer karkör együttes alkalmazása a törzs stabilitásáért).
+- **Végtag Műveletek (Limb Actions):** Súlytalan lábáthelyezések (on-floor foot transfers: slide or glide, off-floor foot transfers: tap, kick, rond, flag), terpeszváltások (swaps).
 - **Útvonal Stílusok (Path Styles / Via elements):** A térbeli elmozdulás mikéntje (egylendületű/Direct, tört, hurkos/Looped, firkálós/Scribble).
-- **Súlyvonal- és Lábkinetika (lépés):** Súlyvonal mozgatás (Center of Gravity Progression), súlyvonal irányváltás (Change of Direction).
+- **Súlyvonal- és Lábkinetika (lépés):** Horizontális súlyvonal mozgatás (center of gravity progression), súlyvonal irányváltás (center of gravity change of direction), Vertikális súlyvonal mozgatás (center of gravity elevation / sink, godown) / ugrások (jumps, leaps), lépés, súlyláb mikro tengelyfordulat (amit a `*` operátor, pl. `*lFoot` jelöl). 
 
 **L2: Ciklikus Műveletsorok és Szóló Alapok (Struktúra és Ritmus)** Az L1-es atomok zenei struktúrára (periódusokra) fűzött, felismerhető mintázatai. A zenei idő kitöltésének strukturált módjai.
 
@@ -73,19 +75,17 @@ A leíró nyelv kódjainak tömörsége és írási sebessége érdekében a ren
 A Szuper Rövidítés nem egy statikus táblázat, hanem egy háromfázisú, folyamatosan fejlődő és önjavító nyelvi életciklus:
 
 1. **Fázis: Az Induló "v1.0 Csomag" Bootstrappingje (Initial Package Bootstrapping):**
-   - A rendszer éles használatba vétele előtt a szoftver elemzi a meglévő tananyagot (syllabus) és óravázlat-mintákat.
-   - Az elemzés alapján a rendszer azonosítja a leggyakrabban és legfontosabbként előforduló bázisfogalmakat.
-   - A tudományos/kutatói pólus (T4) jóváhagyásával létrejön egy **zárt, induló "v1.0 csomag"**, amelyben ezek a kiemelt fogalmak szuper-rövid, fixen 1 vagy 2 karakteres egyedi kódokat kapnak.
-   - *Cél:* Garantálni, hogy a leggyakoribb szavak leírása minimális billentyűleütést igényeljen a kezdetektől fogva.
-
+  - A rendszer éles használatba vétele előtt a szoftver elemzi a meglévő tananyagot (syllabus) és óravázlat-mintákat.
+  - Az elemzés alapján a rendszer azonosítja a leggyakrabban és legfontosabbként előforduló bázisfogalmakat.
+  - A tudományos/kutatói pólus (T4) jóváhagyásával létrejön egy **zárt, induló "v1.0 csomag"**, amelyben ezek a kiemelt fogalmak szuper-rövid, fixen 1 vagy 2 karakteres egyedi kódokat kapnak.
+  - *Cél:* Garantálni, hogy a leggyakoribb szavak leírása minimális billentyűleütést igényeljen a kezdetektől fogva.
 2. **Fázis: Használat-Alapú Statisztika és Dinamikus Monitorozás (Usage-Based Statistics):**
-   - Aktív használat közben (amikor a tanárok órákat terveznek, naplóznak, vagy fuzzy draftokat visznek fel) a rendszer a háttérben folyamatosan méri az egyes fogalmak használati gyakoriságát (Frequency Tracking) és az időközben bevezetett új fogalmakat.
-   - A rendszer figyeli, ha egy hosszú vagy dekonstruált kifejezést a tanárok rendkívül gyakran használnak, vagy ha egy korábban ritka fogalom hirtelen kulcsfontosságúvá válik.
-
+  - Aktív használat közben (amikor a tanárok órákat terveznek, naplóznak, vagy fuzzy draftokat visznek fel) a rendszer a háttérben folyamatosan méri az egyes fogalmak használati gyakoriságát (Frequency Tracking) és az időközben bevezetett új fogalmakat.
+  - A rendszer figyeli, ha egy hosszú vagy dekonstruált kifejezést a tanárok rendkívül gyakran használnak, vagy ha egy korábban ritka fogalom hirtelen kulcsfontosságúvá válik.
 3. **Fázis: Új Szótárverziók Bevezetése és Automatikus Migráció (Dynamic Dictionary Versioning & Migration):**
-   - Ha a statisztikai adatok alapján egy új vagy meglévő fogalmat érdemes lenne felminősíteni a szuper-rövid (1-2 karakteres) szintre, vagy ha egy meglévő rövidítést az alacsony használat miatt érdemes visszafokozni, a rendszer **új szótárverzió bevezetését javasolja** a kutatói pólus (T4) részére.
-   - **Lektorálási és Validálási Folyamat (Review & Validation Gateway):** A kutatói felületen megjelenik a javaslat (pl. *"A 'cuddle' fogalom előfordulása meghaladta a küszöbértéket. Javasoljuk a 'cud' vagy 'cd' szuper-rövidítés bevezetését v1.1-ként"*). A kutató lektorálhatja, módosíthatja vagy elvetheti a javaslatot.
-   - **Visszamenőleges Frissítés (Retroactive Migration Pipeline):** Amikor a kutató jóváhagyja az új szótárverziót, az **automatikus refaktorizációs pipeline** (lásd 10.D fejezet) végigfut az összes történelmi óravázlaton, videó-időbélyegen és a diákok skill-mátrixán, és a háttérben az AST parser segítségével **visszamenőlegesen frissíti (updateli) a múltbeli kódolt leírásokat** az új rövidítésekre, garantálva a 100%-os adatintegritást és a történelmi konzisztenciát.
+  - Ha a statisztikai adatok alapján egy új vagy meglévő fogalmat érdemes lenne felminősíteni a szuper-rövid (1-2 karakteres) szintre, vagy ha egy meglévő rövidítést az alacsony használat miatt érdemes visszafokozni, a rendszer **új szótárverzió bevezetését javasolja** a kutatói pólus (T4) részére.
+  - **Lektorálási és Validálási Folyamat (Review & Validation Gateway):** A kutatói felületen megjelenik a javaslat (pl. *"A 'cuddle' fogalom előfordulása meghaladta a küszöbértéket. Javasoljuk a 'cud' vagy 'cd' szuper-rövidítés bevezetését v1.1-ként"*). A kutató lektorálhatja, módosíthatja vagy elvetheti a javaslatot.
+  - **Visszamenőleges Frissítés (Retroactive Migration Pipeline):** Amikor a kutató jóváhagyja az új szótárverziót, az **automatikus refaktorizációs pipeline** (lásd 10.D fejezet) végigfut az összes történelmi óravázlaton, videó-időbélyegen és a diákok skill-mátrixán, és a háttérben az AST parser segítségével **visszamenőlegesen frissíti (updateli) a múltbeli kódolt leírásokat** az új rövidítésekre, garantálva a 100%-os adatintegritást és a történelmi konzisztenciát.
 
 ---
 
@@ -96,48 +96,63 @@ A Szuper Rövidítések kategóriáit a **2. pont Didaktikai Szintjeivel (Abstra
 *(Az alábbi táblázatokban szereplő kódok és rövidítések kizárólag feltételezett, nem előre eldöntött, illusztratív példák! Az éles kódokat az induló v1.0 csomag bootstrapping folyamata fogja meghatározni.)*
 
 #### C0: Atomi és Geometriai Alapok (Az L0 szint kiszolgálására)
+
 Az anatómiai pontok, alapvető térirányok és testhelyzetek kategóriája.
 
-| Al-kategória | Fogalom (Full Name) | Feltételezett Példa Kód | Példa Jelentése |
-| --- | --- | --- | --- |
+
+| Al-kategória         | Fogalom (Full Name)                                    | Feltételezett Példa Kód                              | Példa Jelentése                                        |
+| -------------------- | ------------------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------ |
 | **Anatómiai pontok** | Head, Torso, Arm, Hand, Leg, Foot, Shoulder, Hip, Knee | `hd`, `to`, `ar`, `ha`, `lg`, `ft`, `sh`, `hp`, `kn` | Fej, Törzs, Kar, Kéz, Láb, Lábfej, Vállöv, Csípő, Térd |
-| **Térbeli irányok** | Right, Left, Front, Back, Up, Down, Diagonal | `R`, `L`, `F`, `B`, `U`, `D`, `dg` | Jobb, Bal, Elöl, Hátul, Fent, Lent, Diagonál |
-| **Alátámasztás** | Stand, Squat, Sit, Kneel | `st`, `sq`, `si`, `kn` | Állás, Guggolás, Ülés, Térdelés |
+| **Térbeli irányok**  | Right, Left, Front, Back, Up, Down, Diagonal           | `R`, `L`, `F`, `B`, `U`, `D`, `dg`                   | Jobb, Bal, Elöl, Hátul, Fent, Lent, Diagonál           |
+| **Alátámasztás**     | Stand, Squat, Sit, Kneel                               | `st`, `sq`, `si`, `kn`                               | Állás, Guggolás, Ülés, Térdelés                        |
+
 
 #### C1: Kinetikai és Dinamikai Műveletek (Az L1 szint kiszolgálására)
+
 A testrészek elmozdulásának, rotációjának és a végtagok mozgási útvonalainak kategóriája.
 
-| Al-kategória | Fogalom (Full Name) | Feltételezett Példa Kód | Példa Jelentése |
-| --- | --- | --- | --- |
-| **Szabadságfokok** | Shift, Rotate, Tilt, Nod, Twist | `shf`, `rot`, `tlt`, `nod`, `tws` | Eltolás, Forgatás, Döntés, Bólintás, Csavarás |
-| **Végtag műveletek** | Slide, Tap, Kick, Ronde, Wave, Circle | `sld`, `tp`, `kck`, `rnd`, `wav`, `cir` | Csúsztatás, Koppintás, Rúgás, Félkörív, Hullám, Körzés |
-| **Útvonal stílusok** | Direct, Looped, Scribble, Change of Direction | `dir`, `lop`, `scb`, `cod` | Egyenes, Hurkolt, Firkálós, Irányváltó |
+
+| Al-kategória         | Fogalom (Full Name)                           | Feltételezett Példa Kód                 | Példa Jelentése                                        |
+| -------------------- | --------------------------------------------- | --------------------------------------- | ------------------------------------------------------ |
+| **Szabadságfokok**   | Shift, Rotate, Tilt, Nod, Twist               | `shf`, `rot`, `tlt`, `nod`, `tws`       | Eltolás, Forgatás, Döntés, Bólintás, Csavarás          |
+| **Végtag műveletek** | Slide, Tap, Kick, Ronde, Wave, Circle         | `sld`, `tp`, `kck`, `rnd`, `wav`, `cir` | Csúsztatás, Koppintás, Rúgás, Félkörív, Hullám, Körzés |
+| **Útvonal stílusok** | Direct, Looped, Scribble, Change of Direction | `dir`, `lop`, `scb`, `cod`              | Egyenes, Hurkolt, Firkálós, Irányváltó                 |
+
 
 #### C2: Idő- és Ritmusstruktúra (Az L2 szint kiszolgálására)
+
 A zenei idő, ritmikai egységek és ciklikus fázisok leírásának kategóriája.
 
-| Al-kategória | Fogalom (Full Name) | Feltételezett Példa Kód | Példa Jelentése |
-| --- | --- | --- | --- |
-| **Zenei fázisok** | Basic 1st Half, Basic 2nd Half, Break | `b1`, `b2`, `brk` | Alaplépés 1-4. üteme, Alaplépés 5-8. üteme, Szünet |
-| **Időzítési markerek** | Beat 1, Beat 2, Beat 5, Hastening | `1:`, `2:`, `5:`, `&` | Első ütésre, Második ütésre, Ötödik ütésre, Siettetett ütem |
+
+| Al-kategória           | Fogalom (Full Name)                   | Feltételezett Példa Kód | Példa Jelentése                                             |
+| ---------------------- | ------------------------------------- | ----------------------- | ----------------------------------------------------------- |
+| **Zenei fázisok**      | Basic 1st Half, Basic 2nd Half, Break | `b1`, `b2`, `brk`       | Alaplépés 1-4. üteme, Alaplépés 5-8. üteme, Szünet          |
+| **Időzítési markerek** | Beat 1, Beat 2, Beat 5, Hastening     | `1:`, `2:`, `5:`, `&`   | Első ütésre, Második ütésre, Ötödik ütésre, Siettetett ütem |
+
 
 #### C3: Interakciós és Kapcsolódási Jelzők (Az L3 szint kiszolgálására)
+
 A páros interakciók, szerepek, fogások és vezetés-követéses állapotváltozások kategóriája.
 
-| Al-kategória | Fogalom (Full Name) | Feltételezett Példa Kód | Példa Jelentése |
-| --- | --- | --- | --- |
-| **Szerepek** | Leader, Follower, Solo | `M` (vagy `ma`), `F` (vagy `la`), `S` | Vezető szerep, Követő szerep, Szóló szerep |
-| **Kapcsolódások** | Hand Crossed, Two Hands Crossed, Cuddle, Hold | `hx`, `2hx`, `cud`, `hld` | Keresztezett kéz, Kétkezes keresztfogás, Cuddle tartás, Fogás |
-| **Vezetés-követés** | Turnout, Turnback, Tension, Compression | `TO`, `TB`, `ten`, `cmp` | Kifordulás, Visszafordulás, Feszítés, Sűrítés |
+
+| Al-kategória        | Fogalom (Full Name)                           | Feltételezett Példa Kód               | Példa Jelentése                                               |
+| ------------------- | --------------------------------------------- | ------------------------------------- | ------------------------------------------------------------- |
+| **Szerepek**        | Leader, Follower, Solo                        | `M` (vagy `ma`), `F` (vagy `la`), `S` | Vezető szerep, Követő szerep, Szóló szerep                    |
+| **Kapcsolódások**   | Hand Crossed, Two Hands Crossed, Cuddle, Hold | `hx`, `2hx`, `cud`, `hld`             | Keresztezett kéz, Kétkezes keresztfogás, Cuddle tartás, Fogás |
+| **Vezetés-követés** | Turnout, Turnback, Tension, Compression       | `TO`, `TB`, `ten`, `cmp`              | Kifordulás, Visszafordulás, Feszítés, Sűrítés                 |
+
 
 #### C4: Összetett Láncolási és Szerkezeti Operátorok (Az L4 szint kiszolgálására)
+
 A mozgássorok időbeli és térbeli összekapcsolásának kategóriája.
 
-| Al-kategória | Fogalom (Full Name) | Feltételezett Példa Kód | Példa Jelentése |
-| --- | --- | --- | --- |
-| **Időbeli láncolás** | Sequence (Egymás utániság) | `-` | Szekvenciális elválasztó |
-| **Egyidejűség** | Simultaneous (Egyidejű akciók) | `&` vagy `+` | Szimultán elválasztó |
-| **Szerep-szétválasztás**| Role Colon (Szerep-hozzárendelés) | `:` | Szerep-művelet elválasztó |
+
+| Al-kategória             | Fogalom (Full Name)               | Feltételezett Példa Kód | Példa Jelentése           |
+| ------------------------ | --------------------------------- | ----------------------- | ------------------------- |
+| **Időbeli láncolás**     | Sequence (Egymás utániság)        | `-`                     | Szekvenciális elválasztó  |
+| **Egyidejűség**          | Simultaneous (Egyidejű akciók)    | `&` vagy `+`            | Szimultán elválasztó      |
+| **Szerep-szétválasztás** | Role Colon (Szerep-hozzárendelés) | `:`                     | Szerep-művelet elválasztó |
+
 
 ---
 
@@ -146,12 +161,11 @@ A mozgássorok időbeli és térbeli összekapcsolásának kategóriája.
 Minden olyan fogalomra, amely nem része a kiemelt szuper-rövid (C0-C4) zárt készletnek, az alábbi két standard rövidítési elv érvényes:
 
 1. **CPC-3 (Consonant Pattern Coding - 3 betűs):**
-   A szavakból kivonjuk a magánhangzókat, és az első három mássalhangzót tartjuk meg.
-   - *Feltételezett példa:* `glide` $\rightarrow$ `gld`, `mambo` $\rightarrow$ `mmb`.
-
+  A szavakból kivonjuk a magánhangzókat, és az első három mássalhangzót tartjuk meg.
+  - *Feltételezett példa:* `glide` $\rightarrow$ `gld`, `mambo` $\rightarrow$ `mmb`.
 2. **Kimondhatósági Kivétel (Pronounceability Exception):**
-   Ha a CPC-3 kód nehezen kimondható vagy nem elég intuitív az összetett szavakban, a **kimondhatóság és a hagyomány kedvéért prefix/fonetikus csonkolást** használunk (szótag-alapú rövidítés).
-   - *Feltételezett példa:* `long` $\rightarrow$ `lon` (a nehezen kiejthető `lng` helyett), `short` $\rightarrow$ `sho` (a `shr` helyett), `caminando` $\rightarrow$ `cami`, `cucaracha` $\rightarrow$ `cuca`.
+  Ha a CPC-3 kód nehezen kimondható vagy nem elég intuitív az összetett szavakban, a **kimondhatóság és a hagyomány kedvéért prefix/fonetikus csonkolást** használunk (szótag-alapú rövidítés).
+  - *Feltételezett példa:* `long` $\rightarrow$ `lon` (a nehezen kiejthető `lng` helyett), `short` $\rightarrow$ `sho` (a `shr` helyett), `caminando` $\rightarrow$ `cami`, `cucaracha` $\rightarrow$ `cuca`.
 
 A rendszer a Szuper Rövidítés 2. fázisában (használati statisztika) folyamatosan méri, hogy a standard CPC-3 vagy kimondhatósági kódok közül melyek érik el azt a használati gyakoriságot, ami indokolttá teszi a C0-C4 szuper-rövid kategóriákba való felminősítésüket.
 
@@ -161,7 +175,7 @@ A rendszer a Szuper Rövidítés 2. fázisában (használati statisztika) folyam
 
 *(Megjegyzés: Az ebben a fejezetben és a dokumentum további részeiben szereplő kódok és rövidítések kizárólag feltételezett, nem előre eldöntött, illusztratív példák!)*
 
-A kódok láncolatának minimalizálása érdekében egy **hibrid rendszert** alkalmazunk: ahol a CamelCase egyértelmű és kompakt, ott azt használjuk; ahol viszont kétértelműség vagy strukturális tagolás szükséges, ott kötelezően bevezetjük a pont (`.`) vagy space (` `) karakterek használatát.
+A kódok láncolatának minimalizálása érdekében egy **hibrid rendszert** alkalmazunk: ahol a CamelCase egyértelmű és kompakt, ott azt használjuk; ahol viszont kétértelműség vagy strukturális tagolás szükséges, ott kötelezően bevezetjük a pont (`.`) vagy space ( ``) karakterek használatát.
 
 ### A. Mikor használunk CamelCase-t? (Takarékos láncolás)
 
@@ -200,6 +214,7 @@ A 8-ütéses (8/4) ritmusú rendszerek zenei szintaktikáját szigorúan megőri
 *(Megjegyzés: A Span és Track operátorok jelenleg kidolgozás/megvitatás alatt állnak, a végleges szintaktika változhat!)*
 
 ### A. Pontszerű Zenei Markerek (Hit)
+
 - **Ritmikai képlet:** `**12 + 34 & 56 + 78`**
 - **Időzítési marker (`X:`):** A számérték és a kettőspont jelzi a konkrét zenei ütésre történő mozgásokat.
   - `**1:`** = Első ütésre történő mozgás (pl. `1:bwdCami` - lépés hátra az 1-re).
@@ -207,20 +222,43 @@ A 8-ütéses (8/4) ritmusú rendszerek zenei szintaktikáját szigorúan megőri
   - `**5&6:`** = Siettetett, sűrített ütemek (hastening).
 
 ### B. Időtartam Operátor (Span) - Egyszerű párhuzamosság (TERVEZET)
+
 Amikor egy mozdulat (pl. egy karmozdulat) átível több lépésen, a kötőjel (`-`) használható az időtartam kifejezésére, amelyet a `+` vagy `&` kapcsol a lépésekhez.
+
 - *Példa:* `1-4:upCu & 1:l 2:r 3:l` (Az 1-4. ütés alatt folyamatos upper curve, miközben 1, 2, 3-ra lépünk).
 
 ### C. Relatív Horgonyzás (Structural Anchoring) - Pedagógiai szint
+
 Nem kötelező számokat használni. A kitartott mozdulat ráköthető egy ismert zenei/lépés blokkra, mint tulajdonság.
+
 - *Példa:* `b1(upCu)` vagy `upCu.b1` -> "Csináld a Basic első felét, és közben csinálj egy upCu-t."
 
 ### D. Sáv-alapú Bontás (Track/Voice Separation) - Kutatói szint (TERVEZET)
+
 Komplex izolációknál (ahol a testrészek független ritmikát táncolnak) a kódot névterekre (sávokra) bontjuk, amit a UI egy kottaszerű Timeline nézetben vizualizál:
 - *Szöveges kód:* `Legs[1:l 2:r 3:l] & Arms[1-4:upCu]`
 
 ---
 
-## 6. Rövidítési Skála-Spektrum (ASS - Abbreviation Scale Spectrum)
+## 6. Vektor és Dinamika Operátorok (Adverbs of Movement)
+
+A mozgás irányának, eredetének és mikro-dinamikájának leírására a rendszer egyedi szimbólumokat (operátorokat) használ. Ezek célja a kód tömörítése és a hosszú angol határozószók (from, to, around, spin) vizuális kiváltása. A UI felületeken ezeket gyorsgombokról (Kód-paletta) is el lehet érni.
+
+### A. Irány és Vektor Operátorok (Térbeli mozgás)
+
+- `>` **Cél / Irány (To / Towards / Transition into):** A mozdulat vagy átmenet célpontja. Valahová tart, valamivé válik.
+  - *Példa:* `2h > hlock` (Kétkezes fogásból átmenet hand-lock pozícióba).
+- `<` **Eredet / Honnan (From / Originating from):** A mozdulat vagy impulzus kiindulópontja.
+  - *Példa:* `<chest` (A mellkasból induló mozdulat/impulzus).
+
+### B. Dinamika és Kinetika Operátorok
+
+- `*` **Forgás / Pördülés tengelye (Rotation / Spin axis rajta álló lábon):** A súlyláb talajon való elfordulását vagy egy extra mikrotengelyt jelöl.
+  - *Példa:* `*lFoot` (Tengelyfordulat a bal lábon).
+
+---
+
+## 7. Rövidítési Skála-Spektrum (ASS - Abbreviation Scale Spectrum)
 
 A pontok felesleges burjánzásának elkerülésére és a kódok hosszának minimalizálására bevezetjük a **Rövidítési Skála-Spektrum (ASS)** elvét. Minden fogalomhoz a szótárban több tömörítési szintet rendelünk hozzá, amelyek között a rendszer szükség esetén lépked.
 
@@ -235,15 +273,15 @@ A pontok felesleges burjánzásának elkerülésére és a kódok hosszának min
 
 **Gyakorisági vs. Atomizációs Prioritás (Frequency vs Atomicity Priority):**
 A L1 és L2 szuperrövidítések odaítélése nem tisztán az atomizációs szinten múlik, hanem a **statisztikai gyakoriság és az atomizáltság egyensúlyán**. 
-- *A sarokkő esetek kezelése (Corner cases):* Például a `basic` (összetett) és a `back` (atomi irány) is a `b` betűre pályázik. Bár a `back` atomibb, a `basic` szót nagyságrendekkel gyakrabban használjuk egy táncleírásban. Ezért a `basic` kapja meg a Level 1-es `**b**` kódot, míg a `back` hátrébb tolódik a skálán a Level 2-es `**ba**` kódra.
-- *Szófaj/tulajdonság elkülönítése (Type disambiguation):* Hogy elkerüljük az irány és a testrész keveredését, a `back` (mint hátra irány) marad a rövid `**ba**` (L2), de a `back` (mint a hát, testrész) még hátrébb tolódik az L3 szintre, például `**bck**` formában. Így az irány és a testrész sosem keveredik össze vizuálisan.
+
+- *A sarokkő esetek kezelése (Corner cases):* Például a `basic` (összetett) és a `back` (atomi irány) is a `b` betűre pályázik. Bár a `back` atomibb, a `basic` szót nagyságrendekkel gyakrabban használjuk egy táncleírásban. Ezért a `basic` kapja meg a Level 1-es `**b`** kódot, míg a `back` hátrébb tolódik a skálán a Level 2-es `**ba**` kódra.
+- *Szófaj/tulajdonság elkülönítése (Type disambiguation):* Hogy elkerüljük az irány és a testrész keveredését, a `back` (mint hátra irány) marad a rövid `**ba*`* (L2), de a `back` (mint a hát, testrész) még hátrébb tolódik az L3 szintre, például `**bck**` formában. Így az irány és a testrész sosem keveredik össze vizuálisan.
 
 ### B. Dinamikus Ütközésfeloldó Protokoll (Collision Resolution):
 
 Amikor összetett szavakat képzünk (pl. *Left Arm*), a szoftveres motor megpróbálja az L1 + L1 formát alkalmazni, szigorúan **CamelCase** formátumban maradva. Ha ütközést észlel egy bázisfogalommal, bekapcsol a **Tömörítési Skála Elmozdulás (Compression Shift Rule)**. A rendszer az alábbi elvek alapján dönti el, hogy melyik szót léptesse fel a 2-karakteres (Level 2) szintre:
 
 - **Domain-Specifikus Szó Prioritása (Domain-Specific Noun Priority):** A szigorú, univerzális minősítők (mint az `l` - left, `r` - right) a legstabilabb alapkövek. Ütközés esetén **először mindig a domain-specifikus főnevet (itt az "arm"-ot) léptetjük fel** az L2 szintre, és az univerzális minősítőt hagyjuk L1-en. Ez biztosítja a legnagyobb vizuális egyértelműséget.
-
 - **Kísérlet #1 (L1 + L1):** `l` + `a` $\rightarrow$ `**la`**
   - *Státusz:* **ÜTKÖZIK** a `la` (lady / follower) bázisszóval. -> **REJECTED**
 - **Kísérlet #2 (L2-Modifier + L1-Noun):** `left` L2 formája (`le`) + `arm` L1 formája (`A`) $\rightarrow$ `**leA`**
@@ -255,7 +293,7 @@ Ez a megközelítés garantálja, hogy a kódok mérete a lehető legkisebb mara
 
 ---
 
-## 7. Általános - Speciális Tengely és Induktív Fogalom-Felfedezés (General-Specific Axis & Inductive Discovery)
+## 8. Általános - Speciális Tengely és Induktív Fogalom-Felfedezés (General-Specific Axis & Inductive Discovery)
 
 A rendszer támogatja a mozgások általános-speciális hierarchiájának kezelését, elkerülve a redundanciát, és támogatva az oktatást mind deduktív (kísérleti variációk ajánlása), mind induktív (új alapfogalmak javaslása a gyakori sémák alapján) módon.
 
@@ -291,10 +329,9 @@ Ezzel a módszerrel az új variáció közvetlen **szülő-gyermek (parent-child
 *Szintaktikai Javaslat (Csere operátor):* `AlapFogalom[eredeti_komponens -> új_komponens]`
 
 1. **Példa (Salsa On1 Basic Step módosítása):**
-   - Alapfogalom: `salsaOn1Basic` (amely magában foglalja a "collector" karmozdulatot a zenei kérdés alatt).
-   - Új variáció: A "collector" kar helyett "colCod" (collector change of direction).
-   - Diff kód: `**salsaOn1Basic[collector -> colCod]**` (vagy rövidítve: `b1[col -> colCod]`).
-
+  - Alapfogalom: `salsaOn1Basic` (amely magában foglalja a "collector" karmozdulatot a zenei kérdés alatt).
+  - Új variáció: A "collector" kar helyett "colCod" (collector change of direction).
+  - Diff kód: `**salsaOn1Basic[collector -> colCod]*`* (vagy rövidítve: `b1[col -> colCod]`).
 2. **Értelmezés:** A compiler ezt úgy olvassa, hogy "Vedd a `salsaOn1Basic` teljes fájlfáját, keresd meg benne a `collector` komponenst, és cseréld le a `colCod` komponensre". Ez minimalizálja a gépelést és azonnal érthető, miközben strukturális pontosságot ad.
 
 A kutatás-fejlesztés felgyorsítására a rendszer tartalmaz egy logikai generátort, amely az alábbi dimenziók mentén állít elő új, még nem létező variációkat (kísérleti feladatokat):

@@ -31,3 +31,14 @@ Kezdeti állapot: A MASTER_CONCEPT.md frissítése a Hibrid Idővonal-Modellel (
   - A `MASTER_CONCEPT.md` 5. fejezetébe (Ritmikai Szintaktika) bekerült a **Hibrid Idővonal-Modell** koncepciója. Bemutat 4 szintet: Pontszerű (Hit) -> `1:l`, Időtartam (Span) -> `1-4:upCu`, Relatív Horgonyzás -> `b1(upCu)`, Sáv-alapú bontás (Track/Voice) -> `Legs[...] & Arms[...]`. Jelölve lett, hogy ez "TERVEZET", tehát még kidolgozás alatt áll.
   - A 7. fejezetbe bekerült a **Diff-alapú Megfogalmazás (Helyettesítés)**. Szintaktikai javaslat: `AlapFogalom[eredeti_komponens -> új_komponens]`. Példaként felhozva a `salsaOn1Basic[collector -> colCod]`. Ez pontos, tömör, minimalizálja a gépelést és automatikus `parent_term_id` kapcsolatot hoz létre a háttérben.
   - A MASTER_CONCEPT.md verziószáma **v2.8.0**-ra frissült.
+
+### Beszélgetés #12 (2026-06-08)
+- **User kérése:**
+  - Kinetikai operátorok (határozószók) bevezetése a mozgás leírására, vizuálisan intuitív, billentyűzetről könnyen elérhető karakterekkel (from, to, spin, stb.).
+  - Az "L1: Atomi Műveletek és Kinetika" didaktikai szint (2. fejezet) kategorizálásának pontosítása. A "Szabadságfokok" kiegészítése elemi testmozdulatokkal (homorítás, domborítás, csavarás, stb.). A "Végtag Műveletek" átnevezése/kiegészítése egy új kategóriával: "Kiegyenlítő Mozdulatpárok" (olyan komplementer mozdulatok, amelyek a test alsó/felső központjában kiegyensúlyozott csendet, referenciapont-stabilitást hoznak létre).
+- **Tervezés és Megoldások:**
+  - Létrehoztam a 6. fejezetet: **Vektor és Dinamika Operátorok (Adverbs of Movement)**. Bevezettük az irány és vektor operátorokat (`>` cél/átmenet, `<` eredet/honnan), valamint a dinamika operátort (`*` tengelyfordulat a súlylábon). Ezzel kiválthatók a hosszú angol prepozíciók.
+  - A 2. fejezet L1-es szintjét újraírtam az új kategorizálás alapján:
+    - **Elemi Testmozdulatok és Szabadságfokok:** ízületi rotációk, plusz alapvető kinetikus akciók (homorítás, domborítás, bump, stb.).
+    - **Kiegyenlítő Mozdulatpárok (Compensatory / Counter-Balancing Gestures):** Új kategória a referenciapont mozdulatlanságát garantáló, testrészek közötti egyensúlyt teremtő mozdulatpárokra (pl. csípő kitolása vs. ellentétes kar nyújtása, azonos oldali lábkör és karkör).
+  - A MASTER_CONCEPT.md verziószáma **v2.9.0**-ra frissült, a módosításokat commitoltam és pusholtam.
