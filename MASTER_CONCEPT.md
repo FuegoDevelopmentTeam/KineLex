@@ -1,6 +1,6 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 2.6.0 (Super-Abbreviation Process & Aligned Categories & UI Font & Collision Resolution)
+Version: 2.7.0 (Frequency vs Atomicity Priority)
 Date: 2026-06-07
 
 ## 1. Rendszer-architektúra és Filozófia
@@ -217,6 +217,11 @@ A pontok felesleges burjánzásának elkerülésére és a kódok hosszának min
   - *Példa:* `arm` $\rightarrow$ `**ar`**.
 3. **Level 3 (Standard / CPC-3 - 3 karakter):** CPC-3 alapú mássalhangzós kód vagy pronouncable szótag (pl. `left` -> `**lft`**, `glide` -> `**gld`**).
 4. **Level 4 (Full Word):** A fogalom teljes angol kiírása (pl. `left`, `arm`).
+
+**Gyakorisági vs. Atomizációs Prioritás (Frequency vs Atomicity Priority):**
+A L1 és L2 szuperrövidítések odaítélése nem tisztán az atomizációs szinten múlik, hanem a **statisztikai gyakoriság és az atomizáltság egyensúlyán**. 
+- *A sarokkő esetek kezelése (Corner cases):* Például a `basic` (összetett) és a `back` (atomi irány) is a `b` betűre pályázik. Bár a `back` atomibb, a `basic` szót nagyságrendekkel gyakrabban használjuk egy táncleírásban. Ezért a `basic` kapja meg a Level 1-es `**b**` kódot, míg a `back` hátrébb tolódik a skálán a Level 2-es `**ba**` kódra.
+- *Szófaj/tulajdonság elkülönítése (Type disambiguation):* Hogy elkerüljük az irány és a testrész keveredését, a `back` (mint hátra irány) marad a rövid `**ba**` (L2), de a `back` (mint a hát, testrész) még hátrébb tolódik az L3 szintre, például `**bck**` formában. Így az irány és a testrész sosem keveredik össze vizuálisan.
 
 ### B. Dinamikus Ütközésfeloldó Protokoll (Collision Resolution):
 

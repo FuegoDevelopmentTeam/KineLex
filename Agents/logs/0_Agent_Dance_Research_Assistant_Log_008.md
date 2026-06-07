@@ -14,11 +14,13 @@ Kezdeti állapot: A MASTER_CONCEPT.md frissítése a Vizuális Disambiguáció (
   7. **Felhasználási Gradiens & Pedagógia (v2.3.0):** Képesség alapú gradiens (Tanár vs Kutató), Pedagógiai modul (K1-K3 bizonyosság), Shakespeare-szonett probléma (koreográfia vs improvizáció), Atomizáció-vezérelt absztrakció.
   8. **Role-Aware Matrix & Retroactive Skill Distribution (v2.4.0 - v2.5.0):** Role (Leader/Follower) oszlop bevezetése. Visszamenőleges tudás-szétosztás a fuzzy fogalmak dekonstrukciójakor (Bizonyosság-örökítés, Idempotencia).
   9. **Vizuális Disambiguáció & CamelCase Ütközésfeloldás (v2.6.0):** Pont (.) operátor funkciójának korlátozása csak a szülő-gyermek/hierarchikus viszonyra. A CamelCase szóösszetételeknél az ütközésfeloldást a "Tömörítési Skála Elmozdulás" (Compression Shift Rule) kezeli, prioritást adva a Domain-Specifikus főnevek L2-re emelésének (pl. `l` + `a` = `la` ütközik a lady-vel -> `lAr` lesz, nem `leA`). Kötelező UI font szabályok (ligatúra nélküli monospace/sans-serif a kódolvashatóságért).
+  10. **Gyakorisági vs. Atomizációs Prioritás (v2.7.0):** Szuperrövidítések (L1, L2) kiosztási logikájának finomítása. A statisztikai gyakoriság felülírja a tisztán atomizációs szintet (pl. `basic` = `b`, `back` irány = `ba`). Továbbá a szófajok/tulajdonságok elkülönítése a skálán (pl. `back` mint irány `ba`, `back` mint hát `bck`).
 
 - **Rendszerszintű Igazságok (MASTER_CONCEPT-be rögzítve):**
   - **Nyelvi mag:** Lexikalizáció, egykarakteres CamelCase, Hanyag defaults.
   - **Szabály-Hierarchia & Compression Shift:** Ütközéskor CamelCase marad, a specifikus főnevet emeljük L2 szintre (`lAr` a `leA` helyett) a vizuális egyértelműségért. Pont csak hierarchiára használható (`body.arm.left`).
   - **Vizuális Disambiguáció (UI):** Szigorú frontend betűtípus követelmények az "l", "I" és "1" összetéveszthetősége miatt.
+  - **Gyakorisági Prioritás & Szófaj Elkülönítés:** A rövidítések (L1/L2) kiosztása a használati gyakoriság és az atomizáltság egyensúlyán alapul. Az azonos szavak különböző szófajai/jelentései el vannak tolva a skálán (pl. `b`, `ba`, `bck`), hogy elkerüljük az ütközést és egyértelmű legyen a jelentés.
   - **OntoShift & Retroactive Distribution:** Absztraktabb szülő felfedezésekor a hierarchia frissül. Atomizáláskor a komponensek visszamenőleg jóváíródnak a diákok skill-mátrixában.
   - **Didaktikai Scaffolding & Dynamic Aliasing:** Megértési állapotok (scaffold/precise/deconstructed). Személyre szabott álnevek a tanároknak, Rosetta Stone a háttérben.
   - **Felhasználási Gradiens & Pedagógiai Modul:** T0-T4 jogosultsági rétegek. K1 (Részvétel), K2 (Begyakorlottság), K3 (Minőség) tudásszintek Role megjelöléssel. Improvizációs vs memorizált tudás megkülönböztetése.
@@ -37,3 +39,13 @@ Kezdeti állapot: A MASTER_CONCEPT.md frissítése a Vizuális Disambiguáció (
   - A 4. fejezet (Hibrid szeparáció) módosítása: A pont operátort szigorúan korlátoztuk a szülő-gyermek és hierarchikus névterekre (pl. `body.arm.left`). Tilos szavak lineáris elválasztására használni.
   - A 6. fejezet (Dinamikus Ütközésfeloldó Protokoll) frissítése: Bevezetve a **Tömörítési Skála Elmozdulás (Compression Shift Rule)** és a **Domain-Specifikus Szó Prioritása**. Logika: Az univerzális minősítők (`l`, `r`) maximálisan tömör (L1) formában tartandók, mert ezek a legbiztosabb vizuális horgonyok. Ütközéskor a domain-specifikus főnevet emeljük fel L2 szintre. Ez alapján az `lAr` (L1 minősítő + L2 főnév) nyer a `leA` felett.
   - A verziószámot **v2.6.0**-ra emeltük.
+
+### Beszélgetés #10 (2026-06-07)
+- **User kérése:**
+  - A szuperrövidítések (L1, L2) ereje ne pusztán az atomizáltsági szinttől függjön, hanem a statisztikai gyakoriságtól (használat) is. 
+  - Példa: A `basic` sokkal gyakrabban használt, mint a `back`. Így a `basic` legyen `b`, és a `back` (bár atomibb) tolódjon hátrébb a skálán és legyen `ba`.
+  - Szófaj/típus szerinti elkülönítés: Ha a `back` mint irány `ba`, akkor a `back` mint testrész (hát) legyen ettől megkülönböztetve (pl. `bck`), hogy a különböző tulajdonságú fogalmak ne keveredjenek össze.
+- **Tervezés és Megoldások:**
+  - A `MASTER_CONCEPT.md` 6. fejezetében (ASS - Rövidítési Skála-Spektrum) a minimalizált tömörítési szintek részhez hozzáadtam a **Gyakorisági vs. Atomizációs Prioritás (Frequency vs Atomicity Priority)** szabályát.
+  - Dokumentálva lettek a "sarokkő esetek" (corner cases) a statisztikai elv alapján: a gyakoriság megelőzi a puszta atomizáltságot. A szófajok és tulajdonságok (irány vs. testrész) közötti disambiguációt is integráltam (ugyanaz a szó, eltérő funkcióban a skála különböző szintjeit kapja).
+  - A verziószámot **v2.7.0**-ra emeltük, és commitoltuk a repóba.
