@@ -1,6 +1,6 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 3.3.0 (Movement Abstraction Layers Refinement)
+Version: 3.4.0 (Super & Standard AAA Adaptive Synergy)
 Date: 2026-06-08
 
 Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen salsa, mambo vagy "on2" salsa, bachata, chachacha, jazztánc, contemporary) leírására és ezáltal oktatási rendszerbe foglalására.
@@ -67,11 +67,13 @@ A legmagasabb absztrakciós szint, amely a korábbi elemek hosszabb, tudatos kom
 
 ---
 
-## 3. Egységesített Rövidítési Algoritmus 2.0 (UAA 2.0) és a Szuper Rövidítés Folyamata
+## 3. Adaptív Rövidítési Algoritmus és Szótár Verziók (AAA & Vocabulary Versions)
+
+### A. Szuper Rövidítés (Super AAA)
 
 A leíró nyelv kódjainak tömörsége és írási sebessége érdekében a rendszer a **Szuper Rövidítés (Super-Abbreviation / SA)** folyamatát alkalmazza. Ahelyett, hogy a rövidítéseket statikusan és változtathatatlanul rögzítenénk ebben a koncepcióban, egy dinamikus, használat-alapú és verziózható szótárkezelő rendszert vezetünk be.
 
-### A. A "Szuper Rövidítés" Életciklusa és Folyamata (The Super-Abbreviation Lifecycle)
+### 1. Életciklusa és Folyamata (The Super-Abbreviation Lifecycle)
 
 A Szuper Rövidítés nem egy statikus táblázat, hanem egy háromfázisú, folyamatosan fejlődő és önjavító nyelvi életciklus:
 
@@ -88,9 +90,7 @@ A Szuper Rövidítés nem egy statikus táblázat, hanem egy háromfázisú, fol
   - **Lektorálási és Validálási Folyamat (Review & Validation Gateway):** A kutatói felületen megjelenik a javaslat (pl. *"A 'cuddle' fogalom előfordulása meghaladta a küszöbértéket. Javasoljuk a 'cud' vagy 'cd' szuper-rövidítés bevezetését v1.1-ként"*). A kutató lektorálhatja, módosíthatja vagy elvetheti a javaslatot.
   - **Visszamenőleges Frissítés (Retroactive Migration Pipeline):** Amikor a kutató jóváhagyja az új szótárverziót, az **automatikus refaktorizációs pipeline** (lásd 10.D fejezet) értesítést dob és kérésre végigfut az adott tanár (kutatói hozzáfárásnél pedig az összes beállított tanár) összes történelmi óravázlatán, videó-időbélyegen és a diákok skill-mátrixán, és a háttérben az AST parser segítségével **visszamenőlegesen frissíti (updateli) a múltbeli kódolt leírásokat** az új rövidítésekre, garantálva a 100%-os adatintegritást és a történelmi konzisztenciát.
 
----
-
-### B. Új Kategória-rendszer a Szuper Rövidítésekhez (Aligned Abstraction Categories)
+### 2. Szuper Rövidítések Kategóriái (Abstraction Aligned Categories)
 
 A Szuper Rövidítések kategóriáit a **2. pont Didaktikai Szintjeivel (Abstraction Layers)** tökéletes harmóniában, az alábbi új struktúra szerint határozzuk meg. 
 
@@ -128,7 +128,7 @@ A zenei idő, ritmikai egységek és ciklikus fázisok leírásának kategóriá
 | Al-kategória           | Fogalom (Full Name)                   | Feltételezett Példa Kód | Példa Jelentése                                             |
 | ---------------------- | ------------------------------------- | ----------------------- | ----------------------------------------------------------- |
 | **Zenei fázisok**      | Basic 1st Half, Basic 2nd Half, Break | `b1`, `b2`, `brk`       | Alaplépés 1-4. üteme, Alaplépés 5-8. üteme, Szünet          |
-| **Időzítési markerek** | Beat 1, Beat 2, Beat 5, Hastening     | `1:`, `2:`, `5:`, `&`   | Első ütésre, Második ütésre, Ötödik ütésre, Siettetett ütem |
+| **Időzítési markerek** | Beat 1, Beat 2, Beat 5, Hastening     | `1:`, `2:`, `5:`, `'`   | Első ütésre, Második ütésre, Ötödik ütésre, Siettetett ütem |
 
 
 #### C3: Interakciós és Kapcsolódási Jelzők (Az L3 szint kiszolgálására)
@@ -148,16 +148,16 @@ A páros interakciók, szerepek, fogások és vezetés-követéses állapotvált
 A mozgássorok időbeli és térbeli összekapcsolásának kategóriája.
 
 
-| Al-kategória             | Fogalom (Full Name)               | Feltételezett Példa Kód | Példa Jelentése           |
-| ------------------------ | --------------------------------- | ----------------------- | ------------------------- |
-| **Időbeli láncolás**     | Sequence (Egymás utániság)        | `-`                     | Szekvenciális elválasztó  |
-| **Egyidejűség**          | Simultaneous (Egyidejű akciók)    | `&` vagy `+`            | Szimultán elválasztó      |
-| **Szerep-szétválasztás** | Role Colon (Szerep-hozzárendelés) | `:`                     | Szerep-művelet elválasztó |
+| Al-kategória                       | Fogalom (Full Name)                             | Feltételezett Példa Kód | Példa Jelentése                                                                                                           |
+| ---------------------------------- | ----------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| **Időbeli láncolás**               | Sequence (Egymás utániság)                      | `-`                     | Szekvenciális ütem elválasztó                                                                                             |
+| **Ütemen belüli időbeli láncolás** | In Beat Sequence (Ütemen belüli egymásutániság) | `&` vagy `+`            | Szétválasztja az ütemet zenei kérdésre és válaszra (pl. 1234 & 5678) Kettéválasztja a zenei ütemet (pl. 12+34 vagy 56+78) |
+| **Szerep-szétválasztás**           | Role Colon (Szerep-hozzárendelés)               | `:`                     | Szerep-művelet elválasztó                                                                                                 |
 
 
 ---
 
-### C. Standard Fogalmak Rövidítési Elvei (UAA 2.0 Standard Rules)
+### B. Standard Rövidítési Elvek (Standard AAA Rules)
 
 Minden olyan fogalomra, amely nem része a kiemelt szuper-rövid (C0-C4) zárt készletnek, az alábbi két standard rövidítési elv érvényes:
 
@@ -169,6 +169,21 @@ Minden olyan fogalomra, amely nem része a kiemelt szuper-rövid (C0-C4) zárt k
   - *Feltételezett példa:* `long` $\rightarrow$ `lon` (a nehezen kiejthető `lng` helyett), `short` $\rightarrow$ `sho` (a `shr` helyett), `caminando` $\rightarrow$ `cami`, `cucaracha` $\rightarrow$ `cuca`.
 
 A rendszer a Szuper Rövidítés 2. fázisában (használati statisztika) folyamatosan méri, hogy a standard CPC-3 vagy kimondhatósági kódok közül melyek érik el azt a használati gyakoriságot, ami indokolttá teszi a C0-C4 szuper-rövid kategóriákba való felminősítésüket.
+
+### C. A Két Elv Harmonikus Együttműködése (The Adaptive Synergy)
+
+A Super AAA és a Standard AAA nem két versengő, független rendszer, hanem egyazon **adaptív nyelvi életciklus** szorosan együttműködő két fázisa. A két elv harmonizációja a következő pilléreken nyugszik:
+
+1. **A Keltető és a Hírességek Csarnoka (Incubator vs. Hall of Fame):** 
+   - A *Standard AAA* a "Keltető": Determinisztikus és szabályalapú. Minden újonnan létrejött vagy ritkán használt fogalom automatikusan kap egy CPC-3 vagy szótag-alapú kódot a rendszertől. Biztonságos, garantálja, hogy a fogalom azonnal és egyértelműen hivatkozható legyen, anélkül, hogy emberi döntést igényelne (bár 3 karakteres, picit hosszabb formában).
+   - A *Super AAA* a "Hírességek Csarnoka": Szemantikailag kurátori, ember (T4 kutató) által menedzselt zárt halmaz. Ide a szabályok tudatos "megtörésével" csak a statisztikailag leginkább használt, központi fogalmak léphetnek be, elfoglalva a privilegizált 1 vagy 2 karakteres rövidítéseket.
+
+2. **Kétirányú Ozmózis (Bi-directional Osmosis):**
+   - *Felminősítés (Promotion):* Ha egy Standard kód (pl. `cuca` a cucarachára) a tanárok használati statisztikájában átlép egy küszöböt, a rendszer automatikusan felajánlja a T4 kutatóknak a fogalom Super AAA szintre történő emelését (pl. `cc` vagy `cu` kódra).
+   - *Lefokozás (Demotion):* Mivel az 1 és 2 karakteres névtér (namespace) véges és rendkívül értékes, ha egy trend lecseng és egy korábbi Super AAA kód használata statisztikailag elsorvad, a rendszer felajánlhatja annak visszaminősítését Standard szintre (3 betűre). Ezzel az elit helyek mindig a valóban releváns fogalmaknak vannak fenntartva.
+
+3. **Zökkenőmentes Identitás-Megőrzés (Seamless Identity Preservation):**
+   A harmonikus működés technikai alapja az, hogy egy mozdulat (szemantikai DNA / UUID) identitása állandó. Ha egy fogalom a Standard AAA-ból átlép a Super AAA-ba, a rövidítése megváltozik, de az adatbázisban a `term_id` ugyanaz marad. A **Verziózott Szótár (12.D)** és az automatikus migrációs pipeline miatt a tanár akár a régi (Standard), akár az új (Super) rövidítést írja be, a fordítómotor (compiler) felismeri azt, és a "Legújabb Nézetben" (Latest View) már a szuper-rövidített verziót fogja megjeleníteni, nulla kód-törést (breaking change) okozva a történelmi óravázlatokban.
 
 ---
 
