@@ -1,6 +1,6 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 4.2.0 (Expanded ASS Scale & Intuitive Cognitive Completion)
+Version: 4.2.1 (Expanded ASS Scale & Intuitive Cognitive Completion)
 Date: 2026-06-08
 
 Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen salsa, mambo vagy "on2" salsa, bachata, chachacha, jazztánc, contemporary) leírására és ezáltal oktatási rendszerbe foglalására.
@@ -127,9 +127,9 @@ Mivel a tánc tele van komplex és hasonló fogalmakkal, az L1-L3 tartomány nem
 
 ### B. Intuitivitást Elősegítő Harmonizáló Elv (Intuitive Cognitive Completion Rule)
 
-A 4, 5, 6 karakteres rövidítések generálásakor a puszta magánhangzó-kivonás vagy szótagolás már nem elég hatékony. Az emberi agy "első ránézésre kiegészíti" élményének (cognitive completion) garantálásához a két módszert **váltogatva, egy harmonizáló algoritmus** szerint alkalmazzuk:
+A 3, 4, 5 és 6 karakteres rövidítések generálásakor a puszta magánhangzó-kivonás vagy szótagolás már nem mindig elég hatékony. Az emberi agy "első ránézésre kiegészíti" élményének (cognitive completion) garantálásához a két módszert **váltogatva, egy harmonizáló algoritmus** szerint alkalmazzuk:
 
-- **A Szabály Hierarchiája 8+ karakteres szavaknál:**
+- **A Szabály Hierarchiája 3+ karakteres szavaknál:**
   1. A rövidítésnek mindig az **eredeti szótag-határokat (Syllable Boundaries)** vagy a **kulcs-mássalhangzókat (Key Consonants)** kell megcéloznia.
   2. Ha a csonkolt szótag-vég magánhangzóra esne, és ez rontaná a szó vizuális sűrűségét, a következő kulcs-mássalhangzót húzzuk be.
   3. A szóvégi szuffixumokat (`-tion`, `-nal`, `-lum`) drasztikusan (mássalhangzókra) sűrítjük a hosszabb kódoknál.

@@ -126,3 +126,11 @@ Kezdeti állapot: A MASTER_CONCEPT.md frissítése a Hibrid Idővonal-Modellel (
   - A 4.B fejezetben kidolgoztam az **Intuitivitást Elősegítő Harmonizáló Elv (Intuitive Cognitive Completion Rule)** szabályát 8+ karakteres szavakra. A rövidítések a szótaghatárokra és a kulcs-mássalhangzókra épülnek, sűrítve a szóvégeket (`-tion`, `-lum`). A `pendulum` és `external` szavak példáján bemutatva a kognitív L1-L6 feloldást.
   - A 4.D fejezetbe (Ütközésfeloldás) bekerült a **Rokonértelmű Kifejezések Felajánlása (Synonym Suggestion Strategy)**: ha az elmozdulás sem menti meg az alaki ütközést (pl. `rot` már foglalt), a rendszer szinonimát (pl. `spin` -> `spn`) ajánl fel.
   - A MASTER_CONCEPT.md verziószámát **v4.2.0**-ra emeltem, a módosításokat commitoltam és pusholtam.
+
+### Beszélgetés #21 (2026-06-08)
+- **User kérése:**
+  - Az "Intuitivitást elősegítő harmonizáló elv" (ICCR) kiterjesztése: ne csak a 8+ karakteres szavakra vonatkozzon, hanem már a 3+ karakteres szavakra is érvényes legyen, hiszen a rövidebb szavak is igényelhetik a szótag/mássalhangzó alapú kognitív feloldást a 3-6 karakteres tartományban.
+- **Tervezés és Megoldások:**
+  - A 4.B fejezetben az ICCR szabály hatályát "8+ karakteres szavaknál"-ról **"3+ karakteres szavaknál"**-ra módosítottam.
+  - Szöveges pontosítás: A 4, 5, 6 karakteres rövidítések mellet a "3, 4, 5 és 6 karakteres" megfogalmazást alkalmaztam, illetve finomítottam, hogy "már nem mindig elég hatékony" a puszta kivonás.
+  - A MASTER_CONCEPT.md verziószámát **v4.2.1**-re emeltem, a módosításokat commitoltam és pusholtam.
