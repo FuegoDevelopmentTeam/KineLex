@@ -60,3 +60,14 @@ Kezdeti állapot: A MASTER_CONCEPT.md frissítése a Hibrid Idővonal-Modellel (
   - A `MASTER_CONCEPT.md` 7. fejezetébe (ASS - Rövidítési Skála-Spektrum) bekerült az **Értelmezhetőségi Szóösszevonási Szabály (Interpretability Merge Rule)**. E szerint a tiltó vagy ellentétes értelmű előtagok (pl. `in-`, `un-`, `non-`) kivételt képeznek a maximális tömörítés alól.
   - A példa (direct -> dir, indirect -> inDir, nem pedig ind) be lett építve a logikai megértés támogatására. A jelentésmódosítók ezáltal levédve maradnak a szuper-rövidítőtől.
   - A MASTER_CONCEPT.md verziószáma **v3.1.0**-ra frissült, a módosításokat commitoltam és pusholtam.
+
+### Beszélgetés #15 (2026-06-08)
+- **User kérése:**
+  - Központi tudásbázis kezelése: Szét kell választani a tanárok saját, egyedi fogalom-objektumait a központi, közös fogalomtárba kerülő "certified" fogalmaktól.
+  - A tanárok egyedi fogalmai kezdetben csak a saját rendszerükben (lokálisan) legyenek elérhetők, de lehessen őket "commit-olni" egy központi review-ra.
+  - A központi fogalomtárban legyen egy minősítő rendszer: "elfogadott", "visszautasított", "módosítással elfogadott" és "kipróbálási célból elfogadott" állapotokkal.
+- **Tervezés és Megoldások:**
+  - A 12. fejezetet kiegészítettem az **E. Lokális és Központi Fogalomtár (Local vs. Central Dictionary Governance)** szekcióval.
+  - Bevezettem a "Local Scope" és "Propose to Central" koncepcióját: a tanár lokálisan szemetelés nélkül használhatja a kódjait (pl. `PetiFuraForgasa`), majd beküldheti azokat a közösbe.
+  - Dokumentáltam a 4 állapotú Központi Minősítő Rendszert (Review & Rating System): 1. Elfogadott (átment a szűrőn, auto-complete-be kerül), 2. Visszautasított (lokális marad, globálisan elvetve), 3. Módosítással elfogadott (pl. a központ érvényesíti az Anti-Kapszula vagy Tömörítési skála elvet, de a lokális alias megmarad), 4. Kipróbálási célból elfogadott (Experimental tag, a statisztikai gyakoriság dönt róla később).
+  - A MASTER_CONCEPT.md verziószámát **v3.2.0**-ra frissítettem, a módosításokat commitoltam és pusholtam.

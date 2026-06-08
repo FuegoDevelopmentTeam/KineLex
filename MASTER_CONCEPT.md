@@ -1,22 +1,22 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 3.1.0 (Interpretability Merge Rule)
+Version: 3.2.0 (Local vs Central Dictionary Governance)
 Date: 2026-06-08
+
+Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen salsa, mambo vagy "on2" salsa, bachata, chachacha) leírására és ezáltal oktatási rendszerbe foglalására.
 
 ## 1. Rendszer-architektúra és Filozófia
 
 ### Vizuális és UI Követelmények (UI & Visual Guidelines)
 
-A rendszer minden felületén (frontend), ahol a formális nyelv kódjai és az acronymok megjelennek, **kötelező** olyan "Arial egyszerűségű", letisztult, de szigorúan "disambiguation-friendly" (nem redundáns) betűtípust használni (pl. egyértelmű monospace vagy modern sans-serif), ahol a kis "l" betű, a nagy "I" betű és az "1" szám vizuálisan élesen elkülönül egymástól (pl. ligatúrák és serif hiánya). Ennek célja a kódok olvasásakor fellépő vizuális ütközések teljes kiküszöbölése.
-
-Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen salsa, mambo vagy "on2" salsa, bachata, chachacha) leírására és ezáltal oktatási rendszerbe foglalására.
+**Egyértelmű betűtípusok:** A rendszer minden felületén (frontend), ahol a formális nyelv kódjai és az acronymok megjelennek, **kötelező** olyan "Arial egyszerűségű", letisztult, de szigorúan "disambiguation-friendly" (nem redundáns) betűtípust használni (pl. egyértelmű monospace vagy modern sans-serif), ahol a kis "l" betű, a nagy "I" betű és az "1" szám vizuálisan élesen elkülönül egymástól (pl. ligatúrák és serif hiánya). Ennek célja a kódok olvasásakor fellépő vizuális ütközések teljes kiküszöbölése.
 
 ### A Rendszer Felhasználási Gradiense: Pedagógiai Pólus és Tudományos Kutatói Pólus (Capability & Commitment Gradient)
 
-A rendszer **nem egyetlen, homogén szoftver**, és nem is két, élesen szétválasztott külön termék, hanem egy **képesség- és vállalás-alapú gradiens** (Capability & Commitment Gradient) mentén szerveződik. A funkciókat **nem éles határvonal, hanem fokozatos átmenet** választja el aszerint, hogy a felhasználó milyen mélységig **képes** és **hajlandó** a fogalmak atomizálásával, dekonstrukciójával és tudományos pontosításával foglalkozni:
+A rendszer **nem egyetlen, homogén szoftver**, és nem is két, élesen szétválasztott külön termék, hanem egy **képesség-vállalás-jogosultság alapú gradiens** (Capability-Commitment-Authority Gradient) mentén szerveződik. A funkciókat **nem éles határvonal, hanem fokozatos átmenet** választja el aszerint, hogy a felhasználó milyen mélységig **képes** és **hajlandó** a fogalmak atomizálásával, dekonstrukciójával és tudományos pontosításával foglalkozni, bár az egyes tudományos kutatói funkciókhoz és szintekhez való hozzáférést egy központi adminisztrációtól igényelni kell:
 
-- **Pedagógiai Pólus (Teaching Pole):** A "mezei" tánctanár napi munkáját szolgálja: óratervezés, csoport- és tanítványkövetés, tudásszint-térképezés, részvétel- és tanítási mélység-alapú haladásmérés. A tanár itt a fogalmakat **fekete dobozként** (scaffold / egyezményes figuranév / saját, kitalált figuranév szinten) használja, és **nem köteles atomizálni**. A teljes pedagógiai értéket úgy is megkapja, ha sosem lép a kutatói pólus felé.
-- **Tudományos Kutatói Pólus (Research Pole):** A kutatói funkciók (atomi dekonstrukció, ontológia-kezelés, kombinatorikus variációs motor, vizuális annotáció, 3D szimuláció, IP-jegyzék) a tudásbázis mélyítését és a leíró nyelv fejlesztését szolgálják. Ez **opcionális, többletvállalás**, amely a pedagógiai adatokra épül.
+- **Pedagógiai Pólus (Teaching Pole):** A "mezei" tánctanár napi munkáját szolgálja: tananyag fejlesztés és tisztítás, óratervezés, csoport- és tanítványkövetés, tudásszint-térképezés, részvétel- és tanítási mélység-alapú haladásmérés. A tanár itt a fogalmakat **fekete dobozként** (scaffold / egyezményes figuranév / saját, kitalált figuranév szinten) használja, és **nem köteles atomizálni**. A teljes pedagógiai értéket úgy is megkapja, ha sosem lép a kutatói pólus felé.
+- **Tudományos Kutatói Pólus (Research Pole):** A kutatói funkciók (tanárfüggetlen központi fogalomtár és rövidítésrendszer fejlesztése, atomi dekonstrukció, ontológia-kezelés, kombinatorikus variációs motor, vizuális annotáció, 3D szimuláció, IP-jegyzék) a tudásbázis mélyítését és a leíró nyelv fejlesztését szolgálják. Ez **opcionális, többletvállalás**, amely a pedagógiai adatokra épül.
 
 A két pólus **ideális esetben összeér**: a pedagógiai követés adatai (mit, hányszor, milyen részletességgel tanítottak) táplálják a kutatást, a kutatás atomizált fogalmai pedig egyre finomabb pedagógiai követést és **absztraktabb, helyzetérzékenyebb, improvizatívabb tanulói tudást** tesznek lehetővé. A gradiens lényege, hogy minden tanár ott állhat meg, ahol a kompetenciája és a vállalása engedi — a rendszer minden szinten teljes értékű.
 
@@ -38,9 +38,9 @@ A mozgásokat és a tudásanyagot öt egymásra épülő, egyre komplexebb abszt
 
 **L1: Atomi Műveletek és Kinetika (Dinamika és Változás)** Ezen a szinten jelenik meg az idő (`>` mint `from -> to` és `<` mint origin operátorokkal), azaz az L0-s pozíciók megváltoztatása. Ide tartoznak a legkisebb, tovább már nem bontható mozdulatok.
 
-- **Elemi Testmozdulatok és Szabadságfokok (Elemental Body Actions & Degrees of Freedom):** Az ízületek és testrészek rotációja (rotation, tilt, nod), eltolása (shift) és ezek kombinációi (például head / hip 8 / C rolls, waves, twists). Ide tartoznak az olyan alapvető kinetikus akciók, mint a homorítás, domborítás, nyújtás, hajlítás, csavarás, csapás, hajítás, bump.   
-**Végtag Műveletek (Limb Actions):** Súlytalan lábáthelyezések (on-floor foot transfers: slide or glide, off-floor foot transfers: tap, kick, rond, flag), terpeszváltások (swaps).   
-**Útvonal Stílusok (Path Styles / Via elements):** A térbeli elmozdulás mikéntje (egylendületű/Direct, tört, hurkos/Looped, firkálós/Scribble).
+- **Elemi Testmozdulatok és Szabadságfokok (Elemental Body Actions & Degrees of Freedom):** Az ízületek és testrészek rotációja (rotation, tilt, nod), eltolása (shift) és ezek kombinációi (például head / hip 8 / C rolls, waves, twists). Ide tartoznak az olyan alapvető kinetikus akciók, mint a homorítás, domborítás, nyújtás, hajlítás, csavarás, csapás, hajítás, bump.  
+**Pozíciók és Végtag Műveletek (Limb Actions):** Állás, ülés, térdeplés, fekvés, keresztezett lábak, gimnasztikai pozíciók (pl. kézállás, gyertya állás), jóga ászanák (pl. padmászana, lefelé néző kutya póz), súlytalan lábáthelyezések (on-floor foot transfers: slide or glide, off-floor foot transfers: tap, kick, rond, flag), terpeszváltások (swaps).  
+**Mozdulat Útvonalak és Stílusok (Motion Paths / Motion Path Styles or Via elements):** Kör, egyenes, visszapattanó, emitter/collector irányok. Style: térbeli elmozdulás mikéntje (egylendületű/Direct, tört, hurkos/Looped, firkálós/Scribble).
 - **Kiegyenlítő Mozdulatpárok (Compensatory / Counter-Balancing Gestures):** A csípő, a törzs és a végtagok olyan összehangolt mozdulatpárjai, amelyek a test alsó vagy felső központjában "kiegyensúlyozott csendet" (referenciapont-stabilitást) hoznak létre. Például a csípő teljes kitolása egy lábon állásig, miközben a másik kar oldalsó megnyújtása komplementer egyensúlyt ad, megőrizve a fej mozdulatlanságát. (Ide tartozik az azonos oldali lábkör/rond és a komplementer karkör együttes alkalmazása a törzs stabilitásáért).
 - **Súlyvonal- és Lábkinetika (lépés):** Horizontális súlyvonal mozgatás (center of gravity progression), súlyvonal irányváltás (center of gravity change of direction), Vertikális súlyvonal mozgatás (center of gravity elevation / sink, godown) / ugrások (jumps, leaps), lépés, súlyláb mikro tengelyfordulat (amit a `*` operátor, pl. `*lFoot` jelöl).
 
@@ -48,7 +48,7 @@ A mozgásokat és a tudásanyagot öt egymásra épülő, egyre komplexebb abszt
 
 - **Zenei Ciklusok:** a zenei ütemezése és a táncot meghatározó "zenei kérdés" és "zenei válasz" részütemek ciklikussága. 
 - **Ciklikus Lépéssorok / Alaplépések (Cyclic Step Patterns / Basic Steps):** Vonalon elvégzett "rezgés" (lengés) természetű, önmagába ciklikusan visszatérő terpeszváltás-sorok (például túlgördülő/Over-rolling és irányváltó/Change of Direction fázisokból felépülő sorozat).
-- **Szóló Mintázatok (Solo Patterns):** Haladó (Walk) lépéssorozatok, alapvető szóló forgások és izolált lábmunka (Shines).
+- **Ciklikus Lépéssorok / Szóló Karakter Mintázatok (Solo Patterns):** Karakteres lépéssorozatok, forgások és izolált lábmunka, double front crosses, box, diamond..
 - **Díszítések (Adornments):** Lépést helyettesítő műveletek (magasságváltás/Leveling, Tap, taps/Handclaps).
 
 **L3: Páros Alapfigurák (Interakció)** A tánc kiterjesztése a partnerek közötti fizikai és vizuális kommunikációra.
@@ -279,10 +279,11 @@ A pontok felesleges burjánzásának elkerülésére és a kódok hosszának min
 A L1 és L2 szuperrövidítések odaítélése nem tisztán az atomizációs szinten múlik, hanem a **statisztikai gyakoriság és az atomizáltság egyensúlyán**. 
 
 - *A sarokkő esetek kezelése (Corner cases):* Például a `basic` (összetett) és a `back` (atomi irány) is a `b` betűre pályázik. Bár a `back` atomibb, a `basic` szót nagyságrendekkel gyakrabban használjuk egy táncleírásban. Ezért a `basic` kapja meg a Level 1-es `**b`** kódot, míg a `back` hátrébb tolódik a skálán a Level 2-es `**ba`** kódra.
-- *Szófaj/tulajdonság elkülönítése (Type disambiguation):* Hogy elkerüljük az irány és a testrész keveredését, a `back` (mint hátra irány) marad a rövid `**ba`** (L2), de a `back` (mint a hát, testrész) még hátrébb tolódik az L3 szintre, például `**bck*`* formában. Így az irány és a testrész sosem keveredik össze vizuálisan.
+- *Szófaj/tulajdonság elkülönítése (Type disambiguation):* Hogy elkerüljük az irány és a testrész keveredését, a `back` (mint hátra irány) marad a rövid `**ba`** (L2), de a `back` (mint a hát, testrész) még hátrébb tolódik az L3 szintre, például `**bck`** formában. Így az irány és a testrész sosem keveredik össze vizuálisan.
 
 **Értelmezhetőségi Szóösszevonási Szabály (Interpretability Merge Rule):**
 Ha egy szóösszetételben az egyik összetevő egy **tiltó vagy ellentétes értelmet kifejező előtag** (pl. `in-`, `un-`, `non-`), ezek az összetevők **kivételt képeznek** a szuper-rövidítő algoritmus alól, és nem vonhatók össze a bázisszóval egyetlen összevont kóddá. Ezeket a jelentésmódosító előtagokat egy külön listában tartjuk nyilván.
+
 - *Példa:* `dir` = direct (direkt), `inDir` = indirect (indirekt). Hiába lenne a legoptimálisabb matematikai tömörítés az `ind` kód (az `inDir`-ből), ezzel elveszítenénk annak az azonnali felismerhetőségét, hogy az `in` előtag az eredeti jelentést fordítja meg. Ilyenkor lemondunk a maximális rövidítésről a logikai érthetőség javára, és meghagyjuk a világosan tagolt `inDir` (vagy adott esetben egy szeparátorral elválasztott) alakot.
 
 ### B. Dinamikus Ütközésfeloldó Protokoll (Collision Resolution):
@@ -760,6 +761,21 @@ A rendszer fejlődése és a tanárok kollektív tapasztalata során a fogalmak 
 - **Szabad Hivatkozhatóság:** A tanár az óravázlatba beírhatja, hogy `LevKedvencHelycseréi001`. A parser (AST) felismeri az aliast, és a háttérben azonnal feloldja a teljes atomi képletre. A tanárnak sosem kell a bonyolult kódot gépelnie.
 - **Nézet-Váltás (Detail Slider):** A UI felületen a tanár egy csúszkával állíthatja, hogy az óravázlatot milyen részletességgel akarja látni. Ugyanaz a sor megjelenhet úgy, mint `LevKedvencHelycseréi001`, de ha a csúszkát elhúzza "Atomi" irányba, a szöveg szétnyílik a `pvt.R.180 + sld.L.back + lvl.down` képletre, vagy bármilyen köztes állapotra.
 - **Iskolák Közötti Fordító (Rosetta Stone):** Mivel minden egyedi név (Alias) ugyanarra az atomi DNA-ra mutat, ha egy másik iskola tanára olvassa az óravázlatot, a rendszer automatikusan az ő iskolájában használt egyezményes névre (vagy az atomi képletre) tudja fordítani a `LevKedvencHelycseréi001` kifejezést. Ez tökéletesen megoldja a különböző iskolák eltérő terminológiájából fakadó káoszt.
+
+### E. Lokális és Központi Fogalomtár (Local vs. Central Dictionary Governance)
+
+A rendszer architektúrája szigorúan elválasztja a tanárok saját, egyedi fogalom-objektumait a központi, közös fogalomtárba (Central Dictionary) bekerülő "certified" (hitelesített) fogalmaktól. Ez biztosítja a szabadság és a rendszerszintű tisztaság egyensúlyát.
+
+- **Lokális Fogalomtár (Local Scope):** A tanár bármilyen új, egyedi fogalmat vagy aliast bevezethet az óravázlataiban (pl. `PetiFuraForgasa`). Ezek az objektumok azonnal használhatók, de kezdetben kizárólag az ő saját rendszerén (Local Scope) belül élnek és hivatkozhatók. Nem szemetelik tele a globális névteret.
+- **Commit a Központi Fogalomtárba (Propose to Central):** Ha a tanár úgy érzi, hogy az általa létrehozott vagy atomizált fogalom univerzálisan hasznos (pl. egy új alaplépés, vagy egy nagyon gyakori anatómiai variáció), beküldheti (commit-olhatja) azt egy rendszerszintű felülvizsgálatra (Review).
+
+**A Központi Minősítő Rendszer (Review & Rating System):**
+A beküldött új fogalmakat vagy a meglévő rekordok szerkesztési igényeit a kutatói szintű felhasználók (T4) vagy a rendszer adminisztrátorai minősítik. A beküldött (proposed) elemek a következő állapotokat vehetik fel:
+
+1. **Elfogadott (Accepted):** A fogalom (és annak UAA kódja) tökéletesen illeszkedik a rendszer logikájába, ütközésmentes, és bekerül a "Certified" központi szótárba. Innentől minden felhasználó számára elérhető az auto-complete-ben.
+2. **Visszautasított (Rejected):** A javaslat logikailag hibás, redundáns (már létezik más néven), vagy sérti a szeparációs és kódolási szabályokat. *(A fogalom a tanár lokális terében továbbra is megmarad, de globálisan nem jelenik meg).*
+3. **Módosítással elfogadott (Accepted with modifications):** Az ötlet jó és szükséges, de a javasolt rövidítés vagy hierarchia ütközik a szabályrendszerrel (pl. életbe lép a Tömörítési Skála Elmozdulás). A központ módosítja a beküldött adatokat (pl. `leA` helyett `lAr`), de a tanár az eredeti elnevezését megtarthatja saját lokális Aliasként.
+4. **Kipróbálási célból elfogadott (Accepted for trial / Experimental):** A fogalom új, határeset, vagy egy kialakulóban lévő táncstílus sajátja, aminek a rendszerszintű létjogosultsága még kérdéses. Bekerül a központi térbe, de kap egy "Experimental" taget. Később a statisztikai használat (Frequency) dönti el a végleges sorsát és rövidítési szintjét.
 
 ---
 
