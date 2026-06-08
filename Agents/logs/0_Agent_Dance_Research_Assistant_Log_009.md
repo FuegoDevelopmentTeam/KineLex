@@ -51,3 +51,12 @@ Kezdeti állapot: A MASTER_CONCEPT.md frissítése a Hibrid Idővonal-Modellel (
   - A 4. fejezetet átírtam a **Anti-Kapszula (No Consecutive Capitals)** és a **Főnévi Bázis (Base Noun) Kiemelése** szabályokkal. A csupa nagybetűs kódok (pl. LTO, MRT) hivatalosan is érvénytelenítve lettek. A mozgás főnévi magja (pl. Turn, Foot) kapja a nagybetűt, míg a minősítők (l, r) kisbetűsek maradnak. Ha egy kód 4 karakternél rövidebb, tisztán kisbetűvel is összeolvadhat (pl. lto, lft). Ha tagolni kell, a Tömörítési Skála alapján legalább L2 szintre toljuk az egyik elemet (pl. lTuOp vagy lFt).
   - A 12. fejezetet kiegészítettem a **D. Fogalomtár Evolúció és Verziózott Nézetek (Dictionary Evolution & Versioned Views)** szekcióval. Ez bevezeti a háttérben történő SemVer (Semantic Versioning) verziózást, és a UI-on választható "Legacy" vagy "Latest" nézeteket, így biztosítva a visszafelé kompatibilitást és a folyamatos fejlődést.
   - A MASTER_CONCEPT.md verziószáma **v3.0.0**-ra ugrott a szótári architektúra és a szintaxis jelentős rendszerszintű változása miatt. A módosításokat commitoltam és pusholtam.
+
+### Beszélgetés #14 (2026-06-08)
+- **User kérése:**
+  - Értelmezhetőségi Szóösszevonási Szabály bevezetése: Ha egy összetétel egyik tagja tiltó vagy ellentétes értelmet fejez ki (pl. `in-`, mint az "indirekt" esetében), akkor az ne vonódjon össze a másik szóval (pl. `inDir` helyett `ind`). Ez azért fontos, mert bár logikus lenne az `ind` tömörítés, az `in` előtétszó jelentésmódosító/ellentétes funkciója elveszne.
+  - Az ilyen jelentésmódosító jelzőket külön listában kell nyilvántartani, és a tömörítési algoritmus ne legyen rájuk hatással.
+- **Tervezés és Megoldások:**
+  - A `MASTER_CONCEPT.md` 7. fejezetébe (ASS - Rövidítési Skála-Spektrum) bekerült az **Értelmezhetőségi Szóösszevonási Szabály (Interpretability Merge Rule)**. E szerint a tiltó vagy ellentétes értelmű előtagok (pl. `in-`, `un-`, `non-`) kivételt képeznek a maximális tömörítés alól.
+  - A példa (direct -> dir, indirect -> inDir, nem pedig ind) be lett építve a logikai megértés támogatására. A jelentésmódosítók ezáltal levédve maradnak a szuper-rövidítőtől.
+  - A MASTER_CONCEPT.md verziószáma **v3.1.0**-ra frissült, a módosításokat commitoltam és pusholtam.
