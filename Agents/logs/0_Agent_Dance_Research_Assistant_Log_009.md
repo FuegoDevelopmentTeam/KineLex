@@ -71,3 +71,12 @@ Kezdeti állapot: A MASTER_CONCEPT.md frissítése a Hibrid Idővonal-Modellel (
   - Bevezettem a "Local Scope" és "Propose to Central" koncepcióját: a tanár lokálisan szemetelés nélkül használhatja a kódjait (pl. `PetiFuraForgasa`), majd beküldheti azokat a közösbe.
   - Dokumentáltam a 4 állapotú Központi Minősítő Rendszert (Review & Rating System): 1. Elfogadott (átment a szűrőn, auto-complete-be kerül), 2. Visszautasított (lokális marad, globálisan elvetve), 3. Módosítással elfogadott (pl. a központ érvényesíti az Anti-Kapszula vagy Tömörítési skála elvet, de a lokális alias megmarad), 4. Kipróbálási célból elfogadott (Experimental tag, a statisztikai gyakoriság dönt róla később).
   - A MASTER_CONCEPT.md verziószámát **v3.2.0**-ra frissítettem, a módosításokat commitoltam és pusholtam.
+
+### Beszélgetés #16 (2026-06-08)
+- **User kérése:**
+  - A MASTER_CONCEPT.md 2. fejezetének (Absztrakciós Szintek) jelentős átírása és kibővítése. Új elnevezések és csoportosítások bevezetése (pl. Fizikai és környezeti összetevők, Testkontúrok, Táncirányok orientációja L0-ban; Pozíciók bevezetése L1-ben, L2 Ciklikus Lépéssorok bontása, Tánc alapmozdulatok hagyatékának rögzítése, stb.).
+  - A dokumentum egészében az átírás harmonizációja és a verziószám frissítése.
+- **Tervezés és Megoldások:**
+  - Kicseréltem a 2. fejezet korábbi szövegét a megadott új, részletes szerkezetre.
+  - Szinkronizáltam az operátorokra való korábbi hivatkozásokat (`>`, `<`, `*lFoot`), és ügyeltem arra, hogy a struktúra továbbra is kompatibilis maradjon a Fuzzy-to-Precise (12. fej) és a Pedagógiai Modul (17. fej) logikájával. A kibontott csoportok (mint Pozíciók, Testkontúrok) jobban megalapozzák a videós annotációk és a 3D avatár (14. fej) fejlesztését.
+  - A MASTER_CONCEPT.md verziószámát **v3.3.0**-ra emeltem (Movement Abstraction Layers Refinement), a módosításokat commitoltam és pusholtam.

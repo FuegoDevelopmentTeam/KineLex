@@ -1,9 +1,9 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 3.2.0 (Local vs Central Dictionary Governance)
+Version: 3.3.0 (Movement Abstraction Layers Refinement)
 Date: 2026-06-08
 
-Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen salsa, mambo vagy "on2" salsa, bachata, chachacha) leírására és ezáltal oktatási rendszerbe foglalására.
+Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen salsa, mambo vagy "on2" salsa, bachata, chachacha, jazztánc, contemporary) leírására és ezáltal oktatási rendszerbe foglalására.
 
 ## 1. Rendszer-architektúra és Filozófia
 
@@ -15,47 +15,48 @@ Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének 
 
 A rendszer **nem egyetlen, homogén szoftver**, és nem is két, élesen szétválasztott külön termék, hanem egy **képesség-vállalás-jogosultság alapú gradiens** (Capability-Commitment-Authority Gradient) mentén szerveződik. A funkciókat **nem éles határvonal, hanem fokozatos átmenet** választja el aszerint, hogy a felhasználó milyen mélységig **képes** és **hajlandó** a fogalmak atomizálásával, dekonstrukciójával és tudományos pontosításával foglalkozni, bár az egyes tudományos kutatói funkciókhoz és szintekhez való hozzáférést egy központi adminisztrációtól igényelni kell:
 
-- **Pedagógiai Pólus (Teaching Pole):** A "mezei" tánctanár napi munkáját szolgálja: tananyag fejlesztés és tisztítás, óratervezés, csoport- és tanítványkövetés, tudásszint-térképezés, részvétel- és tanítási mélység-alapú haladásmérés. A tanár itt a fogalmakat **fekete dobozként** (scaffold / egyezményes figuranév / saját, kitalált figuranév szinten) használja, és **nem köteles atomizálni**. A teljes pedagógiai értéket úgy is megkapja, ha sosem lép a kutatói pólus felé.
+- **Pedagógiai Pólus (Teaching Pole):** A "mezei" tánctanár napi munkáját szolgálja: tananyag fejlesztés és tisztítás, óratervezés, csoport- és tanítványkövetés, tudásszint-térképezés, részvétel- és tanítási mélység-alapú haladásmérés. A tanár itt a fogalmakat **fekete dobozként** (scaffold / egyezményes figuranév / saját, kitalált figuranév szinten) használja, és **nem köteles atomizálni** vagy a központi fogalomtárba regisztrálni. A teljes pedagógiai értéket úgy is megkapja, ha sosem lép a kutatói pólus felé.
 - **Tudományos Kutatói Pólus (Research Pole):** A kutatói funkciók (tanárfüggetlen központi fogalomtár és rövidítésrendszer fejlesztése, atomi dekonstrukció, ontológia-kezelés, kombinatorikus variációs motor, vizuális annotáció, 3D szimuláció, IP-jegyzék) a tudásbázis mélyítését és a leíró nyelv fejlesztését szolgálják. Ez **opcionális, többletvállalás**, amely a pedagógiai adatokra épül.
 
-A két pólus **ideális esetben összeér**: a pedagógiai követés adatai (mit, hányszor, milyen részletességgel tanítottak) táplálják a kutatást, a kutatás atomizált fogalmai pedig egyre finomabb pedagógiai követést és **absztraktabb, helyzetérzékenyebb, improvizatívabb tanulói tudást** tesznek lehetővé. A gradiens lényege, hogy minden tanár ott állhat meg, ahol a kompetenciája és a vállalása engedi — a rendszer minden szinten teljes értékű.
+A két pólus **ideális esetben összeér**: a pedagógiai követés adatai (mit, hányszor, milyen részletességgel tanítottak, milyen gyakorisággal gyakoroltak) táplálják a kutatást, a kutatás atomizált fogalmai pedig egyre finomabb pedagógiai követést és **absztraktabb, helyzetérzékenyebb, improvizatívabb tanulói tudást** tesznek lehetővé. A gradiens lényege, hogy minden tanár ott állhat meg, ahol a kompetenciája és a vállalása engedi — a rendszer minden szinten teljes értékű.
 
 Ennek a gradiensnek és a hozzá tartozó jogosultsági rétegeknek a részletes leírását lásd a **16. fejezetben**, a pedagógiai modult a **17. fejezetben**, a tudás természetének (koreográfia vs. improvizáció) kezelését a **18. fejezetben**, az atomizáció-vezérelt improvizációs absztrakciót pedig a **19. fejezetben**.
 
 ---
 
-## 2. Didaktikai Szintek (Abstraction Layers)
+## 2. Absztrakciós Szintek a Mozgásban (Movement Abstraction Layers)
 
 A mozgásokat és a tudásanyagot öt egymásra épülő, egyre komplexebb absztrakciós szinten modellezzük a fizikai alapoktól a színpadi koreográfiákig:
 
 **L0: Térbeli és Anatómiai Primitívek (Statika és Keretek)** Ez a legalapvetőbb szint, a "vászon", amelyen a tánc történik. Itt még nincs időbeli változás, csak állapotok és fizikai keretek.
 
-- **Tér és Síkok (Space and Planes):** Gravitáció, parkett sík, merőleges síkok (sagittal plane, horizontal plane, lateral plane).
-- **Irányok és Orientáció (Directions and Orientation):** A test szemben iránya (origo direction), a tánctartás vonala és nyitottsága (dancing position line and opening), a kommunikáció fő iránya (communication direction), valamint az abszolút és relatív térirányok (forward, backward, diagonal, side).
-- **Alátámasztás és Pozíció (Support and Stance):** Testsúly-megtartási pontok (több pontos / harmadik pont pl. kéztámasz,  kétpontos terpesz, egypontos) és testhelyzetek (állás, guggolás, ülés, fekvés).
-- **Testrészek (Body Parts):** A mozgásra képes izolált egységek (fej, vállöv, gerinctengely, csípő, végtagok).
-- **Testkontúrok (Body Lines):** a testhelyzetek burkoló görbéi és a képzetes testrészek (pl. oldalvonal, laterál-mediális vonal) vonalai.
+- **Fizikai és környezeti összetevők (Physical and Environmental Components):** Tér, test, gravitáció, súly, alátámasztás, parkett sík, színpad vagy táncterem kitüntetett közönség/néző iránya, a színpad abszolút pontjai és irányai (stage center, stage back, stage front, stage left, stage right, diagonals). 
+- **Testrészek (Body Parts):** A mozgásra képes izolált egységek (fej, vállöv, gerinctengely, csípő, végtagok). Testkontúrok (Body Lines / Imaginary Body Parts): a képzetes testrészek (pl. oldalvonal, laterál-mediális vonal) és a testhelyzetek burkoló görbéi (Silhouettes).
+- **Táncirányok (Dancers Directions):** A test szemben iránya (origo direction), a test merőleges síkjai (sagittal plane, horizontal plane, lateral plane), a nézet vagy közönségirány (view), a kommunikáció iránya (communication direction), összetartozó táncosok pl. táncpárok (couples) egymáshoz viszonyított helyzete, amely: a táncpartnerek tánctartás vektorainak tengelye (dancing position axis), szögbeli nyitottsága (face-to-face / promenade position), a táncpartnerek távolsága (near / far). Orientáció (Orientation): a parkettsíkra vetített szöge (azymuth / horizontal angle) és az abból adódó relatív parkettirányok és relatív térirányok (forward, backward, diagonal, side, up and down).
+- **Alátámasztás (Support):** Testsúly-megtartási pontok (több pontos / harmadik pont pl. kéztámasz, kétpontos terpesz, egypontos) és testhelyzetek (állás, guggolás, ülés, fekvés).
 
 **L1: Atomi Műveletek és Kinetika (Dinamika és Változás)** Ezen a szinten jelenik meg az idő (`>` mint `from -> to` és `<` mint origin operátorokkal), azaz az L0-s pozíciók megváltoztatása. Ide tartoznak a legkisebb, tovább már nem bontható mozdulatok.
 
-- **Elemi Testmozdulatok és Szabadságfokok (Elemental Body Actions & Degrees of Freedom):** Az ízületek és testrészek rotációja (rotation, tilt, nod), eltolása (shift) és ezek kombinációi (például head / hip 8 / C rolls, waves, twists). Ide tartoznak az olyan alapvető kinetikus akciók, mint a homorítás, domborítás, nyújtás, hajlítás, csavarás, csapás, hajítás, bump.  
-**Pozíciók és Végtag Műveletek (Limb Actions):** Állás, ülés, térdeplés, fekvés, keresztezett lábak, gimnasztikai pozíciók (pl. kézállás, gyertya állás), jóga ászanák (pl. padmászana, lefelé néző kutya póz), súlytalan lábáthelyezések (on-floor foot transfers: slide or glide, off-floor foot transfers: tap, kick, rond, flag), terpeszváltások (swaps).  
-**Mozdulat Útvonalak és Stílusok (Motion Paths / Motion Path Styles or Via elements):** Kör, egyenes, visszapattanó, emitter/collector irányok. Style: térbeli elmozdulás mikéntje (egylendületű/Direct, tört, hurkos/Looped, firkálós/Scribble).
+- **Pozíciók (Positions):** Állás, ülés, térdeplés, fekvés, keresztezett lábak, gimnasztikai pozíciók (pl. kézállás, gyertya állás), jóga ászanák (pl. padmászana, lefelé néző kutya póz).
+- **Elemi Testmozdulatok és Szabadságfokok (Elemental Body Actions & Degrees of Freedom):** Ide tartoznak az olyan alapvető kinetikus akciók, mint a homorítás, domborítás, kontrakció, nyújtás, hajlítás, eltolás (shift), emelés (elevation / lift), hajítás (throw), ütés/csapás (hit / bump), rotation, tilt, nod. Kombinált testmozdulatok (head, shoulder girdle, hip): 8, C rolls, twists, corridor circles / paddle, waves, barrell roll / orbit or tangential path.
+- **Mozdulat Útvonalak és Stílusok (Motion Paths / Motion Path Styles or Via elements):** Kör, egyenes, visszapattanó, emitter/collector irányok. Style: térbeli elmozdulás mikéntje (egylendületű/Direct, tört, hurkos/Looped, firkálós/Scribble).
 - **Kiegyenlítő Mozdulatpárok (Compensatory / Counter-Balancing Gestures):** A csípő, a törzs és a végtagok olyan összehangolt mozdulatpárjai, amelyek a test alsó vagy felső központjában "kiegyensúlyozott csendet" (referenciapont-stabilitást) hoznak létre. Például a csípő teljes kitolása egy lábon állásig, miközben a másik kar oldalsó megnyújtása komplementer egyensúlyt ad, megőrizve a fej mozdulatlanságát. (Ide tartozik az azonos oldali lábkör/rond és a komplementer karkör együttes alkalmazása a törzs stabilitásáért).
-- **Súlyvonal- és Lábkinetika (lépés):** Horizontális súlyvonal mozgatás (center of gravity progression), súlyvonal irányváltás (center of gravity change of direction), Vertikális súlyvonal mozgatás (center of gravity elevation / sink, godown) / ugrások (jumps, leaps), lépés, súlyláb mikro tengelyfordulat (amit a `*` operátor, pl. `*lFoot` jelöl).
+- **Lépést Előkészítő Műveletek (Limb Actions):** Súlytalan lábáthelyezések (on-floor foot transfers: slide or glide, off-floor foot transfers: tap, kick, rond, flag), terpeszváltások (swaps). Súlyvonal- és Lábkinetika (lépés): Horizontális súlyvonal mozgatás (center of gravity progression), súlyvonal irányváltás (center of gravity change of direction), Vertikális súlyvonal mozgatás (center of gravity elevation / sink, godown) / ugrások (jumps, leaps), lépés, súlyláb mikro tengelyfordulat (amit a `*` operátor, pl. `*lFoot` jelöl).
+- **Tánc alapmozdulatok (Legacy):** A hajlítás (plier), nyújtás (étendre), emelkedés (relever), siklás/csúszás (glisser), ugrás (sauter), kivetés/megiramodás (élancer), forgás (tourner).
 
 **L2: Ciklikus Műveletsorok és Szóló Alapok (Struktúra és Ritmus)** Az L1-es atomok zenei struktúrára (periódusokra) fűzött, felismerhető mintázatai. A zenei idő kitöltésének strukturált módjai.
 
-- **Zenei Ciklusok:** a zenei ütemezése és a táncot meghatározó "zenei kérdés" és "zenei válasz" részütemek ciklikussága. 
-- **Ciklikus Lépéssorok / Alaplépések (Cyclic Step Patterns / Basic Steps):** Vonalon elvégzett "rezgés" (lengés) természetű, önmagába ciklikusan visszatérő terpeszváltás-sorok (például túlgördülő/Over-rolling és irányváltó/Change of Direction fázisokból felépülő sorozat).
-- **Ciklikus Lépéssorok / Szóló Karakter Mintázatok (Solo Patterns):** Karakteres lépéssorozatok, forgások és izolált lábmunka, double front crosses, box, diamond..
-- **Díszítések (Adornments):** Lépést helyettesítő műveletek (magasságváltás/Leveling, Tap, taps/Handclaps).
+- **Zenei Ciklusok:** A zenei ütemezés és a táncot meghatározó "zenei kérdés" és "zenei válasz" részütemek ciklikussága.
+- **Ciklikus Lépéssorok (Cyclic Step Patterns):**
+  - **Alaplépések (Basic Steps):** Vonalon elvégzett "rezgés" (lengés) természetű, önmagába ciklikusan (periódus idő) visszatérő terpeszváltás-sorok (például túlgördülő/Over-rolling és irányváltó/Change of Direction fázisokból felépülő sorozat).
+  - **Nevesített Szóló Karakter Mintázatok (Solo Patterns):** Táncos alap összetevőkkel változtatott "karakterizált" lépéssorozatok és forgások: crossover basic, slide basic, double front crosses, box, diamond, mambo jazz, stb.
+  - **Ritmus Díszítések (Rhythm Adornments):** Lépést helyettesítő / kiegészítő műveletek: magasságváltás (leveling), láb talaj érintés (tap), rúgás (lick), taps (handclaps), kinyúlás (reach out), kimutatás (point out), vállrázás (shimmy).
 
 **L3: Páros Alapfigurák (Interakció)** A tánc kiterjesztése a partnerek közötti fizikai és vizuális kommunikációra.
 
-- **Páros Ciklikusság Alapfeladatai:** a vezető és követő szerep alapszabályai (vezető általi a követő alaplépésének végpont átírása, követő oldali semleges és szembeforduló állapot rekonstruálása a periódusidő végéig).
-- **Alapvető Páros Építőelemek (Core Couple Elements):** Egyszerű, vezetés-követéses rendszerű alapelemek és helycserék (például Cross Body Lead, keresztvezetések, alap páros forgások és kifordulások/Turnouts).
+- **Páros Ciklikusság Alapfeladatai:** A vezető és követő szerep alapszabályai (vezető általi a követő alaplépésének végpont átírása, követő oldali semleges és szembeforduló állapot rekonstruálása a periódusidő végéig).
 - **Vezetés és Követés Mechanikája (Lead and Follow Mechanics):** Erőhatások és holtjátékok, kerettartás, vizuális és fizikai kapcsolódási pontok és azok helyzete a vezetőhöz és követőhöz képest (tolt/húzott/tangenciális ív), prediktív (positive backlash) pattintások.
+- **Alapvető Páros Építőelemek és Figurák (Core Couple Elements & Figures):** Egyszerű, vezetés-követéses rendszerű alapelemek és helycserék (például Cross Body Lead, keresztvezetések, alap páros forgások és kifordulások/Turnouts).
 
 **L4: Szekvenciák és Koreográfiák (Láncolás)**
 
