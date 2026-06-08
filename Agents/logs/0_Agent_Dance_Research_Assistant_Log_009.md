@@ -90,3 +90,17 @@ Kezdeti állapot: A MASTER_CONCEPT.md frissítése a Hibrid Idővonal-Modellel (
   - A dinamika alapja a "Kétirányú Ozmózis" (Felminősítés és Lefokozás), amely biztosítja a szűk (1-2 karakteres) elit névtér folyamatos tisztaságát és aktualitását.
   - Rögzítettem a "Zökkenőmentes Identitás-Megőrzés" szabályát: a mozdulat UUID-ja sosem változik. A 12.D Verziózott Szótár nézeteinek (Versioned Views) köszönhetően a tanár bármelyik régi kódot begépelheti, a UI automatikusan a legfrissebb érvényes verzióra fordítja azt kód-törés nélkül.
   - A MASTER_CONCEPT.md verziószámát **v3.4.0**-ra emeltem, a módosításokat commitoltam és pusholtam.
+
+### Beszélgetés #18 (2026-06-08)
+- **User kérése:**
+  - A 7. fejezetet (Rövidítési Skála-Spektrum / ASS) helyezzük át a 3. fejezet (Rövidítési Algoritmusok) mögé 4. fejezetként, mivel szorosan oda tartozik.
+  - Számozzuk át az összes alatta lévő fejezetet.
+  - Harmonizáljuk a tartalmat, és írjuk át az egész rövidítési elv- és szabályrendszert úgy, hogy az ASS konkrét hierarchiája és integrációja a rendszerben tökéletesen logikus legyen.
+- **Tervezés és Megoldások:**
+  - A korábbi 7. fejezetet áthelyeztem a **4. Rövidítési Skála-Spektrum (ASS) és Ütközésfeloldás** névre. Az alatta lévő összes fejezet sorszámozását (5-től 20-ig) frissítettem, beleértve egy korábbi duplikált 8-as fejezetszám kijavítását is, valamint az összes belső kereszthivatkozást (pl. "lásd 13.D fejezet") is szinkronizáltam az új sorszámokkal.
+  - A 3. és 4. fejezet tartalmát mélyen harmonizáltam:
+    - Kifejtettem, hogy a **Super AAA (Elit szint)** az **ASS L1 és L2** rövidítési szintekre épül.
+    - Kifejtettem, hogy a **Standard AAA (Keltető)** az **ASS L3 és L4** rövidítési szinteket fedi le.
+    - Az "Ütközésfeloldás" (Compression Shift) és az "Értelmezhetőségi Szóösszevonási Szabály" logikusan az ASS spektrumába lett beágyazva a 4. fejezetbe.
+  - Ezzel a rövidítési logikák egyetlen, hatalmas és összefüggő elméleti blokká váltak a dokumentum elején.
+  - A MASTER_CONCEPT.md verziószámát **v4.0.0**-ra emeltem az átfogó szerkezeti refaktorálás miatt, a módosításokat commitoltam és pusholtam.
