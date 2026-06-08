@@ -104,3 +104,12 @@ Kezdeti állapot: A MASTER_CONCEPT.md frissítése a Hibrid Idővonal-Modellel (
     - Az "Ütközésfeloldás" (Compression Shift) és az "Értelmezhetőségi Szóösszevonási Szabály" logikusan az ASS spektrumába lett beágyazva a 4. fejezetbe.
   - Ezzel a rövidítési logikák egyetlen, hatalmas és összefüggő elméleti blokká váltak a dokumentum elején.
   - A MASTER_CONCEPT.md verziószámát **v4.0.0**-ra emeltem az átfogó szerkezeti refaktorálás miatt, a módosításokat commitoltam és pusholtam.
+
+### Beszélgetés #19 (2026-06-08)
+- **User kérése:**
+  - A Super AAA "Hírességek Csarnokába" való bekerülés logikájának megkérdőjelezése: Miért volt a Super AAA a didaktikai szintekhez (L0-L4) és a C0-C4 kategóriákhoz kötve? A Super AAA tagsága (rövidség) a gyakoriságtól függ, nem pedig az atomizációs szinttől (L0-L4). A C0-C4 besorolás létjogosultsága megkérdőjelezhető.
+- **Tervezés és Megoldások:**
+  - Teljesen egyetértettem a felhasználó érvelésével: A didaktikai szint (L0-L4) a mozdulat szemantikai komplexitását jelenti, míg az ASS skála (L1-L4) a kód szintaktikai hosszát. A kettő független, ortogonális tengely.
+  - A 3. fejezetből **teljesen eltávolítottam a "Szuper Rövidítések Kategóriái (C0-C4)" szekciót**, mivel ez mesterségesen és feleslegesen kötötte össze a jelentéstartalmat a rövidítési szinttel.
+  - Helyette beszúrtam a **"Függetlenség az Absztrakciós Szintektől (Independence from Didactic Layers)"** alapelvet. Bármilyen szintű (L0-L4) fogalom megkaphatja a szuper-rövidítést (ASS L1-L2), ha a statisztikai használata ezt indokolja.
+  - A MASTER_CONCEPT.md verziószámát **v4.1.0**-ra emeltem (Decoupling Super AAA from Didactic Layers), a módosításokat commitoltam és pusholtam.

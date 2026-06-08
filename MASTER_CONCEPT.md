@@ -1,6 +1,6 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 4.0.0 (ASS Hierarchy & Abbreviation Restructure)
+Version: 4.1.0 (Decoupling Super AAA from Didactic Layers)
 Date: 2026-06-08
 
 Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen salsa, mambo vagy "on2" salsa, bachata, chachacha, jazztánc, contemporary) leírására és ezáltal oktatási rendszerbe foglalására.
@@ -84,13 +84,8 @@ A Szuper Rövidítés a rendszer "Hírességek Csarnoka", ahová a leggyakrabban
   - Ha egy fogalmat fel kell minősíteni szuper-rövid L1/L2 szintre, vagy visszafokozni, a rendszer új szótárverzió bevezetését javasolja (Lektorálási folyamat).
   - Jóváhagyás után a **Visszamenőleges Frissítés (Retroactive Migration Pipeline)** (lásd 11.D fejezet) visszamenőleg átírja a régi óravázlatok kódjait, garantálva a történelmi konzisztenciát.
 
-#### Szuper Rövidítések Kategóriái (Abstraction Aligned Categories - C0-C4)
-A Super AAA (L1-L2) kódokat a didaktikai szintekkel harmóniában csoportosítjuk:
-- **C0: Atomi és Geometriai Alapok (L0 szint):** Anatómiai pontok (`hd`, `ar`, `hp`), Térbeli irányok (`R`, `L`, `F`, `B`), Alátámasztás (`1sup`).
-- **C1: Kinetikai és Dinamikai Műveletek (L1 szint):** Szabadságfokok (`shf`, `rot`), Pozíciók (`sld`, `kck`), Útvonalak (`ci`, `dir`).
-- **C2: Idő- és Ritmusstruktúra (L2 szint):** Zenei fázisok (`b1`, `brk`), Időzítési markerek (`1:`, `'`).
-- **C3: Interakciós és Kapcsolódási Jelzők (L3 szint):** Szerepek (`M`, `F`), Kapcsolódások (`hx`, `cud`), Vezetés-követés (`TO`, `ten`).
-- **C4: Összetett Láncolási és Szerkezeti Operátorok (L4 szint):** Láncolás (`-`), Egyidejűség (`&`), Szerep-szétválasztás (`:`).
+**Függetlenség az Absztrakciós Szintektől (Independence from Didactic Layers):**
+Fontos tisztázni, hogy a Super AAA "elit" klubjába való bekerülés **kizárólag a statisztikai gyakoriságtól (Frequency)** függ, és teljesen független attól, hogy a fogalom anatómiai primitív (L0) vagy egy komplex páros figura (L3). A Rövidítési Skála (ASS L1-L4) és a Didaktikai Absztrakciós Szintek (L0-L4) két egymásra merőleges, független tengelyt alkotnak a rendszerben. Bármilyen didaktikai szintű fogalom kaphat szuper-rövidítést, ha a használati gyakorisága azt megköveteli.
 
 ### B. Standard Rövidítési Elvek (Standard AAA Rules) - A Keltető (ASS L3 & L4)
 
@@ -135,9 +130,12 @@ Az L1 és L2 szuperrövidítések odaítélése a következő elvek alapján tö
 Amikor CamelCase formátumban összetett szavakat képzünk (pl. *Left Arm*), a motor megpróbálja az L1 + L1 formát alkalmazni. Ha ütközést észlel egy bázisfogalommal, bekapcsol a **Tömörítési Skála Elmozdulás (Compression Shift Rule)**.
 
 - **Domain-Specifikus Szó Prioritása (Domain-Specific Noun Priority):** A szigorú, univerzális minősítők (`l`, `r`) a legstabilabb alapkövek. Ütközés esetén **először mindig a domain-specifikus főnevet (itt az "arm"-ot) léptetjük fel** az L2 szintre, és a minősítőt hagyjuk L1-en.
-- *Kísérlet #1 (L1 + L1):* `l` + `a` $ightarrow$ `la` -> **ÜTKÖZIK** a `la` (lady) bázisszóval. (Elvetve)
-- *Kísérlet #2 (L2-Modifier + L1-Noun):* `le` + `A` $ightarrow$ `leA` -> Fókusz a minősítőn, főnév felismerhetetlen. (Elvetve)
-- *Kísérlet #3 (L1-Modifier + L2-Noun):* `l` + `Ar` $ightarrow$ `**lAr**` -> **NINCS ÜTKÖZÉS!** A `l` egyértelmű, az `Ar` jól olvasható. (Elfogadva)
+- *Kísérlet #1 (L1 + L1):* `l` + `a` $
+ightarrow$ `la` -> **ÜTKÖZIK** a `la` (lady) bázisszóval. (Elvetve)
+- *Kísérlet #2 (L2-Modifier + L1-Noun):* `le` + `A` $
+ightarrow$ `leA` -> Fókusz a minősítőn, főnév felismerhetetlen. (Elvetve)
+- *Kísérlet #3 (L1-Modifier + L2-Noun):* `l` + `Ar` $
+ightarrow$ `**lAr**` -> **NINCS ÜTKÖZÉS!** A `l` egyértelmű, az `Ar` jól olvasható. (Elfogadva)
 
 Ez garantálja, hogy a kódok vizuálisan egyértelműek és jól verbalizálhatóak maradjanak.
 
