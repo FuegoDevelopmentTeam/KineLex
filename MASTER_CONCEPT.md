@@ -1,6 +1,6 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 4.1.0 (Decoupling Super AAA from Didactic Layers)
+Version: 4.2.0 (Expanded ASS Scale & Intuitive Cognitive Completion)
 Date: 2026-06-08
 
 Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen salsa, mambo vagy "on2" salsa, bachata, chachacha, jazztánc, contemporary) leírására és ezáltal oktatási rendszerbe foglalására.
@@ -87,14 +87,19 @@ A Szuper Rövidítés a rendszer "Hírességek Csarnoka", ahová a leggyakrabban
 **Függetlenség az Absztrakciós Szintektől (Independence from Didactic Layers):**
 Fontos tisztázni, hogy a Super AAA "elit" klubjába való bekerülés **kizárólag a statisztikai gyakoriságtól (Frequency)** függ, és teljesen független attól, hogy a fogalom anatómiai primitív (L0) vagy egy komplex páros figura (L3). A Rövidítési Skála (ASS L1-L4) és a Didaktikai Absztrakciós Szintek (L0-L4) két egymásra merőleges, független tengelyt alkotnak a rendszerben. Bármilyen didaktikai szintű fogalom kaphat szuper-rövidítést, ha a használati gyakorisága azt megköveteli.
 
-### B. Standard Rövidítési Elvek (Standard AAA Rules) - A Keltető (ASS L3 & L4)
+### B. Standard Rövidítési Elvek (Standard AAA Rules) - A Keltető (ASS L3-L6)
 
-Minden olyan fogalom, amely nem része a Super AAA elit (1-2 karakteres) készletének, a **Rövidítési Skála 3 és 4 karakteres (L3, L4)** tartományában, a "Keltetőben" kap helyet az alábbi automatizált elvek alapján:
+Minden olyan fogalom, amely nem része a Super AAA elit (1-2 karakteres) készletének, a **Rövidítési Skála 3-6 karakteres (L3-L6)** tartományában, a "Keltetőben" kap helyet az alábbi automatizált elvek alapján:
 
 1. **CPC-3 (Consonant Pattern Coding - 3 betűs - L3):**
   A szavakból kivonjuk a magánhangzókat, és az első három mássalhangzót tartjuk meg. (Pl. `glide` -> `gld`, `mambo` -> `mmb`).
 2. **Kimondhatósági Kivétel (Pronounceability Exception - L3/L4):**
   Ha a CPC-3 kód nehezen kimondható, a hagyomány és érthetőség kedvéért szótag-alapú csonkolást használunk. (Pl. `caminando` -> `cami`, `cucaracha` -> `cuca`).
+3. **Több Szavas Fogalmak Rövidítése (Multi-Word Concepts - Acronyms):**
+  Ha egy bázisfogalom eleve több szóból áll (pl. `Stop and Go`, `Cross Body Lead`), nem a CPC-3 logikát, hanem a kezdőbetűs **Mozaikszó (Acronym)** logikát alkalmazzuk L3 (vagy L2) szinten.
+  - *L_max (Full Word):* `stopAndGo`
+  - *L3 (Standard):* `sag` (A szavak kezdőbetűiből: Stop And Go)
+  - *L2 (Super):* `sg` (A kötőszók elhagyásával: Stop Go)
 
 ### C. A Két Elv Harmonikus Együttműködése (The Adaptive Synergy)
 
@@ -110,12 +115,42 @@ A 3. fejezet algoritmusait a **Rövidítési Skála-Spektrum (ASS - Abbreviation
 
 ### A. Minimalizált Tömörítési Szintek (Spectrum Layers)
 
-1. **Level 1 (Core - 1 karakter / Super AAA):** A leggyakoribb báziselem kód (pl. `left` -> `**l**`, `right` -> `**r**`, `arm` -> `**a**`).
-2. **Level 2 (Strictly Minimal 2-char / Super AAA):** Kétkarakteres kiejtés-barát vagy mássalhangzós kód. (Pl. `left` -> `**le**`, `arm` -> `**ar**`).
-3. **Level 3 (Standard CPC-3 / Standard AAA):** Háromkarakteres kód vagy kimondható szótag. (Pl. `left` -> `**lft**`, `glide` -> `**gld**`).
-4. **Level 4 (Full Word / Standard AAA):** A fogalom teljes angol kiírása (pl. `left`, `arm`).
+Mivel a tánc tele van komplex és hasonló fogalmakkal, az L1-L3 tartomány nem nyújt elegendő teret a tömeges ütközések elkerülésére. Ezért a skálát a 4, 5 és 6 karakteres állapotokra is kiterjesztjük, hogy az emberi agy számára minden ponton azonnal felismerhető (intuitív) maradjon a kód.
 
-### B. Kiosztási és Értelmezési Szabályok (Allocation & Interpretability Rules)
+1. **Level 1 (Core - 1 karakter / Super AAA):** A leggyakoribb báziselem kód (pl. `pendulum` -> `**p**`, `external` -> `**e**`).
+2. **Level 2 (Strictly Minimal 2-char / Super AAA):** Kétkarakteres kód. (Pl. `pendulum` -> `**pd**`, `external` -> `**ex**`).
+3. **Level 3 (Standard CPC-3 / Standard AAA):** Háromkarakteres kód. (Pl. `pendulum` -> `**pen**`, `external` -> `**ext**`).
+4. **Level 4 (Standard AAA):** Négykarakteres kód. (Pl. `pendulum` -> `**pend**`, `external` -> `**extl**`).
+5. **Level 5 (Standard AAA):** Ötkarakteres kód. (Pl. `pendulum` -> `**pendu**`, `external` -> `**extnl**`).
+6. **Level 6 (Standard AAA):** Hatkarakteres kód. (Pl. `pendulum` -> `**pendlm**`, `external` -> `**extrnl**`).
+7. **L_max (Full Word):** A fogalom teljes angol kiírása (pl. `pendulum`, `external`).
+
+### B. Intuitivitást Elősegítő Harmonizáló Elv (Intuitive Cognitive Completion Rule)
+
+A 4, 5, 6 karakteres rövidítések generálásakor a puszta magánhangzó-kivonás vagy szótagolás már nem elég hatékony. Az emberi agy "első ránézésre kiegészíti" élményének (cognitive completion) garantálásához a két módszert **váltogatva, egy harmonizáló algoritmus** szerint alkalmazzuk:
+
+- **A Szabály Hierarchiája 8+ karakteres szavaknál:**
+  1. A rövidítésnek mindig az **eredeti szótag-határokat (Syllable Boundaries)** vagy a **kulcs-mássalhangzókat (Key Consonants)** kell megcéloznia.
+  2. Ha a csonkolt szótag-vég magánhangzóra esne, és ez rontaná a szó vizuális sűrűségét, a következő kulcs-mássalhangzót húzzuk be.
+  3. A szóvégi szuffixumokat (`-tion`, `-nal`, `-lum`) drasztikusan (mássalhangzókra) sűrítjük a hosszabb kódoknál.
+- **Példa 1: `pendulum`**
+  - L1: `p` (Kezdőbetű)
+  - L2: `pd` (Első és harmadik mássalhangzó)
+  - L3: `pen` (Első teljes szótag)
+  - L4: `pend` (Első szótag + következő mássalhangzó - *kognitívan a legerősebb*)
+  - L5: `pendu` (Két szótag)
+  - L6: `pendlm` (Két szótag + az utolsó szótag mássalhangzós sűrítése)
+- **Példa 2: `external`**
+  - L1: `e`
+  - L2: `ex` (Első vizuálisan erős tag)
+  - L3: `ext` (Szótag + következő mássalhangzó)
+  - L4: `extl` (L3 + a szóvégi záró mássalhangzó)
+  - L5: `extnl` (L3 + utolsó szótag sűrítve)
+  - L6: `extrnl` (Kivonásos CPC logikához közeledve)
+
+Ez az elv biztosítja, hogy a skála bármely értékénél a kód kimondható vagy vizuálisan azonnal feloldható (decode-olható) legyen a tanár agyában.
+
+### C. Kiosztási és Értelmezési Szabályok (Allocation & Interpretability Rules)
 
 Az L1 és L2 szuperrövidítések odaítélése a következő elvek alapján történik:
 
@@ -125,17 +160,16 @@ Az L1 és L2 szuperrövidítések odaítélése a következő elvek alapján tö
 3. **Értelmezhetőségi Szóösszevonási Szabály (Interpretability Merge Rule):** Ha egy összetétel **tiltó vagy ellentétes értelmet kifejező előtagot** (pl. `in-`, `un-`, `non-`) tartalmaz, az kivételt képez a szuper-rövidítés alól. Nem vonható össze a bázisszóval.
   - *Példa:* `dir` = direct, `inDir` = indirect. Hiába lenne logikus az `ind` rövidítés az `inDir`-ből, elveszítenénk az `in` előtag jelentését. A logikai érthetőség felülírja a tömörítést.
 
-### C. Dinamikus Ütközésfeloldó Protokoll (Compression Shift Rule)
+### D. Dinamikus Ütközésfeloldó Protokoll (Compression Shift Rule)
 
-Amikor CamelCase formátumban összetett szavakat képzünk (pl. *Left Arm*), a motor megpróbálja az L1 + L1 formát alkalmazni. Ha ütközést észlel egy bázisfogalommal, bekapcsol a **Tömörítési Skála Elmozdulás (Compression Shift Rule)**.
+Amikor CamelCase formátumban összetett szavakat képzünk (pl. *Left Arm*), a motor megpróbálja az L1 + L1 formát alkalmazni. Ha ütközést észlel egy bázisfogalommal, bekapcsol a **Tömörítési Skála Elmozdulás (Compression Shift Rule)** és az alábbi hierarchia szerint lép tovább:
 
-- **Domain-Specifikus Szó Prioritása (Domain-Specific Noun Priority):** A szigorú, univerzális minősítők (`l`, `r`) a legstabilabb alapkövek. Ütközés esetén **először mindig a domain-specifikus főnevet (itt az "arm"-ot) léptetjük fel** az L2 szintre, és a minősítőt hagyjuk L1-en.
-- *Kísérlet #1 (L1 + L1):* `l` + `a` $
-ightarrow$ `la` -> **ÜTKÖZIK** a `la` (lady) bázisszóval. (Elvetve)
-- *Kísérlet #2 (L2-Modifier + L1-Noun):* `le` + `A` $
-ightarrow$ `leA` -> Fókusz a minősítőn, főnév felismerhetetlen. (Elvetve)
-- *Kísérlet #3 (L1-Modifier + L2-Noun):* `l` + `Ar` $
-ightarrow$ `**lAr**` -> **NINCS ÜTKÖZÉS!** A `l` egyértelmű, az `Ar` jól olvasható. (Elfogadva)
+1. **Domain-Specifikus Szó Prioritása (Domain-Specific Noun Priority):** A szigorú, univerzális minősítők (`l`, `r`) a legstabilabb alapkövek. Ütközés esetén **először mindig a domain-specifikus főnevet léptetjük fel** az L2 szintre, és a minősítőt hagyjuk L1-en.
+  - *Kísérlet #1 (L1 + L1):* `l` + `a` $\rightarrow$ `la` -> **ÜTKÖZIK** a `la` (lady) bázisszóval. (Elvetve)
+  - *Kísérlet #2 (L2-Modifier + L1-Noun):* `le` + `A` $\rightarrow$ `leA` -> Fókusz a minősítőn, főnév felismerhetetlen. (Elvetve)
+  - *Kísérlet #3 (L1-Modifier + L2-Noun):* `l` + `Ar` $\rightarrow$ `**lAr**` -> **NINCS ÜTKÖZÉS!** A `l` egyértelmű, az `Ar` jól olvasható. (Elfogadva)
+2. **Rokonértelmű Kifejezések Felajánlása (Synonym Suggestion Strategy):** Ha az elmozdulás sem oldja meg az alaki ütközést (vagy a kód már túlzottan felduzzadna), a rendszer **aktívan felajánlja egy rokonértelmű (szinonima) kifejezés használatát**, amelynek rövidített formája hatástalanítja az ütközést.
+  - *Példa:* Ha egy új kifejezés lerövidítve `rot` lenne, de ez már foglalt a *rotation* által, a rendszer javasolhatja a *spin* (`spn`) vagy a *turn* (`tu`) szavak használatát a szótárban. Ezzel a nyelvtan organikusan fejlődik a leginkább ütközésmentes fogalmak felé.
 
 Ez garantálja, hogy a kódok vizuálisan egyértelműek és jól verbalizálhatóak maradjanak.
 

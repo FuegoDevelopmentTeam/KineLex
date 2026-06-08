@@ -113,3 +113,16 @@ Kezdeti állapot: A MASTER_CONCEPT.md frissítése a Hibrid Idővonal-Modellel (
   - A 3. fejezetből **teljesen eltávolítottam a "Szuper Rövidítések Kategóriái (C0-C4)" szekciót**, mivel ez mesterségesen és feleslegesen kötötte össze a jelentéstartalmat a rövidítési szinttel.
   - Helyette beszúrtam a **"Függetlenség az Absztrakciós Szintektől (Independence from Didactic Layers)"** alapelvet. Bármilyen szintű (L0-L4) fogalom megkaphatja a szuper-rövidítést (ASS L1-L2), ha a statisztikai használata ezt indokolja.
   - A MASTER_CONCEPT.md verziószámát **v4.1.0**-ra emeltem (Decoupling Super AAA from Didactic Layers), a módosításokat commitoltam és pusholtam.
+
+### Beszélgetés #20 (2026-06-08)
+- **User kérése:**
+  - Több szóból álló bázisfogalmak (pl. *Stop and Go*, *Cross Body Lead*) rövidítésének tisztázása: beemelni, hogy több szóból álló fogalmaknál az L3 szint ne CPC-3 (mássalhangzó csonkolás) legyen, hanem Acronym (kezdőbetűs mozaikszó).
+  - Az ASS skála kiterjesztése L4-től L6-ig (ahol az L_max a teljes szó), mert az L1-L3 skála kevés a komplex tánc fogalmak alaki ütközéseinek elkerülésére.
+  - Az "Intuitivitást elősegítő harmonizáló elv" bevezetése a 4, 5, 6 karakteres rövidítéseknél: A szótag-alapú és mássalhangzós (CPC) csonkolás váltogatása (pl. pendulum: p, pd, pen, pend, pendu, pendlm), hogy "az agy azonnal kimondja".
+  - Szinonima javaslása (Rokonértelmű kifejezések felajánlása) ütközés esetén.
+- **Tervezés és Megoldások:**
+  - A 3.B fejezetben lefektettem a **Több Szavas Fogalmak (Multi-Word Concepts - Acronyms)** szabályt, ahol L3 a kezdőbetűkből (pl. `sag`), az L2 a kötőszók elhagyásából áll (pl. `sg`).
+  - A 4.A fejezetben az ASS skálát **L1-L6 és L_max** (Full Word) tartományra bővítettem ki.
+  - A 4.B fejezetben kidolgoztam az **Intuitivitást Elősegítő Harmonizáló Elv (Intuitive Cognitive Completion Rule)** szabályát 8+ karakteres szavakra. A rövidítések a szótaghatárokra és a kulcs-mássalhangzókra épülnek, sűrítve a szóvégeket (`-tion`, `-lum`). A `pendulum` és `external` szavak példáján bemutatva a kognitív L1-L6 feloldást.
+  - A 4.D fejezetbe (Ütközésfeloldás) bekerült a **Rokonértelmű Kifejezések Felajánlása (Synonym Suggestion Strategy)**: ha az elmozdulás sem menti meg az alaki ütközést (pl. `rot` már foglalt), a rendszer szinonimát (pl. `spin` -> `spn`) ajánl fel.
+  - A MASTER_CONCEPT.md verziószámát **v4.2.0**-ra emeltem, a módosításokat commitoltam és pusholtam.
