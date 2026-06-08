@@ -1,6 +1,6 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 2.9.0 (L1 Kinetika pontosítása & Vektor Operátorok bevezetése)
+Version: 3.0.0 (Anti-Crowding CamelCase & Versioned Dictionary Views)
 Date: 2026-06-07
 
 ## 1. Rendszer-architektúra és Filozófia
@@ -179,13 +179,16 @@ A kódok láncolatának minimalizálása érdekében egy **hibrid rendszert** al
 
 ### A. Mikor használunk CamelCase-t? (Takarékos láncolás)
 
-A CamelCase-t használjuk a bázisszavak és standard jelzőik közvetlen összekapcsolására, amennyiben a szóhatár nagybetűvel egyértelműen elkülönül:
+A CamelCase-t használjuk a bázisszavak és standard jelzőik közvetlen összekapcsolására, az alábbi szigorú **Vizuális Egyértelműségi (Anti-Crowding)** szabályok betartásával:
 
-- `bwdCami` (Backward Caminando - nem kell pont, mert a `C` nagybetű jelzi a határt).
-- `elRT` (Elevated Right Turn - az `el` kisbetűs jelzőt követi a nagybetűs `RT` turn bázisszó).
-- `frxMam` (Front Cross Mambo).
-- `dblFrx` (Double Front Cross).
-- `rhx` / `lhx` (Right/Left Hand Crossed - a kis `x` jelzi a keresztezést).
+1. **Tiszta Kisbetűs Összeolvadás (Lexical Merge):** Ha az összetett kód legfeljebb 4 karakterből áll, egyáltalán **nem használunk nagybetűt**. Csupa kisbetűvel írjuk, mert ilyen rövidségnél az emberi szem egyben is képes dekódolni.
+  - *Példa:* `lt` (left turn), `lft` (left foot), `lto` (left turn open).
+2. **Anti-Kapszula Szabály (No Consecutive Capitals):** A rendszerben **szigorúan tilos a csupa nagybetűből álló szótömbök (pl. LTO, LT, RT)** használata. Ezek vizuálisan agresszívek, a kis `l` és nagy `I` miatt könnyen félreolvashatók, és nem tagolják a szót. Két nagybetű sosem állhat közvetlenül egymás mellett!
+3. **Főnévi Bázis (Base Noun) Kiemelése:** Kizárólag az összetétel **főnévi magja** (az akció vagy testrész) kaphat nagybetűt a szóhatáron. Az L1-es minősítők (l, r, f, b) mindig kisbetűsek maradnak.
+  - *Példa:* A "Left Turn" esetében a `Turn` a főnév. Mivel az `lT` sértené az Anti-Kapszula szabályt (ha más is jönne utána), a Turn-t L2-re toljuk: `lTu` vagy `lTurn`.
+  - *Példa:* "Left Foot" (l + ft) -> `lFt` (Az F nagy, a t kicsi, a szabály teljesül).
+  - *Példa:* "Left Turn Open" -> Tilos az `LTO` és az `lTO`. Helyes megoldások: `lto` (mert 3 karakteres), vagy hosszabb tagolásnál `lTuOp`.
+  - *Példa:* `bwdCami` (Backward Caminando - nem kell pont, mert a `C` nagybetű jelzi a határt, és kisbetű követi).
 
 ### B. Mikor kötelező a Pont (`.`) használata? (Szülő-Gyermek Viszony és Specifikáció)
 
@@ -195,7 +198,7 @@ A pont szeparátor használata szigorúan **csak strukturális (objektum-tulajdo
   - *Szabály:* A pontot az objektumok egymásba ágyazottságának kifejezésére használjuk.
   - *Példa:* A gerinc végpontjainak és eltolásainak leírásakor: `**occi.shift.lat`** (occiput lateral shift) vagy `**body.arm.left`**. Ez logikailag pontos és kódolható.
 2. **Állapotváltozások és Specifikációk (Properties & Types):**
-  - *Példa:* Forgások és kivezetéseik specifikálásakor (ahol a kivezetés a forgás egy altípusa/tulajdonsága): `**LLT.TO`** (Lady Left Turn with Turnout) vagy `**MRT.TB`** (Man Right Turn with Turnback).
+  - *Példa:* Forgások és kivezetéseik specifikálásakor (ahol a kivezetés a forgás egy altípusa/tulajdonsága): `**lTu.tuO`** (Left Turn with Turnout) vagy `**rTu.tuB`** (Right Turn with Turnback). Itt sem használunk csupa nagybetűt (nem LLT.TO).
 
 *(Fontos változás: A pontot TÖBBÉ NEM használjuk lineáris szóösszetételek vizuális elválasztására vagy rövidítési ütközések megelőzésére (pl. tilos az `l.a` a left arm-ra). Erre a CamelCase-en belüli Tömörítési Skála Elmozdulás (Compression Shift) szolgál, lásd a 6. fejezetet!)*
 
@@ -738,6 +741,13 @@ Ugyanaz a mögöttes Szemantikai DNA (UUID-láncolat) egyszerre **több hivatkoz
 2. **Level 1 (Köztes Csoportfogalmak / Intermediate):** Részlegesen összevont kódok, amelyek még tartalmaznak atomi részleteket (pl. `pvtScrew + lvl.down`).
 3. **Level 2 (Egyezményes Figuranevek / Conventional):** A nemzetközi vagy iskolai standard rövidítés (pl. `sldScrew`).
 4. **Level 3 (Önkényes Tanári Név / Custom Alias):** A tanár saját, teljesen egyedi elnevezése (pl. `LevKedvencHelycseréi001` vagy `PetiFuraForgasa`).
+
+### D. Fogalomtár Evolúció és Verziózott Nézetek (Dictionary Evolution & Versioned Views)
+
+A rendszer fejlődése és a tanárok kollektív tapasztalata során a fogalmak jelentése, a hierarchia vagy akár a rövidítések elvei folyamatosan finomodnak (evolúció). Hogy egy régi óravázlat vagy koreográfia-kód ne "törjön el" egy utólagos változtatás miatt, a rendszer bevezeti a **Verziózott Szótár (Versioned Dictionary)** koncepcióját.
+
+- **Új Verziók (SemVer):** Minden alkalommal, amikor egy fogalomkör strukturálisan megváltozik, vagy egy rövidítési szabály (pl. a CamelCase logika) módosul, a szótár egy új verziószámot kap a háttérben (pl. v2.8.0 $\rightarrow$ v3.0.0). A régi mozdulatok és kódok metaadatai befagynak a saját verziójukban.
+- **Választható Nézetek (Versioned Views):** A tanárok a felületen egy "View" legördülő menüben választhatnak, hogy egy 2024-es koreográfiát az **"Eredeti (Legacy) Nézetben"** akarnak-e olvasni (ahol minden az akkori, régi kódokkal jelenik meg), vagy a **"Legújabb (Latest) Nézetben"**, ahol a fordítómotor (compiler) a régi UUID-kat dinamikusan a legújabb, legfrissebb rövidítési szabályok (pl. Anti-Kapszula CamelCase) szerint rendereli ki a képernyőre.
 
 **Hogyan kezeli ezt a rendszer technológiailag?**
 

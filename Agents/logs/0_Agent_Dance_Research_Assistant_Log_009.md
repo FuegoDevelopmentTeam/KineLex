@@ -42,3 +42,12 @@ Kezdeti állapot: A MASTER_CONCEPT.md frissítése a Hibrid Idővonal-Modellel (
     - **Elemi Testmozdulatok és Szabadságfokok:** ízületi rotációk, plusz alapvető kinetikus akciók (homorítás, domborítás, bump, stb.).
     - **Kiegyenlítő Mozdulatpárok (Compensatory / Counter-Balancing Gestures):** Új kategória a referenciapont mozdulatlanságát garantáló, testrészek közötti egyensúlyt teremtő mozdulatpárokra (pl. csípő kitolása vs. ellentétes kar nyújtása, azonos oldali lábkör és karkör).
   - A MASTER_CONCEPT.md verziószáma **v2.9.0**-ra frissült, a módosításokat commitoltam és pusholtam.
+
+### Beszélgetés #13 (2026-06-08)
+- **User kérése:**
+  - Rendteremtés a CamelCase használatában. A kódolvasás során a csupa nagybetűs halmozódások (pl. LTO, LT) vizuálisan zavaróak. Csak a szükséges fogalmi határnál legyen nagybetű, és ne legyen nagybetű-torlódás. (Például: lFt, lTo).
+  - Szótár evolúció és verziókövetés: Amikor a fogalomkörök vagy elnevezések szabályai megváltoznak, a rendszer kapjon új verziószámot, és a UI-on lehessen régebbi verzióhoz tartozó nézetet (View) is választani a múltbeli óravázlatok sértetlen megjelenítése érdekében.
+- **Tervezés és Megoldások:**
+  - A 4. fejezetet átírtam a **Anti-Kapszula (No Consecutive Capitals)** és a **Főnévi Bázis (Base Noun) Kiemelése** szabályokkal. A csupa nagybetűs kódok (pl. LTO, MRT) hivatalosan is érvénytelenítve lettek. A mozgás főnévi magja (pl. Turn, Foot) kapja a nagybetűt, míg a minősítők (l, r) kisbetűsek maradnak. Ha egy kód 4 karakternél rövidebb, tisztán kisbetűvel is összeolvadhat (pl. lto, lft). Ha tagolni kell, a Tömörítési Skála alapján legalább L2 szintre toljuk az egyik elemet (pl. lTuOp vagy lFt).
+  - A 12. fejezetet kiegészítettem a **D. Fogalomtár Evolúció és Verziózott Nézetek (Dictionary Evolution & Versioned Views)** szekcióval. Ez bevezeti a háttérben történő SemVer (Semantic Versioning) verziózást, és a UI-on választható "Legacy" vagy "Latest" nézeteket, így biztosítva a visszafelé kompatibilitást és a folyamatos fejlődést.
+  - A MASTER_CONCEPT.md verziószáma **v3.0.0**-ra ugrott a szótári architektúra és a szintaxis jelentős rendszerszintű változása miatt. A módosításokat commitoltam és pusholtam.
