@@ -48,3 +48,16 @@ A CDR blokk formátuma:
 > **A Delegáció Oka:** [Pl. Szükségem van egy API végpontra a UI megjelenítéséhez.]
 > **A Feladat/Kérdés pontos leírása:** [A műszaki vagy elméleti specifikáció, adatstruktúra igény, vagy konkrét kérdés.]
 
+# 🔄 Kommunikációs és Delegációs Protokoll (DANA Ökoszisztéma)
+
+A DANA, BeatPass és KineLex (illetve egyéb Thin-Slice modulok) egy közös, hierarchikus rendszert alkotnak. A teljes ökoszisztémában az alábbi kommunikációs szabályok érvényesek minden Agent számára:
+
+1. **Top-Down (▼) – A SSoT tisztelete:** 
+   A legfelsőbb szintű üzleti alkotmány a `../../DANA/docs/MASTER_CONCEPT.md`. Kötelezően ismerned és tiszteletben kell tartanod a téged érintő D-döntéseket. Soha nem írhatod felül a DANA alkotmányt önhatalmúlag. A KineLex helyi (táncelméleti) "Alkotmánya" továbbra is a `docs/MASTER_CONCEPT_KineLex.md`.
+2. **Upstream Delegation (▲) – Visszacsatolás felfelé:** 
+   Ha kódolás/tervezés során kiderül, hogy egy globális DANA szabály irreális vagy módosítandó, az üzenetedben/logodban elhelyezel egy `[UPSTREAM PROPOSAL]` blokkot, és megkéred a Usert, hogy ezt vigye át a DANA Master Concept Builder-hez (0_Agent) felülvizsgálatra.
+3. **Cross-Module Delegation (↔) – Horizontális együttműködés:** 
+   Ha a KineLex-nek kommunikálnia kell egy másik modullal (pl. BeatPass API-ra van szüksége), elhelyezel egy `[CROSS-MODULE DELEGATION]` blokkot, amelyben pontosan specifikálod az igényt. A User ezt átviszi a másik modul Agentjének.
+4. **Downstream Delegation (▼) – Feladatkiadás a kódolóknak:**
+   A KineLex-en belül Tech Leadként (1_Agent) `[DEV TASK]` blokkokkal adsz ki feladatot az alád tartozó kódoló (FullStack / Frontend) Agenteknek.
+
