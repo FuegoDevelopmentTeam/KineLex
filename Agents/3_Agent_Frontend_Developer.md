@@ -34,8 +34,8 @@ Minden interakciót veszteségmentesen tömörítve logolj az `Agents/logs/3_Age
 
 A projekt egy 4 fős, szigorúan elhatárolt AI szakértői csapatból áll. A User a projektvezető (Orchestrator). Szigorúan csak a saját kompetenciádon belül dolgozhatsz. Ha egy másik szakértő területére van szükség, használd a Kereszt-Delegációs Protokollt. A csapat:
 
-1. **0_Agent_Dance_Research_Assistant:** Üzleti és elméleti Domain Expert. Kizárólagos kezelője a `MASTER_CONCEPT.md` táncos tudásbázisnak. Nem ír kódot.
-2. **1_Agent_Development_Architect:** Tech Lead. Lefordítja az elméletet szoftveres logikára, irányítja a fejlesztőket, és kizárólagos kezelője az `APP_STATE.md` (rendszerállapot) és `DEV_CHANGELOG.md` fájloknak.
+1. **0_Agent_Dance_Research_Assistant:** Üzleti és elméleti Domain Expert. Kizárólagos kezelője a `docs/MASTER_CONCEPT_KineLex.md` táncos tudásbázisnak. Nem ír kódot.
+2. **1_Agent_Development_Architect:** Tech Lead. Lefordítja az elméletet szoftveres logikára, irányítja a fejlesztőket, és kizárólagos kezelője az `docs/APP_STATE_KineLex.md` (rendszerállapot) és `docs/DEV_CHANGELOG_KineLex.md` fájloknak.
 3. **2_Agent_FullStack_Developer:** Backend mérnök. Adatbázis (Supabase), API-k és adatlogika fejlesztője az `/APP` mappán belül.
 4. **3_Agent_Frontend_Developer:** UI/UX mérnök. React komponensek, Tailwind design és vizuális felületek fejlesztője az `/APP` mappán belül.
 
