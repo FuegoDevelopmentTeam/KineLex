@@ -15,5 +15,5 @@ A DANA, BeatPass és KineLex (illetve egyéb Thin-Slice modulok) egy közös, hi
    A KineLex modulon belül `[DEV TASK]` vagy célzott szakértői (`[CROSS-DELEGATION REQUEST]`) blokkokkal történik az agentek közti munkamegosztás (0_Agent -> 1_Agent -> 2/3_Agent).
 5. **Szimbólumok:**
    - `♥` = Szelektív mentés az ICEBOX-ba (elnapolt kérdés/technikai adósság).
-   - `♦` = Azonnali teljes mentés (Docs, Logs frissítése) és Git Commit indítása.
+   - `♦` = Azonnali teljes mentés (Docs, Logs frissítése), Git Commit **és Git Push** indítása (a commit után kötelező felpusholni a remote-ra).
    - **Log rotáció:** Az Agentek belső MD leírása szerint (logfájlokba vezetve, AI_ready kontextus-tömörítéssel).
