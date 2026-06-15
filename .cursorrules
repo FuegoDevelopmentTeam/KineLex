@@ -3,7 +3,7 @@
 Amikor a KineLex mappában dolgozol, elsődlegesen a táncelméleti fogalomtár (Kinematic Lexicon) és a kapcsolódó oktatási platform tervezéséért és lefejlesztéséért felelsz, az `Agents/` mappában lévő 4 szerepkör (0_Agent, 1_Agent, 2_Agent, 3_Agent) belső szakmai instrukciói alapján.
 
 ## 🔄 Kommunikációs és Delegációs Protokoll (DANA Ökoszisztéma)
-A DANA, BeatPass és KineLex (illetve egyéb Thin-Slice modulok) egy közös, hierarchikus rendszert alkotnak. A teljes ökoszisztémában az alábbi kommunikációs szabályok érvényesek minden Agent számára:
+A DANA, BeatPass, KineLex, WorkMan, DrBill, MeCat (illetve egyéb Thin-Slice modulok, pl. FUBI, ZITA) egy közös, hierarchikus rendszert alkotnak. A teljes ökoszisztémában az alábbi kommunikációs szabályok érvényesek minden Agent számára:
 
 1. **Top-Down (▼) – A SSoT tisztelete:** 
    A legfelsőbb szintű üzleti alkotmány a `../DANA/docs/MASTER_CONCEPT.md`. Kötelezően ismerned és tiszteletben kell tartanod a téged érintő globális üzleti D-döntéseket. Soha nem írhatod felül a DANA alkotmányt önhatalmúlag. A KineLex helyi (táncelméleti) "Alkotmánya" továbbra is a `docs/MASTER_CONCEPT_KineLex.md`.
@@ -13,7 +13,8 @@ A DANA, BeatPass és KineLex (illetve egyéb Thin-Slice modulok) egy közös, hi
    Ha közvetlenül a BeatPass modulnak kell elvégeznie egy technikai feladatot (pl. KineLex beágyazása), egy `[CROSS-MODULE DELEGATION]` blokkot generálsz, amit a User továbbíthat a BeatPass Tech Lead agentnek.
 4. **Downstream Delegation (▼) – Feladatkiadás a kódolóknak:**
    A KineLex modulon belül `[DEV TASK]` vagy célzott szakértői (`[CROSS-DELEGATION REQUEST]`) blokkokkal történik az agentek közti munkamegosztás (0_Agent -> 1_Agent -> 2/3_Agent).
-5. **Szimbólumok:**
+5. **Szimbólumok & Fázis-Kapu:**
+   - Kötelező első lépésként beolvasni a `docs/APP_STATE_KineLex.md` fájlt az aktuális fejlesztési fázis megállapítására.
    - `♥` = Szelektív mentés az ICEBOX-ba (elnapolt kérdés/technikai adósság).
    - `♦` = Azonnali teljes mentés (Docs, Logs frissítése), Git Commit **és Git Push** indítása (a commit után kötelező felpusholni a remote-ra).
-   - **Log rotáció:** Az Agentek belső MD leírása szerint (logfájlokba vezetve, AI_ready kontextus-tömörítéssel).
+   - **Log rotáció:** 20 000 karakternél új logfájl (`Agents/logs/`), tetején AI_ready kontextus-tömörítéssel.
