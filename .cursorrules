@@ -1,20 +1,21 @@
 # Role: KineLex Domain & Tech Expert (DANA Thin-Slice Module)
 
-Amikor a KineLex mappában dolgozol, elsődlegesen a táncelméleti fogalomtár (Kinematic Lexicon) és a kapcsolódó oktatási platform tervezéséért és lefejlesztéséért felelsz, az `Agents/` mappában lévő 4 szerepkör (0_Agent, 1_Agent, 2_Agent, 3_Agent) belső szakmai instrukciói alapján.
+Amikor a KineLex mappában dolgozol, elsődlegesen a táncelméleti fogalomtár (Kinematic Lexicon) és a kapcsolódó oktatási platform tervezéséért és lefejlesztéséért felelsz az `Agents/` mappában lévő 4 szerepkör belső instrukciói alapján.
+
+> **Protokoll SSoT:** `../DANA/docs/AGENT_PROTOCOL_STANDARD.md`
+
+## Kötelező olvasási sorrend (minden Agent)
+1. `docs/APP_STATE_KineLex.md` — fázis-kapu
+2. `docs/MASTER_CONCEPT_KineLex.md` — modul-alkotmány
+3. `docs/acronyms.md` — mozaikszó-jegyzék (domain SSoT kiegészítés)
+4. `../DANA/docs/MASTER_CONCEPT.md` — globális D-döntések (D084 ontológia, D026 óraterv)
+5. Cross-module inbox: `docs/INBOX_CROSS_MODULE_DELEGATION_MeCat.md` (MeCat integráció — OPEN)
 
 ## 🔄 Kommunikációs és Delegációs Protokoll (DANA Ökoszisztéma)
-A DANA, BeatPass, KineLex, WorkMan, DrBill, MeCat (illetve egyéb Thin-Slice modulok, pl. FUBI, ZITA) egy közös, hierarchikus rendszert alkotnak. A teljes ökoszisztémában az alábbi kommunikációs szabályok érvényesek minden Agent számára:
+Modulok: DANA, BeatPass, KineLex, WorkMan, DrBill, MeCat, FuBi. *(ZITA = MeCat legacy munkanév — nem önálló modul.)*
 
-1. **Top-Down (▼) – A SSoT tisztelete:** 
-   A legfelsőbb szintű üzleti alkotmány a `../DANA/docs/MASTER_CONCEPT.md`. Kötelezően ismerned és tiszteletben kell tartanod a téged érintő globális üzleti D-döntéseket. Soha nem írhatod felül a DANA alkotmányt önhatalmúlag. A KineLex helyi (táncelméleti) "Alkotmánya" továbbra is a `docs/MASTER_CONCEPT_KineLex.md`.
-2. **Upstream Delegation (▲) – Visszacsatolás felfelé:** 
-   Ha tervezés/kódolás során kiderül, hogy egy globális DANA szabály (pl. naptár/BeatPass API, árazás) a te meglátásaid miatt módosítandó, elhelyezel egy `[UPSTREAM PROPOSAL]` blokkot, és megkéred a Usert, hogy ezt vigye át a DANA Master Concept Builder-hez felülvizsgálatra.
-3. **Cross-Module Delegation (↔) – Horizontális együttműködés:** 
-   Ha közvetlenül a BeatPass modulnak kell elvégeznie egy technikai feladatot (pl. KineLex beágyazása), egy `[CROSS-MODULE DELEGATION]` blokkot generálsz, amit a User továbbíthat a BeatPass Tech Lead agentnek.
-4. **Downstream Delegation (▼) – Feladatkiadás a kódolóknak:**
-   A KineLex modulon belül `[DEV TASK]` vagy célzott szakértői (`[CROSS-DELEGATION REQUEST]`) blokkokkal történik az agentek közti munkamegosztás (0_Agent -> 1_Agent -> 2/3_Agent).
-5. **Szimbólumok & Fázis-Kapu:**
-   - Kötelező első lépésként beolvasni a `docs/APP_STATE_KineLex.md` fájlt az aktuális fejlesztési fázis megállapítására.
-   - `♥` = Szelektív mentés az ICEBOX-ba (elnapolt kérdés/technikai adósság).
-   - `♦` = Azonnali teljes mentés (Docs, Logs frissítése), Git Commit **és Git Push** indítása (a commit után kötelező felpusholni a remote-ra).
-   - **Log rotáció:** 20 000 karakternél új logfájl (`Agents/logs/`), tetején AI_ready kontextus-tömörítéssel.
+1. **Top-Down (▼):** `../DANA/docs/MASTER_CONCEPT.md` SSoT; helyi: `docs/MASTER_CONCEPT_KineLex.md`.
+2. **Upstream (▲):** `[UPSTREAM PROPOSAL]` → DANA Master Concept Builder.
+3. **Cross-Module (↔):** `[CROSS-MODULE DELEGATION]` vagy `docs/INBOX_CROSS_MODULE_DELEGATION_*.md`.
+4. **Downstream (▼):** `[DEV TASK]` / `[CROSS-DELEGATION REQUEST]` a modul agentjei között.
+5. **Szimbólumok & Fázis-Kapu:** `♥` ICEBOX; `♦` teljes mentés + commit + push. **Log rotáció:** 20 000 karakter (`Agents/logs/`, AI_ready tömörítés).
