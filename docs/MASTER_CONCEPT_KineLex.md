@@ -1,7 +1,9 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 4.3.0 (Pedagogy Module Succession Roster & Marketplace Compatibility — D079, D080)
-Date: 2026-06-14
+Version: 4.4.0 (DANA v1.34.0 platform-elv adoptáció: P52–P62, D095 + ontológia mint tudásgráf re-base jegyzet)
+Date: 2026-06-16
+
+> **DANA Platform-elv Adoptáció (v1.34.0):** A KineLex adoptálja a konszolidációs elveket. Kiemelten: **P56/D095** (tenant-izoláció `organization_id` + RLS; a fogalomtár megosztása buborék-scope-pal, láthatóság ⟂ funkció), **P58** (a kánon ↔ tanári dialektus a scoped-overlay kaszkád referencia-esete, a P49 mintán), **P57** (az AAA rövidítési/ütközésfeloldó szabályok a közös Rules-as-Data policy-mintát követik, de **külön domain** a pénzügyi routingtól), **P62** (traceability). **Re-base jegyzet (P52+ #6):** a KineLex ontológia természeténél fogva **gráf** (L0–L4 rétegek, általános–speciális tengely, fogalom-evolúció, dialektus-kompatibilitás) → cél a **property graph / SKOS-jellegű** tárolás **stabil, verziózott `term_id`-kkal** (ezt fogyasztja a MeCat D084 szerint). Aktiválás a megfelelő Phase-ben (lásd `BACKLOG_PROMPT_CACHE` PR-014).
 
 Ez a dokumentum a "DANCE" projekt szoftverarchitektúrájának, fogalomterének és formális leíró nyelvének egyetlen igazságforrása (Source of Truth - SoT). A rendszer fő célja, hogy egy rendkívül tömör, szótárral visszakövethető (dictionary-backed), de gépileg és emberileg egyaránt könnyen írható és olvasható hibrid kódrendszert biztosítson a solo és social páros táncok (különösen salsa, mambo vagy "on2" salsa, bachata, chachacha, jazztánc, contemporary) leírására és ezáltal oktatási rendszerbe foglalására.
 
