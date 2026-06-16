@@ -1,6 +1,6 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 4.6.0 (DANA v1.34.0 platform-elv adoptáció: P52–P62, D095 + ontológia mint tudásgráf re-base jegyzet + DANA v1.36.0 Kulturális Mozgalom adopció: forgatókönyv→3D D107, tudás-royalty D101, wellbeing D109 — §21 + DANA v1.37.0 Kooperatív Szakmai Ív adopció: tananyag-tulajdonosi ív D117, skill-kapu D111 — §22)
+Version: 4.7.0 (DANA v1.34.0 platform-elv adoptáció: P52–P62, D095 + ontológia mint tudásgráf re-base jegyzet + DANA v1.36.0 Kulturális Mozgalom adopció: forgatókönyv→3D D107, tudás-royalty D101, wellbeing D109 — §21 + DANA v1.37.0 Kooperatív Szakmai Ív adopció: tananyag-tulajdonosi ív D117, skill-kapu D111 — §22 + DANA v1.38.0 Szervezői Ökoszisztéma adopció: D124 — §23)
 Date: 2026-06-16
 
 > **DANA Platform-elv Adoptáció (v1.34.0):** A KineLex adoptálja a konszolidációs elveket. Kiemelten: **P56/D095** (tenant-izoláció `organization_id` + RLS; a fogalomtár megosztása buborék-scope-pal, láthatóság ⟂ funkció), **P58** (a kánon ↔ tanári dialektus a scoped-overlay kaszkád referencia-esete, a P49 mintán), **P57** (az AAA rövidítési/ütközésfeloldó szabályok a közös Rules-as-Data policy-mintát követik, de **külön domain** a pénzügyi routingtól), **P62** (traceability). 
@@ -1460,4 +1460,14 @@ A KineLex a kooperatív szakmai ív **tudás-tulajdonosi** és **skill-kapu** vo
 *   **D109/D115 kapcsolat:** a fenntartható terhelés-jelzés (P85) és a „megérkezés" (plató, P87) a Skill-Graph progresszióban is megjelenik — nincs erőltetett szint-hajszolás.
 
 > **Felszólítás (a User közvetíti):** a tananyag-tulajdonosi ív (IP-registry + royalty) és a skill-kapu mastery-igazolás a KineLex Tech Lead hatásköre; a royalty-elszámolás a BeatPass/WorkMan override-motorral egyeztetendő (`[CROSS-MODULE DELEGATION]`).
+
+---
+
+## 23. DANA v1.38.0 Adopció — Szervezői Ökoszisztéma & Anti-Monopol Kooperáció (Top-Down ▼, D124)
+
+A KineLex a szervezői ökoszisztéma és anti-monopol kooperáció kör KineLex-vonatkozásait adoptálja (a Skill-Graph és a tudásszint-igazolás gazdája).
+
+*   **D124 (Esemény Minőség- & Kultúra-Index / SafeFloor for Events):** a KineLex Skill-Graph (D074) adatai és a táncosok igazolt tudásszintjei közvetlen bemenetet képeznek az esemény-szintű Kultúra-Index számításához. Az előre becsekkolt táncosok tudásszintje és érdemei (Credibility, rangok) mint **marketing előny** megjelennek a szervező felületén, és pozitívan súlyozzák az esemény kulturális értékét.
+
+> **Felszólítás (a User közvetíti):** a táncosok tudásszint-adatainak (Skill-Graph) strukturált és biztonságos átadása a BeatPass Kultúra-Index számító motorja felé a KineLex Tech Lead hatásköre (`[CROSS-MODULE DELEGATION]`).
 
