@@ -1,6 +1,6 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 4.5.0 (DANA v1.34.0 platform-elv adoptáció: P52–P62, D095 + ontológia mint tudásgráf re-base jegyzet + DANA v1.36.0 Kulturális Mozgalom adopció: forgatókönyv→3D D107, tudás-royalty D101, wellbeing D109 — §21)
+Version: 4.6.0 (DANA v1.34.0 platform-elv adoptáció: P52–P62, D095 + ontológia mint tudásgráf re-base jegyzet + DANA v1.36.0 Kulturális Mozgalom adopció: forgatókönyv→3D D107, tudás-royalty D101, wellbeing D109 — §21 + DANA v1.37.0 Kooperatív Szakmai Ív adopció: tananyag-tulajdonosi ív D117, skill-kapu D111 — §22)
 Date: 2026-06-16
 
 > **DANA Platform-elv Adoptáció (v1.34.0):** A KineLex adoptálja a konszolidációs elveket. Kiemelten: **P56/D095** (tenant-izoláció `organization_id` + RLS; a fogalomtár megosztása buborék-scope-pal, láthatóság ⟂ funkció), **P58** (a kánon ↔ tanári dialektus a scoped-overlay kaszkád referencia-esete, a P49 mintán), **P57** (az AAA rövidítési/ütközésfeloldó szabályok a közös Rules-as-Data policy-mintát követik, de **külön domain** a pénzügyi routingtól), **P62** (traceability). 
@@ -1448,4 +1448,16 @@ A KineLex a „Kulturális Mozgalom" kör (DANA D097-D109) **tartalom-/tudás-**
 *   **D109 (Wellbeing & Non-Harm):** sérülés-megelőző bemelegítés/levezetés tananyag, fenntartható terhelés-jelzés a Skill-Graph progresszióban (P85); anti-toxic értékrend a tudás-átadásban.
 
 > **Felszólítás (a User közvetíti):** a forgatókönyv-entitás séma + a 3D-koreografáló roadmap, valamint a tudás-royalty IP-registry implementációja a KineLex Tech Lead hatásköre; a zenei/affekt-illesztés a MeCat-tal, a royalty-elszámolás a BeatPass/WorkMan override-/settlement-motorral egyeztetendő (`[CROSS-MODULE DELEGATION]`).
+
+---
+
+## 22. DANA v1.37.0 Adopció — Tananyag-Tulajdonosi Ív & Skill-Kapu (Top-Down ▼, D110-D120)
+
+A KineLex a kooperatív szakmai ív **tudás-tulajdonosi** és **skill-kapu** vonatkozásait adoptálja.
+
+*   **D117 (Tananyag-Tulajdonosi Ív, Deliver→Co-author→Own):** a tartalom-progresszió az IP/Choreographic Registry + Knowledge Commons (D023) fölött három lépcsőben: (1) **helyettesítéses átadás** (más anyaga, D077 dialektus-kompatibilitás), (2) **társszerzőség** (Shapley P71), (3) **saját modul tulajdonlása** mikro-royalty-val (D101/D016-minta), hordozható kurátori/Verifiable Credential-lel (D091/P30). Ez a D101 kiterjesztése egy promótálható **karrier-lépcsővé** (a „helyettesítéses átadástól a tananyag-fejlesztésig").
+*   **D111 (Skill-Kapu):** a Skill-Graph `mastery_level` (D074, K3) a hatáskör-javaslat bemenete; a **mastery-igazolás** (tanári megerősítés a KineLex felületén) a humility gate (P86) természetes helye — a mentor megerősíti a tanítvány szintjét, ami a careerStage-/jog-javaslatot kiváltja (D020/D051).
+*   **D109/D115 kapcsolat:** a fenntartható terhelés-jelzés (P85) és a „megérkezés" (plató, P87) a Skill-Graph progresszióban is megjelenik — nincs erőltetett szint-hajszolás.
+
+> **Felszólítás (a User közvetíti):** a tananyag-tulajdonosi ív (IP-registry + royalty) és a skill-kapu mastery-igazolás a KineLex Tech Lead hatásköre; a royalty-elszámolás a BeatPass/WorkMan override-motorral egyeztetendő (`[CROSS-MODULE DELEGATION]`).
 
