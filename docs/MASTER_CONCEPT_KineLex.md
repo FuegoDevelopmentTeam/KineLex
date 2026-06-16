@@ -1,6 +1,6 @@
 # MASTER_CONCEPT (Dance Systems Architecture)
 
-Version: 4.4.0 (DANA v1.34.0 platform-elv adoptáció: P52–P62, D095 + ontológia mint tudásgráf re-base jegyzet)
+Version: 4.5.0 (DANA v1.34.0 platform-elv adoptáció: P52–P62, D095 + ontológia mint tudásgráf re-base jegyzet + DANA v1.36.0 Kulturális Mozgalom adopció: forgatókönyv→3D D107, tudás-royalty D101, wellbeing D109 — §21)
 Date: 2026-06-16
 
 > **DANA Platform-elv Adoptáció (v1.34.0):** A KineLex adoptálja a konszolidációs elveket. Kiemelten: **P56/D095** (tenant-izoláció `organization_id` + RLS; a fogalomtár megosztása buborék-scope-pal, láthatóság ⟂ funkció), **P58** (a kánon ↔ tanári dialektus a scoped-overlay kaszkád referencia-esete, a P49 mintán), **P57** (az AAA rövidítési/ütközésfeloldó szabályok a közös Rules-as-Data policy-mintát követik, de **külön domain** a pénzügyi routingtól), **P62** (traceability). 
@@ -1431,4 +1431,21 @@ A három modalitás-lépcső (18.A) így kapcsolódik össze egyetlen, mérhető
 > **A rendszer csendes nagy célja:** Minden egyes atomizációs lépés (akár a tanár fogalmainak tisztázása, akár a tanuló tudásának finomítása) egy aprócska lépés afelé, hogy a tanuló a betanult szonettből **valódi nyelvi beszélővé** váljon: aki a zenét hallva azonnal kiválasztja a megfelelő elemet, ráalakítja a zeneiségre, kommunikál a partnerével, és stílussal fűszerezi — azaz a 18.D ideális táncosává. A rendszer ezt **a háttérben, a határokat tiszteletben tartva, de következetesen célozza meg.**
 
 ---
+
+## 21. DANA v1.36.0 Adopció — Forgatókönyv, Tudás-Royalty & Wellbeing (Top-Down ▼, D097-D109)
+
+A KineLex a „Kulturális Mozgalom" kör (DANA D097-D109) **tartalom-/tudás-** és **3D-koreográfiai** vonatkozásait adoptálja.
+
+### 21.1. D107 — Koreográfia-Forgatókönyv & Forgatókönyv→3D Draft `[Érintett: MeCat, BeatPass]`
+*   **Forgatókönyv-entitás (új):** a §15 (Kreatív Koreográfia-Tervező & 3D Show) kiegészül egy **dramaturgiai forgatókönyv** réteggel — a koreográfia **drámai ívre** (feszültség-építés → csúcspont → feloldás) bontva, szekciónként **cél-affekt** + `term_id` mozdulat-igény + idő/zenei slot-séma (a D088 óraterv-slot kiterjesztése).
+*   **MeCat-illesztés:** a forgatókönyv cél-affektjeihez a MeCat (D107/§14.2) **automatikusan felajánl** illő zenei részeket és Inspirációs Tár videó-mozdulatokat — dramaturgia-vezérelt szekvenálás (P83).
+*   **3D-roadmap (Phase-gate, P72):** a §15 3D Avatar Engine a hosszú távú cél (teljes 3D színpadi koreografáló: formáció-térkép, avatar-mozdulat render); MVP-ben 2D timeline + videó-collage draft (a MeCat belső vágójával). A 3D-render explicit innovációs-zseton mögött.
+
+### 21.2. További érintett döntések
+*   **D101 (Élő Tananyag & Tudás-Royalty):** a Knowledge Commons (DANA D023) + IP/Choreographic Registry a társszerzős tananyag/notáció gazdája; ha más tanár használja, a Mentor-Override-mintájú (D016/P39) **mikro-royalty** csordogál vissza, Shapley-felosztással (P71) társszerzőség esetén. Kurátori/Verifiable Credential (D091/P30) a szerzőségre.
+*   **D099 (Skill-Swap):** a dialektus-kompatibilitás (D077) + Skill-Graph (D074) adja a peer-coaching párosítás alapját.
+*   **D103 (Mozgás-Útlevél):** a Skill-Graph progresszió (D074) + spaced repetition (P31) a hordozható credential tartalmi forrása.
+*   **D109 (Wellbeing & Non-Harm):** sérülés-megelőző bemelegítés/levezetés tananyag, fenntartható terhelés-jelzés a Skill-Graph progresszióban (P85); anti-toxic értékrend a tudás-átadásban.
+
+> **Felszólítás (a User közvetíti):** a forgatókönyv-entitás séma + a 3D-koreografáló roadmap, valamint a tudás-royalty IP-registry implementációja a KineLex Tech Lead hatásköre; a zenei/affekt-illesztés a MeCat-tal, a royalty-elszámolás a BeatPass/WorkMan override-/settlement-motorral egyeztetendő (`[CROSS-MODULE DELEGATION]`).
 
